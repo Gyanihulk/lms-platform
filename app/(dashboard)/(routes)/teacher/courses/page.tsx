@@ -4,7 +4,7 @@ const CoursePage = () => {
     return ( <div>
         <Link href="/teacher/create">
         <Button>
-            New COurse
+            New Course
         </Button>
         Course Page!
         </Link>
