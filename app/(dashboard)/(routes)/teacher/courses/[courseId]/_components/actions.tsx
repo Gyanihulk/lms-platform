@@ -8,23 +8,21 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
-
-interface ChapterActionsProps {
+import { useConfettiStore } from "@/hooks/use-confetti-store";
+interface ActionsProps {
   disabled: boolean;
   courseId: string;
-  chapterId: string;
   isPublished: boolean;
 };
 
-export const ChapterActions = ({
+export const Actions = ({
   disabled,
   courseId,
-  chapterId,
   isPublished
-}: ChapterActionsProps) => {
+}: ActionsProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
+  const confetti = useConfettiStore();
   
   
   const onClick = async () => {
@@ -32,11 +30,12 @@ export const ChapterActions = ({
       setIsLoading(true);
 
       if (isPublished) {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
-        toast.success("Chapter unpublished");
+        await axios.patch(`/api/courses/${courseId}/unpublish`);
+        toast.success("Course unpublished");
       } else {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
-        toast.success("Chapter published");
+        await axios.patch(`/api/courses/${courseId}/publish`);
+        toast.success("Course published");
+        confetti.onOpen()
       }
 
       router.refresh();
@@ -51,9 +50,9 @@ export const ChapterActions = ({
     try {
       setIsLoading(true);
 
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
+      await axios.delete(`/api/courses/${courseId}`);
 
-      toast.success("Chapter deleted");
+      toast.success("Course deleted");
       router.refresh();
       router.push(`/teacher/courses/${courseId}`);
     } catch {
