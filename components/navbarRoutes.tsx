@@ -11,7 +11,8 @@ export const NavbarRoutes = () => {
   const pathname = usePathname();
 
   const isTecherPage = pathname?.startsWith("/teacher");
-  const isPlayerPage = pathname?.includes("/chapter");
+  const isPlayerPage = pathname?.includes("/courses");
+  const isSearch =pathname?.includes("/search")
   return (
     <div className="flex gap-x-2 ml-auto">
       <ModeToggle/>
