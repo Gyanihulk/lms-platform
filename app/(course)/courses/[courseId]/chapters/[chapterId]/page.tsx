@@ -9,6 +9,7 @@ import { Preview } from "@/components/preview";
 
 import { VideoPlayer } from "./_components/videoPlayer";
 import { CourseEnrollButton } from "./_components/courseEnrollButton";
+import { CourseProgressButton } from "./_components/course-progress-button";
 
 
 const ChapterIdPage = async ({
@@ -43,7 +44,7 @@ const ChapterIdPage = async ({
 
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
-
+// console.log(chapter)
   return ( 
     <div>
       {userProgress?.isCompleted && (
@@ -68,6 +69,7 @@ const ChapterIdPage = async ({
             playbackId={muxData?.playbackId!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
+            videoUrl={chapter?.videoUrl}
           />
         </div>
         <div>
@@ -78,8 +80,12 @@ const ChapterIdPage = async ({
             {purchase ? (
             
           <>
-          
-          TODO PROGRESS</>
+        <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+              /></>
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}

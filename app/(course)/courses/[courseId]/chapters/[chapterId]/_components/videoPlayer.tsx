@@ -18,6 +18,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
+  videoUrl:string | null;
 };
 
 export const VideoPlayer = ({
@@ -28,8 +29,9 @@ export const VideoPlayer = ({
   isLocked,
   completeOnEnd,
   title,
+  videoUrl
 }: VideoPlayerProps) => {
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(true);
   const router = useRouter();
   const confetti = useConfettiStore();
 
@@ -72,16 +74,20 @@ export const VideoPlayer = ({
         </div>
       )}
       {!isLocked && (
-        <MuxPlayer
-          title={title}
-          className={cn(
-            !isReady && "hidden"
-          )}
-          onCanPlay={() => setIsReady(true)}
-          onEnded={onEnd}
-          autoPlay
-          playbackId={playbackId}
-        />
+        // <MuxPlayer
+        //   title={title}
+        //   className={cn(
+        //     !isReady && "hidden"
+        //   )}
+        //   onCanPlay={() => setIsReady(true)}
+        //   onEnded={onEnd}
+        //   autoPlay
+        //   playbackId={playbackId}
+        // />
+        <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
+
+        <iframe width="100%" height="100%" src={videoUrl} title="YouTube video player"  allowFullScreen></iframe>
+</div>
       )}
     </div>
   )
