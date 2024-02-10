@@ -1,6 +1,6 @@
 import { defaultConfig } from "next/dist/server/config-shared"
-import { SideBar } from "./_components/sidebar";
-import { Navbar } from "./_components/navbar";
+import { SideBar } from "../_components/sidebar";
+import { Navbar } from "../_components/navbar";
 
 const DashBoardLayout=({children}:{children:React.ReactNode})=>{
     return(<div className="h-full">
