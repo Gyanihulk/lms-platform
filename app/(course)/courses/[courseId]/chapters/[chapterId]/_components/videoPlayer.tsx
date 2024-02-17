@@ -18,7 +18,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-  videoUrl:string  | undefined;
+  videoUrl:string | null | undefined;
 };
 
 export const VideoPlayer = ({
@@ -73,7 +73,7 @@ export const VideoPlayer = ({
           </p>
         </div>
       )}
-      {!isLocked && (
+      {!isLocked && videoUrl && (
         // <MuxPlayer
         //   title={title}
         //   className={cn(

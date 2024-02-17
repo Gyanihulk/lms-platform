@@ -69,7 +69,7 @@ const ChapterIdPage = async ({
             playbackId={muxData?.playbackId!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
-            videoUrl={chapter?.videoUrl}
+            videoUrl={chapter?.videoUrl }
           />
         </div>
         <div>
