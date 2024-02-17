@@ -18,7 +18,7 @@ interface VideoPlayerProps {
   isLocked: boolean;
   completeOnEnd: boolean;
   title: string;
-  videoUrl:string | null;
+  videoUrl:string  | undefined;
 };
 
 export const VideoPlayer = ({
