@@ -126,7 +126,7 @@ export const ChapterVideoForm = ({
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Introduction to the course'"
+                      placeholder="e.g. 'https://www.youtube.com/embed/qbpihltKXjw'"
                       {...field}
                     />
                   </FormControl>
