@@ -8,7 +8,7 @@ const Cursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const mouseMove = (e) => {
+    const mouseMove = (e:any) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
 

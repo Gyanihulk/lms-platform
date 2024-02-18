@@ -7,7 +7,7 @@ interface ParallaxProps {
 }
 
 const Parallax: React.FC<ParallaxProps> = ({ type }) => {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,

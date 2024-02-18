@@ -30,18 +30,18 @@ const textVariants = {
   },
 };
 const sliderVariants = {
-  initial: {
-    x: 0,
-  },
+  initial: { x: 0 },
   animate: {
-    x: "-220%",
+    x: "0%",
     transition: {
       repeat: Infinity,
-      repeatType:"mirror",
-      duration: 20,
+      repeatType: "loop" as const, 
+      duration: 2,
     },
   },
 };
+
+
 
 const Hero = () => {
   const router = useRouter();

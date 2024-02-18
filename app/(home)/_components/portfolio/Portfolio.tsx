@@ -31,8 +31,8 @@ const items = [
   },
 ];
 
-const Single = ({ item }) => {
-  const ref = useRef();
+const Single = ({ item }:any) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -59,7 +59,7 @@ const Single = ({ item }) => {
 };
 
 const Portfolio = () => {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
   const { projectRef } = useScroll1();
   const { scrollYProgress } = useScroll({
     target: ref,

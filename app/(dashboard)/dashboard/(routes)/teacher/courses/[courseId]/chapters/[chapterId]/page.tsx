@@ -129,7 +129,10 @@ const ChapterIdPage = async ({
               </h2>
             </div>
             <ChapterVideoForm
-              initialData={chapter}
+              initialData={{
+                ...chapter,
+                videoUrl: chapter.videoUrl ?? "", 
+              }}
               chapterId={params.chapterId}
               courseId={params.courseId}
             />

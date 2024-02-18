@@ -21,7 +21,7 @@ const variants = {
 };
 
 const ProjectInfo = () => {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(ref, { margin: "-100px" });
 

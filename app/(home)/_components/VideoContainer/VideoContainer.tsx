@@ -1,9 +1,6 @@
 import "./videoContainer.scss";
 import { motion } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
-import { OrbitControls } from "@react-three/drei";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+
 const textVariants = {
   initial: {
     x: -500,

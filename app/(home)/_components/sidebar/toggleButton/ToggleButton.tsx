@@ -1,9 +1,9 @@
 "use client"
 import { motion } from "framer-motion";
 
-const ToggleButton = ({ setOpen }) => {
+const ToggleButton = ({ setOpen }:any) => {
   return (
-    <button onClick={() => setOpen((prev) => !prev)}>
+    <button onClick={() => setOpen((prev:any) => !prev)}>
       <svg width="23" height="23" viewBox="0 0 23 23">
         <motion.path
           strokeWidth="3"

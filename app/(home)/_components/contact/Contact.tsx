@@ -20,32 +20,15 @@ const variants = {
 };
 
 const Contact = () => {
-  const ref = useRef();
-  const formRef = useRef();
+  const ref = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const isInView = useInView(ref, { margin: "-100px" });
 
-  const sendEmail = (e) => {
-    e.preventDefault();
 
-    // emailjs
-    //   .sendForm(
-    //     "service_94y20xo",
-    //     "template_v10u2oh",
-    //     formRef.current,
-    //     "pX_2hasGmGcuvjXIW"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       setSuccess(true)
-    //     },
-    //     (error) => {
-    //       setError(true);
-    //     }
-    //   );
-  };
+ 
 
   return (
     <motion.div
@@ -102,7 +85,7 @@ const Contact = () => {
         </motion.div>
         <motion.form
           ref={formRef}
-          onSubmit={sendEmail}
+          
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 4, duration: 1 }}
