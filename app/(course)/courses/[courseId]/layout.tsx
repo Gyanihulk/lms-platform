@@ -6,7 +6,12 @@ import { getProgress } from "@/actions/getProgress";
 
 import { CourseSidebar } from "./_components/courseSidebar";
 import { CourseNavbar } from "./_components/courseNavbar";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Gyaan Bhandaar",
+  description: "Gyani Hulk aspiring Software Engineer",
+};
 const CourseLayout = async ({
   children,
   params

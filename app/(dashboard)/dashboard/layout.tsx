@@ -1,7 +1,13 @@
 import { defaultConfig } from "next/dist/server/config-shared"
 import { SideBar } from "../_components/sidebar";
 import { Navbar } from "../_components/navbar";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+    title: "Gyaan Bhandaar",
+    description: "Gyani Hulk aspiring Software Engineer",
+  };
 
 const DashBoardLayout=({children}:{children:React.ReactNode})=>{
     return(<div className="h-full">

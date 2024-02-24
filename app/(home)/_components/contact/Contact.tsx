@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import "./contact.scss";
 import { motion, useInView } from "framer-motion";
+import Script from "next/script";
 // import emailjs from "@emailjs/browser";
 
 const variants = {
@@ -83,20 +84,7 @@ const Contact = () => {
             />
           </svg>
         </motion.div>
-        <motion.form
-          ref={formRef}
-          
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 4, duration: 1 }}
-        >
-          <input type="text" required placeholder="Name" name="name"/>
-          <input type="email" required placeholder="Email" name="email"/>
-          <textarea rows={8} placeholder="Message" name="message"/>
-          <button>Submit</button>
-          {error && "Error"}
-          {success && "Success"}
-        </motion.form>
+        <div className="visme_d" data-title="Blog Contact Form" data-url="q6pwpq0q-blog-contact-form?fullPage=true" data-domain="forms" data-full-page="true" data-min-height="100vh" data-form-id="20284"></div><Script src="https://static-bundles.visme.co/forms/vismeforms-embed.js"></Script>
       </div>
     </motion.div>
   );

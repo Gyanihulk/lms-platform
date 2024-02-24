@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 50px;
-
+padding: 30px;
   @include mobile {
     width: 100%;
     padding: 10px;

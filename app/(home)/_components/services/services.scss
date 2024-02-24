@@ -1,18 +1,19 @@
 @import "../app.scss";
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 .services {
   background: linear-gradient(180deg, #0c0c1d, #111132);
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  padding: 20px;
   .textContainer {
     flex: 1;
     align-self: flex-end;
     display: flex;
     align-items: center;
     gap: 20px;
-
+    
     @include mobile {
       align-self: center;
       text-align: center;
@@ -70,7 +71,7 @@
       }
 
       h1 {
-        font-size: 96px;
+        font-size: 70px;
         font-weight: 100;
 
         @include mobile {
@@ -80,7 +81,7 @@
 
       button {
         width: 300px;
-        height: 100px;
+        height: 70px;
         border-radius: 50px;
         background-color: orange;
         border: none;
@@ -98,28 +99,37 @@
   .listContainer {
     flex: 2;
     display: flex;
-    max-width: 1366px;
+    max-width: 90%;
     margin: auto;
-
+text-align: center;
+height: auto;
+margin-bottom: 20px;
     @include mobile {
       flex-direction: column;
       width: 100%;
+      
+      height: auto;
     }
-
     .box {
-      padding: 50px;
+      font-family: "Arvo", serif;
+      padding: 10px;
       border: 0.5px solid gray;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-
+      max-width: 33.3%;
+      height: auto;
+      font-size: medium;
       @include mobile {
         border: none;
         align-items: center;
         gap: 20px;
         padding: 10px;
       }
-
+      h2{
+        font-size:100px;
+        font-weight: 700;
+        font-size: larger;
+      }
       p {
         @include mobile {
           display: none;
@@ -131,12 +141,12 @@
         background-color: orange;
         border: none;
         cursor: pointer;
-
+        color:black;
         @include mobile {
           background-color: transparent;
           border: 1px solid orange;
           border-radius: 5px;
-          color: orange;
+          color:black;
           width: 50%;
           padding: 5px;
         }

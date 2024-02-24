@@ -4,32 +4,46 @@ import "./portfolio.scss";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useScroll1 } from '@/context/ScrollContext';
 
-const items = [
+const items =[
   {
-    id: 1,
-    title: "React Commerce",
-    img: "https://images.pexels.com/photos/18073372/pexels-photo-18073372/free-photo-of-young-man-sitting-in-a-car-on-a-night-street.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    "id": 1,
+    "title": "Learning Management System",
+    "img": "https://images.pexels.com/photos/18073372/pexels-photo-18073372.jpeg",
+    "desc": "A Next.js-based platform emulating Udemy, enabling users to create and consume a wide array of educational content. Streamlined for efficient learning and teaching."
   },
   {
-    id: 2,
-    title: "Next.js Blog",
-    img: "https://images.pexels.com/photos/18023772/pexels-photo-18023772/free-photo-of-close-up-of-a-person-holding-a-wristwatch.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    "id": 2,
+    "title": "AI Companions for Teaching/Assistance",
+    "img": "https://images.pexels.com/photos/18023772/pexels-photo-18023772.jpeg",
+    "desc": "Integrates AI with educational tools using Next.js, Replicate, and Firebase, enhancing teaching with virtual assistants. Aimed at improving learning experiences."
+  },
+  
+  {
+    "id": 3,
+    "title": "Office 3d Simulation",
+    "img": "https://images.pexels.com/photos/18023772/pexels-photo-18023772.jpeg",
+    "desc": "An immersive 3D simulation game inspired by 'The Sims', built with Three.js and React Fiber. Offers dynamic gameplay, customizable characters, and interactive environments."
   },
   {
-    id: 3,
-    title: "Vanilla JS App",
-    img: "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    "id": 4,
+    "title": "News SaaS for Reporters",
+    "img": "https://images.pexels.com/photos/18540208/pexels-photo-18540208.jpeg",
+    "desc": "Next.js and Sanity.io powered SaaS, providing reporters a dynamic platform to publish and manage content. Features real-time updates and customizable layouts."
   },
   {
-    id: 4,
-    title: "Music App",
-    img: "https://images.pexels.com/photos/18540208/pexels-photo-18540208/free-photo-of-wood-landscape-water-hill.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores ab id ad nesciunt quo aut corporis modi? Voluptate, quos sunt dolorum facilis, id eum sequi placeat accusantium saepe eos laborum.",
+    "id": 5,
+    "title": "Hotel Booking SaaS",
+    "img": "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg",
+    "desc": "A comprehensive SaaS solution for hotel management, streamlining operations from booking to billing. Designed for hospitality businesses seeking digital transformation."
   },
-];
+  {
+    "id": 6,
+    "title": "Nifty Algo trading",
+    "img": "https://images.pexels.com/photos/6894528/pexels-photo-6894528.jpeg",
+    "desc": "A trading platform simulation with real-time data, built with Express and WebSockets. Offers insights and tools for effective stock market analysis and Automatic Trading on the strategy."
+  },
+]
+
 
 const Single = ({ item }:any) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,7 +56,7 @@ const Single = ({ item }:any) => {
   const projectRef = useRef(null);
   return (
     <section >
-      <div className="container">
+      <div className="container p-10">
         <div className="wrapper">
           <div className="imageContainer" ref={ref}>
             <img src={item.img} alt="" />

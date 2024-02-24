@@ -1,6 +1,4 @@
 "use client"
-
-
 import {  useScroll1 } from "@/context/ScrollContext";
 import "./hero.scss";
 import { motion } from "framer-motion";
@@ -29,25 +27,40 @@ const textVariants = {
     },
   },
 };
-const sliderVariants = {
-  initial: { x: 0 },
+
+const imageVariant = {
+  initial: {
+    x: 500,
+    opacity: 0,
+  },
   animate: {
-    x: "0%",
+    x: 0,
+    opacity: 1,
     transition: {
-      repeat: Infinity,
-      repeatType: "loop" as const, 
-      duration: 2,
+      duration: 1,
+      staggerChildren: 0.1,
+    },
+  }
+};
+const scrollVariants = {
+  animate: {
+    x: [0, -4150], 
+    transition: {
+      x: {
+        repeat: Infinity,
+        repeatType: "loop",
+        duration: 50, // Adjust duration for speed control
+        ease: "linear",
+      },
     },
   },
 };
-
-
 
 const Hero = () => {
   const router = useRouter();
   const { scrollToProject } = useScroll1();
   return (
-    <div className="hero">
+    <div className="hero px-10 ">
       <div className="wrapper">
         <motion.div
           className="textContainer"
@@ -75,17 +88,17 @@ const Hero = () => {
       </div>
       <motion.div
         className="slidingTextContainer"
-        variants={sliderVariants}
+        variants={scrollVariants}
         initial="initial"
         animate="animate"
       >
-        Writer Content Creator Influencer
+        Content Creator | Athlete | Mentor
       </motion.div>
-      <div className="imageContainer1">
-
-</div>
+      
       <div className="imageContainer">
-        <motion.img src="/hero.png" alt="" />
+        <motion.img   variants={imageVariant}
+        initial="initial"
+        animate="animate" src="/hero.png" alt="" />
       </div>
     </div>
   );

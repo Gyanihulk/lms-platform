@@ -16,6 +16,9 @@ model Course{
   title String 
   description String?
   imageUrl String?
+  videoUrl String?
+  description1 String?
+  technology String?
   price Float?
   isPublished Boolean @default(false)
 
