@@ -44,7 +44,7 @@ const imageVariant = {
 };
 const scrollVariants = {
   animate: {
-    x: [0, -4150], 
+    x: [-4150,0 ], 
     transition: {
       x: {
         repeat: Infinity,
