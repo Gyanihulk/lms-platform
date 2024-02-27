@@ -24,7 +24,7 @@ export default function Home() {
         <Hero/>
       </section>
       <section id="Services">
-        <Parallax type="services" />
+        <Parallax type="video" />
       </section>
       <section>
         <Services />
