@@ -71,7 +71,7 @@ const Parallax: React.FC<ParallaxProps> = ({ type }) => {
             </video> */}
 
             
-            <iframe src="https://www.youtube.com/embed/XVoqSTgBD0w" className="planets" style={{ y: yBg }} allow="autoplay" ></iframe>
+            <iframe src="https://www.youtube.com/embed/XVoqSTgBD0w" className="planets" allow="autoplay" ></iframe>
           </>
         ) : (
           
