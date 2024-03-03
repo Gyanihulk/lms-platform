@@ -73,7 +73,7 @@ const Hero = () => {
             Full Stack Developer
           </motion.h1>
           <motion.div variants={textVariants} className="buttons">
-            <motion.button variants={textVariants} onClick={()=>router.push("dashboard/search")}>
+            <motion.button variants={textVariants} onClick={()=>router.push("/dashboard/search")}>
               Courses
             </motion.button>
             <motion.button onClick={scrollToProject} variants={textVariants}>Projects</motion.button>

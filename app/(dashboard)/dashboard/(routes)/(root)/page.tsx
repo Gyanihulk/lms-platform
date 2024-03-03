@@ -19,7 +19,9 @@ export default async function Dashboard() {
     completedCourses,
     coursesInProgress
   } = await getDashboardCourses(userId);
-
+if(coursesInProgress.length==0){
+  redirect("/dashboard/search")
+}
   return (
     <div className="p-6 space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
