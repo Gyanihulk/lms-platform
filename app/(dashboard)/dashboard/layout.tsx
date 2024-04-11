@@ -1,4 +1,4 @@
-import { defaultConfig } from "next/dist/server/config-shared"
+
 import { SideBar } from "../_components/sidebar";
 import { Navbar } from "../_components/navbar";
 import { Metadata } from "next";

@@ -15,7 +15,7 @@ export const NavbarRoutes = () => {
   const isSearch =pathname?.includes("/dashboard/search")
   return (
     <div className="flex gap-x-2 ml-auto">
-      {/* <ModeToggle/> */}
+  
       {isTecherPage || isPlayerPage ? (
         <Link href={"/"}>
           <Button size="sm" variant={"ghost"}>
