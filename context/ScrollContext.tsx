@@ -1,4 +1,5 @@
 // ScrollContext.tsx
+"use client"
 import React, { createContext, useContext, useRef, ReactNode, useCallback, RefObject } from 'react';
 
 interface ScrollContextType {

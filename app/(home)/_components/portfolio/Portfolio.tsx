@@ -7,11 +7,18 @@ import Link from "next/link";
 
 const items = [
   {
-    id: 5,
-    title: "Hotel Booking SaaS",
-    img: "/projects/hotel.png",
-    demo:"https://chardhamstays.com/",
-    desc: "A comprehensive SaaS solution for hotel management, streamlining operations from booking to billing. Designed for hospitality businesses seeking digital transformation.",
+    id: 3,
+    title: "Office 3d Simulation",
+    img: "/projects/3fiber.png",
+    demo:"https://www.linkedin.com/posts/adamya-kumar-5947751ba_quickwins-gamedev-passionproject-activity-7129718092099702784-QxH0?utm_source=share&utm_medium=member_desktop",
+    desc: "An immersive 3D simulation game inspired by 'The Sims', built with Three.js and React Fiber. Offers dynamic gameplay, customizable characters, and interactive environments.",
+  },
+  {
+    id: 2,
+    title: "Three Fiber PortFolio",
+    img: "/projects/3d.png",
+    demo:"https://ubiquitous-palmier-e3a771.netlify.app/",
+    desc: "Integrates AI with educational tools using Next.js, Replicate, and Firebase, enhancing teaching with virtual assistants. Aimed at improving learning experiences.",
   },
   {
     id: 4,
@@ -28,12 +35,14 @@ const items = [
     desc: "A Next.js-based platform emulating Udemy, enabling users to create and consume a wide array of educational content. Streamlined for efficient learning and teaching.",
   },
   {
-    id: 2,
-    title: "Three Fiber PortFolio",
-    img: "/projects/3d.png",
-    demo:"https://ubiquitous-palmier-e3a771.netlify.app/",
-    desc: "Integrates AI with educational tools using Next.js, Replicate, and Firebase, enhancing teaching with virtual assistants. Aimed at improving learning experiences.",
+    id: 5,
+    title: "Hotel Booking SaaS",
+    img: "/projects/hotel.png",
+    demo:"https://chardhamstays.com/",
+    desc: "A comprehensive SaaS solution for hotel management, streamlining operations from booking to billing. Designed for hospitality businesses seeking digital transformation.",
   },
+  
+  
   // {
   //   id: 6,
   //   title: "Nifty Algo trading",
@@ -48,13 +57,7 @@ const items = [
   //   desc: "Integrates AI with educational tools using Next.js, Replicate, and Firebase, enhancing teaching with virtual assistants. Aimed at improving learning experiences.",
   // },
 
-  {
-    id: 3,
-    title: "Office 3d Simulation",
-    img: "/projects/3fiber.png",
-    demo:"https://www.linkedin.com/posts/adamya-kumar-5947751ba_quickwins-gamedev-passionproject-activity-7129718092099702784-QxH0?utm_source=share&utm_medium=member_desktop",
-    desc: "An immersive 3D simulation game inspired by 'The Sims', built with Three.js and React Fiber. Offers dynamic gameplay, customizable characters, and interactive environments.",
-  },
+  
 
  
 ];
@@ -79,7 +82,7 @@ const Single = ({ item }: any) => {
             <h2>{item.title}</h2>
             <p>{item.desc}</p>
             
-            <button><Link
+            <button><Link target="_blank"
               href={item?.demo?item.demo:"/"}
            
             >

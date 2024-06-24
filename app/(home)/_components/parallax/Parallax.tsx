@@ -45,7 +45,7 @@ const Parallax: React.FC<ParallaxProps> = ({ type }) => {
       }}
     >
       <motion.h1 style={{ y: yText }}>
-        {type === "video" ? "Who am I ?" : "What I have Done?"}
+        {type === "services" ? "What I know ?" : "What I have Done?"}
       </motion.h1>
      {/* <motion.div className="mountains"></motion.div> */}
   
