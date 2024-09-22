@@ -20,6 +20,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4078042381069561"
+            crossOrigin="anonymous"
+          ></script>
+           <meta name="google-adsense-account" content="ca-pub-4078042381069561" />
+        </head>
         <body className={inter.className}>
           {children}
           <ConfettiProvider />
