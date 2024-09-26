@@ -24,7 +24,7 @@ const Home = async () =>  {
       name: "asc",
     },
   });
-console.log(categories)
+// console.log(categories)
   const courses = await getCourses({
     userId:userId|| "",
   });
