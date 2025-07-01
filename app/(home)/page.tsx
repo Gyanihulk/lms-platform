@@ -1,61 +1,36 @@
+import Banner from './_components/Banner/index';
+import Aboutus from './_components/Aboutus/index';
+import Dedicated from './_components/Dedicated/index';
+import Digital from './_components/Digital/index';
+import Beliefs from './_components/Beliefs/index';
+import Wework from './_components/Wework/index';
+import Ourteam from './_components/Ourteam/index';
+import Featured from './_components/Featured/index';
+import Manage from './_components/Manage/index';
+import FAQ from './_components/FAQ/index';
+import Testimonials from './_components/Testimonials/index';
+import Articles from './_components/Articles/index';
+import Joinus from './_components/Joinus/index';
+import Insta from './_components/Insta/index';
 
 
-import Contact from "./_components/contact/Contact";
-import Hero from "./_components/hero/Hero";
-import Parallax from "./_components/parallax/Parallax";
-import Portfolio from "./_components/portfolio/Portfolio";
-import Services from "./_components/services/Services";
-import { ScrollProvider } from "@/context/ScrollContext";
-import { getCourses } from "@/actions/getCourses";
-import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs";
-import { Categories } from "../(dashboard)/dashboard/(routes)/search/_components/categories";
-import { CoursesList } from "@/components/courseList";
-const Home = async () =>  {
-  const { userId } = auth();
-
-  // if (!userId) {
-  //   return redirect("/dashboard");
-  // }
-
-  const categories = await db.category.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
-// console.log(categories)
-  const courses = await getCourses({
-    userId:userId|| "",
-  });
+export default function Home() {
   return (
-    <ScrollProvider>
-      <div id="homepage">
-        {/* <Cursor /> */}
-        <section id="Homepage">
-          <Hero />
-        </section>
-        <div className="p-6 space-y-4">
-        <CoursesList items={courses} />
-      </div>
-        <section id="Services">
-          <Parallax type="services" />
-        </section>
-        <section>
-          <Services />
-        </section>
-        <section id="Portfolio">
-          <Parallax type="portfolio" />
-        </section>
-
-        <Portfolio />
-
-        <section id="Contact">
-          <Contact />
-        </section>
-      </div>
-    </ScrollProvider>
-  );
+    <main>
+      <Banner />
+      <Aboutus />
+      <Dedicated />
+      <Digital />
+      <Beliefs />
+      <Wework />
+      <Ourteam />
+      <Featured />
+      {/* <Manage /> */}
+      <FAQ />
+      <Testimonials />
+      {/* <Articles /> */}
+      <Joinus />
+      {/* <Insta /> */}
+    </main>
+  )
 }
-
-export default Home;

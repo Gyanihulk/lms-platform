@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+        <ClerkProvider>
         <head>
           <script
             async
@@ -33,7 +33,7 @@ export default function RootLayout({
           <ConfettiProvider />
           <ToastProvider />
         </body>
-      </html>
     </ClerkProvider>
+      </html>
   );
 }
