@@ -8,8 +8,8 @@ import { ConfettiProvider } from "@/components/providers/confetti-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Adamya Kumar",
-  description: "Gyani Hulk aspiring Software Engineer",
+  title: "Altitude Aviation Academy",
+  description: "Empowering Future Pilots with Knowledge and Skill",
 };
 
 export default function RootLayout({

@@ -91,10 +91,10 @@ export default class FeaturedHighlights extends Component {
         };
 
         return (
-            <div className="bg-bgblue py-20 bg-featured">
+            <div className="bg-bgblue  bg-featured">
                 <div className='mx-auto max-w-7xl sm:py-4 lg:px-8'>
 
-                    <div className="text-center pt-48 pb-10 md:pt-96">
+                    <div className="text-center pt-48 pb-10">
                         <h3 className="text-4xl sm:text-6xl font-bold text-white my-2">Featured Highlights</h3>
                         <h3 className="text-4xl sm:text-6xl font-bold text-white text-opacity-50 lg:mr-48 my-2">Global Success. Proven Results.</h3>
                         <h3 className="text-4xl sm:text-6xl font-bold text-white text-opacity-25 lg:-mr-32 my-2">Altitude Trained. Airline Ready.</h3>
@@ -111,7 +111,7 @@ export default class FeaturedHighlights extends Component {
                                         height={420}
                                         className="rounded-2xl"
                                     />
-                                    <div className="w-345">
+                                    <div className="w-full">
                                         <h4 className='sm:text-3xl font-bold sm:pt-6 text-center sm:text-start mt-10 text-white'>
                                             {items.heading}
                                         </h4>

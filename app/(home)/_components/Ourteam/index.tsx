@@ -12,7 +12,7 @@ const Team = () => {
             </h3>
             <div className='grid grid-cols-1 my-16'>
                 <Image 
-                    src="/images/team/teamimg.png" 
+                    src="/images/team/team1.png" 
                     alt="Altitude Aviation Academy team" 
                     height={684} 
                     width={1296} 

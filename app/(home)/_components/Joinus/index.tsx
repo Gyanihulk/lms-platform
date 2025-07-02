@@ -9,7 +9,7 @@ const Join = () => {
                         Ready to Begin Your Aviation Journey?
                     </h2>
                     <p className="text-lightblack text-base font-normal">
-                        Enroll in one of India’s top-rated pilot training academies. Whether you're starting with ground school or ready for flight training, we’ll guide you all the way to the cockpit.
+                        Enroll in one of India&apos;s top-rated pilot training academies. Whether you&apos;re starting with ground school or ready for flight training, we&apos;ll guide you all the way to the cockpit.
                     </p>
                 </div>
 
