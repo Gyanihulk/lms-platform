@@ -36,7 +36,7 @@ const Join = () => {
                         <div className="sm:mr-3">
                             <button
                                 type="submit"
-                                className="joinButton w-full sm:w-0 text-xl text-white font-semibold text-center rounded-xl sm:rounded-full bg-blue hover:bg-btnblue px-6 py-4"
+                                className="joinButton w-full sm:w-0 text-xl text-white font-semibold text-center rounded-xl sm:rounded-full bg-blue hover:bg-btnblue px-10 py-4"
                             >
                                 Join Now
                             </button>
