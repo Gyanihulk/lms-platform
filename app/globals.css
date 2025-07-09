@@ -203,6 +203,12 @@ html {
   background-size: cover;
 }
 
+.bg-stats {
+  background-image: url("/images/digital/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center -300px;
+}
 .bg-build {
   background-image: url('/images/beliefs/bg.svg');
   background-repeat: no-repeat;

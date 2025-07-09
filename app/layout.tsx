@@ -4,13 +4,20 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
-
+import { Marcellus } from 'next/font/google';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Altitude Aviation Academy",
   description: "Empowering Future Pilots with Knowledge and Skill",
 };
+const marcellus = Marcellus({
+  subsets: ['latin'],
+  weight: ['400'], // Marcellus only has one weight
+  display: 'swap',
+  variable: '--font-marcellus', // optional: for Tailwind
+});
+
 
 export default function RootLayout({
   children,
@@ -18,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={marcellus.className}>
         <ClerkProvider>
         <head>
           <script
