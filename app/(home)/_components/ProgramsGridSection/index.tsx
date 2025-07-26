@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { FiChevronRight } from "react-icons/fi";
 
 interface ProgramItem {
     icon: ReactNode;
@@ -50,7 +51,20 @@ const ProgramsGridSection = ({
                             <div key={idx} className="flex items-start gap-4">
                                 <div>
                                     <h4 className="text-xl font-bold">{item.title}</h4>
-                                    <p className="text-gray-700">{item.description}</p>
+                                    <div className="text-gray-700 space-y-1 mt-1">
+                                        {item.description.split('\n').map((line, i) => {
+                                            const trimmed = line.trim();
+                                            const isBullet = trimmed.startsWith("•");
+                                            return isBullet ? (
+                                                <div key={i} className="flex items-start gap-2">
+                                                    <FiChevronRight className="mt-1 text-btnblue" />
+                                                    <span>{trimmed.replace(/^•\s*/, '')}</span>
+                                                </div>
+                                            ) : (
+                                                <p key={i}>{line}</p>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                                 <div className="text-btnblue text-4xl">{item.icon}</div>
                             </div>
@@ -82,7 +96,20 @@ const ProgramsGridSection = ({
                                 <div className="text-btnblue text-4xl">{item.icon}</div>
                                 <div>
                                     <h4 className="text-xl font-bold">{item.title}</h4>
-                                    <p className="text-gray-700">{item.description}</p>
+                                    <div className="text-gray-700 space-y-1 mt-1">
+                                        {item.description.split('\n').map((line, i) => {
+                                            const trimmed = line.trim();
+                                            const isBullet = trimmed.startsWith("•");
+                                            return isBullet ? (
+                                                <div key={i} className="flex items-start gap-2">
+                                                    <FiChevronRight className="mt-1 text-btnblue" />
+                                                    <span>{trimmed.replace(/^•\s*/, '')}</span>
+                                                </div>
+                                            ) : (
+                                                <p key={i}>{line}</p>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         ))}
