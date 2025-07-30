@@ -140,6 +140,8 @@ model PageComponent {
   type        String // e.g. "HighlightSection", "StatsSection"
   componentId String // ID from the specific component collection
   sortOrder   Int    @default(0)
+
+  @@unique([pageId, componentId, type])
 }
 
 model BannerSection {
@@ -169,20 +171,19 @@ model HighlightSection {
 
 model StatsSection {
   id        String     @id @default(uuid()) @map("_id")
-  stats     StatItem[]
+  stats     StatItem[] @relation("StatsOnSection") // 👈 relation name
   createdAt DateTime   @default(now())
 }
 
 model StatItem {
-  id             String        @id @default(uuid()) @map("_id")
-  sectionId      String
-  icon           String // e.g. "FaUserGraduate"
-  value          Int
-  label          String
-  suffix         String? // e.g. "+", "%"
-  textColor      String? // e.g. "text-white"
-  StatsSection   StatsSection? @relation(fields: [statsSectionId], references: [id])
-  statsSectionId String?
+  id        String  @id @default(uuid()) @map("_id")
+  icon      String // e.g. "FaUserGraduate"
+  value     Int
+  label     String
+  suffix    String? // e.g. "+", "%"
+  textColor String? // e.g. "text-white"
+  sectionId    String
+  StatsSection StatsSection @relation("StatsOnSection", fields: [sectionId], references: [id])
 }
 
 model TestimonialSection {
@@ -262,11 +263,35 @@ model JoinUsSection {
 }
 
 model User {
-  id        String   @id @map("_id") @default(auto()) @db.ObjectId
-  clerkId   String   @unique
-  email     String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
   name      String?
   imageUrl  String?
+  password  String
   role      String   @default("user") // "admin", "user", etc.
   createdAt DateTime @default(now())
+}
+
+model ProgramsGridSection {
+  id        String   @id @default(uuid()) @map("_id")
+  title     String
+  subtitle  String?
+  images    String[] // image URLs
+  programs  Json // store structured program items as JSON
+  createdAt DateTime @default(now())
+}
+
+model DedicatedSection {
+  id          String   @id @default(uuid()) @map("_id")
+  title       String
+  subtitle    String
+  points      String[]
+  imageSrc    String
+  commaSrc    String
+  spiralSrc   String?
+  button1Text String?
+  button1Link String?
+  button2Text String?
+  button2Link String?
+  createdAt   DateTime @default(now())
 }

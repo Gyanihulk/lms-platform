@@ -3,6 +3,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import BannerSectionForm from '../_components/BannerSectionForm'
+import HighlightSectionForm from '../_components/HighlightSectionForm'
+import ProgramsGridSectionForm from '../_components/ProgramsGridSectionForm'
+import StatsSectionForm from '../_components/StatsSectionForm'
+import DedicatedSectionForm from '../_components/DedicatedSectionForm'
+import BeliefsSectionForm from '../_components/BeliefsSectionForm'
 // import { Select } from '@/components/ui/select'
 
 const componentTypes = ['HighlightSection', 'StatsSection', 'TestimonialSection']
@@ -13,7 +19,7 @@ export default function EditPage() {
   const [selectedType, setSelectedType] = useState('HighlightSection')
 
   useEffect(() => {
-    fetch(`/api/pages/${id}`)
+    fetch(`/api/admin/pages/${id}`)
       .then((res) => res.json())
       .then(setPage)
   }, [id])
@@ -48,15 +54,76 @@ export default function EditPage() {
         </Button>
       </div>
 
-      <div className="space-y-6">
-        {page.blocks.map((block: any, i: number) => (
-          <div key={i} className="border p-4 rounded-md">
-            <h3 className="text-xl font-bold">{block.type}</h3>
-            <p>ID: {block.componentId}</p>
-            {/* Add edit button per type later */}
-          </div>
-        ))}
-      </div>
+
+      {page.blocks.map((block: any, i: number) => (
+        <div key={i} className="border p-4 rounded-md pt-4">
+          <h3 className="text-xl font-bold">{block.type}</h3>
+          <p>ID: {block.componentId}</p>
+
+          {block.type === 'BannerSection' && (
+            <BannerSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+          {block.type === 'HighlightSection' && (
+            <HighlightSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+          {block.type === 'ProgramsGridSection' && (
+            <ProgramsGridSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+          {block.type === 'StatsSection' && (
+            <StatsSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+          {block.type === 'DedicatedSection' && (
+            <DedicatedSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+          {block.type === 'BeliefsSection' && (
+            <BeliefsSectionForm
+              data={block.data}
+              onUpdate={(updatedData) => {
+                const updatedBlocks = [...page.blocks]
+                updatedBlocks[i].data = updatedData
+                setPage({ ...page, blocks: updatedBlocks })
+              }}
+            />
+          )}
+        </div>
+      ))}
+
+
     </div>
   )
 }

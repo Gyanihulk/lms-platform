@@ -11,7 +11,7 @@ export default function PagesAdmin() {
   const router = useRouter()
 
   const createPage = async () => {
-    const res = await fetch('/api/pages', {
+    const res = await fetch('/api/admin/pages', {
       method: 'POST',
       body: JSON.stringify({ title, slug }),
     })

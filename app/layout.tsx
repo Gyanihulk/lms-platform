@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={marcellus.className}>
-        <ClerkProvider>
+
         <head>
           <script
             async
@@ -36,11 +36,12 @@ export default function RootLayout({
            <meta name="google-adsense-account" content="ca-pub-4078042381069561" />
         </head>
         <body className={inter.className}>
+          
           {children}
           <ConfettiProvider />
           <ToastProvider />
         </body>
-    </ClerkProvider>
+
       </html>
   );
 }
