@@ -33,7 +33,7 @@ export default function StatsSectionForm({ data, onUpdate }: Props) {
     value: string | number
   ) => {
     const updatedStats = [...formData.stats]
-    updatedStats[index][field] = value
+    updatedStats[index][field] = String(value)
     setFormData((prev) => ({ ...prev, stats: updatedStats }))
   }
 

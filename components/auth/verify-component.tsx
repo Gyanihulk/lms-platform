@@ -6,7 +6,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { Loader2 } from "lucide-react";
-import { verifyEmailToken } from "@/services/verify-email";
+
 
 
 export const VerifyCard = () => {
@@ -25,13 +25,13 @@ export const VerifyCard = () => {
         return;
       }
 
-      const result = await verifyEmailToken(token);
+      // const result = await verifyEmailToken(token);
 
-      if (result.success) {
-        setSuccess(result.message);
-      } else {
-        setError(result.message);
-      }
+      // if (result.success) {
+      //   setSuccess(result.message);
+      // } else {
+      //   setError(result.message);
+      // }
 
       setIsVerifying(false);
     };

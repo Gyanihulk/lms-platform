@@ -1,6 +1,6 @@
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@/context/AuthContext";
 import {
   CircleDollarSign,
   File,
@@ -19,7 +19,7 @@ import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { userId } = auth();
+  const { userId } =auth();
 
   if (!userId) {
     return redirect("/");

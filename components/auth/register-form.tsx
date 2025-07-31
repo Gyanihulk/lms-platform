@@ -20,7 +20,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
-import axiosInstance from "@/hooks/axios-instance";
+
 
 // ✅ Update schema
 const RegisterSchema = z.object({
@@ -51,13 +51,13 @@ export const RegisterForm = () => {
 
     startTransition(async () => {
       try {
-        const response = await axiosInstance.post("/auth/register", values);
+        // const response = await axiosInstance.post("/auth/register", values);
 
-        if (response.status === 201) {
-          setSuccess("Your account is ready! Just verify your email to log in and get started.");
-        } else {
-          setError("Something went wrong. Please try again.");
-        }
+        // if (response.status === 201) {
+        //   setSuccess("Your account is ready! Just verify your email to log in and get started.");
+        // } else {
+        //   setError("Something went wrong. Please try again.");
+        // }
       } catch (err: any) {
         if (err.response?.data?.message) {
           setError(err.response.data.message);

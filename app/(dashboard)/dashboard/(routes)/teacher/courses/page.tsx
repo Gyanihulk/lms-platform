@@ -1,13 +1,14 @@
-import { auth } from "@clerk/nextjs";
+
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 
 import { DataTable } from "./_components/data-tables";
 import { columns } from "./_components/columns";
+import { auth } from "@/lib/auth/custom-auth";
 
 const CoursesPage = async () => {
-  const { userId } = auth();
+  const { userId } =await auth();
 
   if (!userId) {
     return redirect("/");

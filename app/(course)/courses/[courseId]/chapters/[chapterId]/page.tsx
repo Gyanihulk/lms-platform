@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import { File } from "lucide-react";
 
@@ -17,7 +17,7 @@ const ChapterIdPage = async ({
 }: {
   params: { courseId: string; chapterId: string }
 }) => {
-  const { userId } = auth();
+  const { userId } =auth();
   
   if (!userId) {
     return redirect("/");

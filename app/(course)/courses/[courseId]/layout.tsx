@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
@@ -7,6 +7,7 @@ import { getProgress } from "@/actions/getProgress";
 import { CourseSidebar } from "./_components/courseSidebar";
 import { CourseNavbar } from "./_components/courseNavbar";
 import { Metadata } from "next";
+import { auth } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Gyaan Bhandaar",
@@ -19,7 +20,7 @@ const CourseLayout = async ({
   children: React.ReactNode;
   params: { courseId: string };
 }) => {
-  const { userId } = auth();
+  const { userId } =auth();
 
   if (!userId) {
     return redirect("/")

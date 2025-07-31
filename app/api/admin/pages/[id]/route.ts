@@ -111,7 +111,8 @@ export async function PUT(
     const componentResponses = [];
 
     if (Array.isArray(components)) {
-      for (const [index, comp] of components.entries()) {
+      for (let index = 0; index < components.length; index++) {
+        const comp = components[index];
         const {
           type,
           componentData,

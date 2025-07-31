@@ -11,47 +11,54 @@ interface DataType {
     comment: string;
     imgSrc: string;
     name: string;
+    rating: number,
 }
 
 const postData: DataType[] = [
     {
-      name: "Capt. Aditi Verma",
-      profession: 'First Officer, IndiGo Airlines',
-      comment: 'Altitude Aviation Academy gave me the confidence and training I needed to clear the IndiGo Cadet Program. The mentoring from airline pilots made all the difference.',
-      imgSrc: '/images/testimonial/user1.svg',
+        name: "Capt. Aditi Verma",
+        profession: 'First Officer, IndiGo Airlines',
+        comment: 'Altitude Aviation Academy gave me the confidence and training I needed to clear the IndiGo Cadet Program. The mentoring from airline pilots made all the difference.',
+        imgSrc: '/images/testimonial/user1.png',
+        rating: 5,
     },
     {
-      name: "Siddharth Mehra",
-      profession: 'ATPL Student',
-      comment: 'The ground classes were top-notch! The instructors ensured we not only understood the concepts but also excelled in the DGCA exams. Highly recommended!',
-      imgSrc: '/images/testimonial/user2.svg',
+        name: "Siddharth Mehra",
+        profession: 'ATPL Student',
+        comment: 'The ground classes were top-notch! The instructors ensured we not only understood the concepts but also excelled in the DGCA exams. Highly recommended!',
+        imgSrc: '/images/testimonial/user2.png',
+        rating: 4,
     },
     {
-      name: "Capt. Nisha Singh",
-      profession: 'Cadet Pilot, Air India',
-      comment: 'Thanks to Altitude’s expert guidance, I was selected into the Air India Cadet Program. Their pre-type rating support and mock interviews were spot-on.',
-      imgSrc: '/images/testimonial/user3.svg',
+        name: "Capt. Nisha Singh",
+        profession: 'Cadet Pilot, Air India',
+        comment: 'Thanks to Altitude’s expert guidance, I was selected into the Air India Cadet Program. Their pre-type rating support and mock interviews were spot-on.',
+        imgSrc: '/images/testimonial/user3.png',
+        rating: 4,
     },
     {
-      name: "Kunal Sharma",
-      profession: 'CPL Graduate (South Africa Batch)',
-      comment: 'I completed my CPL flying in South Africa through Altitude. Their global tie-up made the entire visa, documentation, and training process smooth and stress-free.',
-      imgSrc: '/images/testimonial/user4.svg',
+        name: "Kunal Sharma",
+        profession: 'CPL Graduate (South Africa Batch)',
+        comment: 'I completed my CPL flying in South Africa through Altitude. Their global tie-up made the entire visa, documentation, and training process smooth and stress-free.',
+        imgSrc: '/images/testimonial/user4.png',
+        rating: 5,
     },
     {
-      name: "Divya Raj",
-      profession: 'Conversion Pilot',
-      comment: 'After training abroad, Altitude helped me with license conversion, DGCA subjects, and all paperwork. The support was consistent throughout.',
-      imgSrc: '/images/testimonial/user5.svg',
+        name: "Anjali Sharma",
+        profession: 'Conversion Pilot',
+        comment: 'After training abroad, Altitude helped me with license conversion, DGCA subjects, and all paperwork. The support was consistent throughout.',
+        imgSrc: '/images/testimonial/user5.png',
+        rating: 5,
     },
     {
-      name: "Rohit Bhardwaj",
-      profession: 'Airline Prep Student',
-      comment: 'The Airline Preparation program was outstanding. I aced my interview with a leading Indian airline thanks to Altitude’s coaching and mock sessions.',
-      imgSrc: '/images/testimonial/user6.svg',
+        name: "Rohit Bhardwaj",
+        profession: 'Airline Prep Student',
+        comment: 'The Airline Preparation program was outstanding. I aced my interview with a leading Indian airline thanks to Altitude’s coaching and mock sessions.',
+        imgSrc: '/images/testimonial/user6.png',
+        rating: 3,
     }
-  ];
-  
+];
+
 
 // CAROUSEL SETTINGS
 
@@ -117,7 +124,7 @@ export default class MultipleItems extends Component {
                         {postData.map((items, i) => (
                             <div key={i} className="relative">
                                 <div className='bg-white test-sha m-3 p-10 my-20 rounded-3xl'>
-                                    <Image src={items.imgSrc} alt={items.imgSrc} width={71} height={71} className="inline-block m-auto absolute test-pos" />
+                                    <Image src={items.imgSrc} alt={items.imgSrc} width={71} height={71} className="inline-block m-auto absolute test-pos rounded-full" />
                                     <h4 className='text-base font-medium text-testColor my-4'>{items.comment}</h4>
                                     <hr style={{ color: "lightgrey" }} />
                                     <div className="flex justify-between">
@@ -126,11 +133,13 @@ export default class MultipleItems extends Component {
                                             <h3 className='text-xs font-medium  pb-2 opacity-50'>{items.profession}</h3>
                                         </div>
                                         <div className="flex">
-                                            <StarIcon width={20} className="star" />
-                                            <StarIcon width={20} className="star" />
-                                            <StarIcon width={20} className="star" />
-                                            <StarIcon width={20} className="star" />
-                                            <StarIcon width={20} className="star" />
+                                            {[...Array(5)].map((_, index) => (
+                                                <StarIcon
+                                                    key={index}
+                                                    width={20}
+                                                    className={index < items.rating ? "star" : "text-gray-300"}
+                                                />
+                                            ))}
                                         </div>
                                     </div>
                                 </div>

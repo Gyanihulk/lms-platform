@@ -27,12 +27,12 @@ export const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        {/* <Avatar>
           <AvatarImage src={user?.image || ""} />
           <AvatarFallback className="bg-sky-500">
             <FaUser className="text-white" />
           </AvatarFallback>
-        </Avatar>
+        </Avatar> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="end">
         {/* <Link href="/user/address" >
