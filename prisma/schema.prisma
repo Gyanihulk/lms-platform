@@ -202,8 +202,7 @@ model Testimonial {
   comment              String
   imgSrc               String
   rating               Int                 @default(5) // Number of stars
-  TestimonialSection   TestimonialSection? @relation(fields: [testimonialSectionId], references: [id])
-  testimonialSectionId String?
+  TestimonialSection   TestimonialSection? @relation(fields: [sectionId], references: [id])
 }
 
 model FAQSection {
@@ -215,7 +214,6 @@ model FAQSection {
 
 model FAQItem {
   id           String      @id @default(uuid()) @map("_id")
-  sectionId    String
   question     String
   answer       String
   FAQSection   FAQSection? @relation(fields: [fAQSectionId], references: [id])
@@ -232,7 +230,6 @@ model WeWorkSection {
 
 model Mentor {
   id              String         @id @default(uuid()) @map("_id")
-  sectionId       String
   name            String
   profession      String
   imgSrc          String

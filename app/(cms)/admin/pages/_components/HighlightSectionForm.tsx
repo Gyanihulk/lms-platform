@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch'
 interface HighlightData {
   id: string
   title: string
-  description: string[] // multiple paragraphs
+  description: string[]
   imageSrc: string
   reverse: boolean
   buttonText: string
@@ -22,11 +22,14 @@ interface HighlightData {
 
 interface Props {
   data: HighlightData
+  pageId: string
   onUpdate: (updatedData: HighlightData) => void
 }
 
-export default function HighlightSectionForm({ data, onUpdate }: Props) {
+export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
+  const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -39,12 +42,53 @@ export default function HighlightSectionForm({ data, onUpdate }: Props) {
     setFormData((prev) => ({ ...prev, description: updated }))
   }
 
+  const handleImageUpload = async (file: File) => {
+    setUploading(true)
+    const formDataUpload = new FormData()
+    formDataUpload.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataUpload,
+      })
+
+      const result = await res.json()
+      if (res.ok && result.path) {
+        setFormData((prev) => ({ ...prev, imageSrc: result.path }))
+      } else {
+        alert('Image upload failed')
+      }
+    } catch (err) {
+      console.error('Image upload error:', err)
+      alert('Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'HighlightSection',
+          componentId: formData.id,
+          componentData: formData,
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -74,8 +118,32 @@ export default function HighlightSectionForm({ data, onUpdate }: Props) {
       ))}
 
       <div>
-        <Label htmlFor="imageSrc">Image Source</Label>
-        <Input id="imageSrc" name="imageSrc" value={formData.imageSrc} onChange={handleChange} />
+        <Label>Image Source</Label>
+        <Input
+          id="imageSrc"
+          name="imageSrc"
+          value={formData.imageSrc}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <Label>Upload Image</Label>
+        <Input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0]
+            if (file) handleImageUpload(file)
+          }}
+        />
+        {formData.imageSrc && (
+          <img
+            src={formData.imageSrc}
+            alt="Highlight"
+            className="max-h-40 mt-2 rounded border"
+          />
+        )}
       </div>
 
       <div className="flex items-center space-x-2">
@@ -83,23 +151,40 @@ export default function HighlightSectionForm({ data, onUpdate }: Props) {
         <Switch
           id="reverse"
           checked={formData.reverse}
-          onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, reverse: checked }))}
+          onCheckedChange={(checked) =>
+            setFormData((prev) => ({ ...prev, reverse: checked }))
+          }
         />
       </div>
 
       <div>
         <Label htmlFor="buttonText">Button Text</Label>
-        <Input id="buttonText" name="buttonText" value={formData.buttonText} onChange={handleChange} />
+        <Input
+          id="buttonText"
+          name="buttonText"
+          value={formData.buttonText}
+          onChange={handleChange}
+        />
       </div>
 
       <div>
         <Label htmlFor="ctaLink">CTA Link</Label>
-        <Input id="ctaLink" name="ctaLink" value={formData.ctaLink || ''} onChange={handleChange} />
+        <Input
+          id="ctaLink"
+          name="ctaLink"
+          value={formData.ctaLink || ''}
+          onChange={handleChange}
+        />
       </div>
 
       <div>
         <Label htmlFor="backgroundClass">Background Class</Label>
-        <Input id="backgroundClass" name="backgroundClass" value={formData.backgroundClass || ''} onChange={handleChange} />
+        <Input
+          id="backgroundClass"
+          name="backgroundClass"
+          value={formData.backgroundClass || ''}
+          onChange={handleChange}
+        />
       </div>
 
       <div>
@@ -109,7 +194,12 @@ export default function HighlightSectionForm({ data, onUpdate }: Props) {
           name="imageWidth"
           type="number"
           value={formData.imageWidth}
-          onChange={(e) => setFormData((prev) => ({ ...prev, imageWidth: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              imageWidth: parseInt(e.target.value),
+            }))
+          }
         />
       </div>
 
@@ -120,11 +210,18 @@ export default function HighlightSectionForm({ data, onUpdate }: Props) {
           name="imageHeight"
           type="number"
           value={formData.imageHeight}
-          onChange={(e) => setFormData((prev) => ({ ...prev, imageHeight: parseInt(e.target.value) }))}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              imageHeight: parseInt(e.target.value),
+            }))
+          }
         />
       </div>
 
-      <Button onClick={handleSubmit}>Save</Button>
+      <Button onClick={handleSubmit} disabled={loading || uploading}>
+        {loading || uploading ? 'Saving...' : 'Save'}
+      </Button>
     </div>
   )
 }

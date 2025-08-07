@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 
 interface BannerData {
   id: string
@@ -18,23 +17,78 @@ interface BannerData {
 
 interface Props {
   data: BannerData
+  pageId: string
   onUpdate: (updatedData: BannerData) => void
 }
 
-export default function BannerSectionForm({ data, onUpdate }: Props) {
+export default function BannerSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
+  const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploading(true)
+
+    const formDataFile = new FormData()
+    formDataFile.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataFile,
+      })
+      const result = await res.json()
+
+      if (res.ok && result.path) {
+        setFormData((prev) => ({ ...prev, imageSrc: result.path }))
+      } else {
+        alert('Image upload failed')
+      }
+    } catch (err) {
+      console.error('Image upload error:', err)
+      alert('Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'BannerSection',
+          componentId: formData.id,
+          componentData: {
+            title: formData.title,
+            subtitle: formData.subtitle,
+            imageSrc: formData.imageSrc,
+            buttonText: formData.buttonText,
+            ctaLink: formData.ctaLink,
+            theme: formData.theme,
+          },
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -59,9 +113,26 @@ export default function BannerSectionForm({ data, onUpdate }: Props) {
       </div>
 
       <div>
-        <Label htmlFor="imageSrc">Image Source</Label>
+        <Label htmlFor="imageSrc">Image Source (URL)</Label>
         <Input id="imageSrc" name="imageSrc" value={formData.imageSrc} onChange={handleChange} />
       </div>
+
+      <div>
+        <Label htmlFor="imageUpload">Upload Image</Label>
+        <Input type="file" accept="image/*" onChange={handleImageUpload} />
+        {uploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
+      </div>
+
+      {formData.imageSrc && (
+        <div>
+          <Label>Image Preview</Label>
+          <img
+            src={formData.imageSrc.startsWith('/uploads') ? formData.imageSrc : `/uploads/${formData.imageSrc}`}
+            alt="Banner"
+            className="max-h-40 mt-2 rounded border"
+          />
+        </div>
+      )}
 
       <div>
         <Label htmlFor="buttonText">Button Text</Label>
@@ -78,7 +149,9 @@ export default function BannerSectionForm({ data, onUpdate }: Props) {
         <Input id="theme" name="theme" value={formData.theme} onChange={handleChange} />
       </div>
 
-      <Button onClick={handleSubmit}>Save</Button>
+      <Button onClick={handleSubmit} disabled={loading}>
+        {loading ? 'Saving...' : 'Save'}
+      </Button>
     </div>
   )
 }

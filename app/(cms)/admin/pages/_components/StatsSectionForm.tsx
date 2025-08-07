@@ -21,11 +21,13 @@ interface StatsSectionData {
 
 interface Props {
   data: StatsSectionData
+  pageId: string
   onUpdate: (updatedData: StatsSectionData) => void
 }
 
-export default function StatsSectionForm({ data, onUpdate }: Props) {
+export default function StatsSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState<StatsSectionData>(data)
+  const [loading, setLoading] = useState(false)
 
   const handleStatChange = (
     index: number,
@@ -33,7 +35,7 @@ export default function StatsSectionForm({ data, onUpdate }: Props) {
     value: string | number
   ) => {
     const updatedStats = [...formData.stats]
-    updatedStats[index][field] = String(value)
+    updatedStats[index][field] = value
     setFormData((prev) => ({ ...prev, stats: updatedStats }))
   }
 
@@ -42,7 +44,7 @@ export default function StatsSectionForm({ data, onUpdate }: Props) {
       ...prev,
       stats: [
         ...prev.stats,
-        { label: '', value: '', icon: '', suffix: '', textColor: '' }
+        { label: '', value: '', icon: '', suffix: '', textColor: '' },
       ],
     }))
   }
@@ -53,11 +55,29 @@ export default function StatsSectionForm({ data, onUpdate }: Props) {
   }
 
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'StatsSection',
+          componentId: formData.id,
+          componentData: {
+            stats: formData.stats,
+          },
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -139,7 +159,9 @@ export default function StatsSectionForm({ data, onUpdate }: Props) {
 
       <div className="flex space-x-2">
         <Button onClick={handleAddStat}>Add Stat</Button>
-        <Button onClick={handleSubmit}>Save</Button>
+        <Button onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Saving...' : 'Save'}
+        </Button>
       </div>
     </div>
   )

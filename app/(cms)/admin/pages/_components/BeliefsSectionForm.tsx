@@ -14,15 +14,20 @@ interface BeliefsSectionData {
   visionTitle: string
   visionText: string
   visionPoints: string[]
+  missionImage?: string
+  visionImage?: string
 }
 
 interface Props {
   data: BeliefsSectionData
+  pageId: string
   onUpdate: (updatedData: BeliefsSectionData) => void
 }
 
-export default function BeliefsSectionForm({ data, onUpdate }: Props) {
+export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
+  const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -51,12 +56,54 @@ export default function BeliefsSectionForm({ data, onUpdate }: Props) {
     setFormData((prev) => ({ ...prev, [listName]: updated }))
   }
 
+  const handleImageUpload = async (field: 'missionImage' | 'visionImage', file: File) => {
+    setUploading(true)
+    const formDataFile = new FormData()
+    formDataFile.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataFile,
+      })
+
+      const result = await res.json()
+
+      if (res.ok && result.path) {
+        setFormData((prev) => ({ ...prev, [field]: result.path }))
+      } else {
+        alert('Image upload failed')
+      }
+    } catch (err) {
+      console.error('Upload error:', err)
+      alert('Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'BeliefsSection',
+          componentId: formData.id,
+          componentData: formData,
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -84,14 +131,22 @@ export default function BeliefsSectionForm({ data, onUpdate }: Props) {
         <Label>Mission Points</Label>
         {formData.missionPoints.map((point, i) => (
           <div key={i} className="flex gap-2 mb-2">
-            <Input
-              value={point}
-              onChange={(e) => handleListChange('missionPoints', i, e.target.value)}
-            />
+            <Input value={point} onChange={(e) => handleListChange('missionPoints', i, e.target.value)} />
             <Button variant="destructive" onClick={() => handleRemoveItem('missionPoints', i)}>X</Button>
           </div>
         ))}
         <Button onClick={() => handleAddItem('missionPoints')}>Add Mission Point</Button>
+      </div>
+
+      <div>
+        <Label>Mission Image</Label>
+        <Input type="file" accept="image/*" onChange={(e) => {
+          const file = e.target.files?.[0]
+          if (file) handleImageUpload('missionImage', file)
+        }} />
+        {formData.missionImage && (
+          <img src={formData.missionImage} alt="Mission" className="max-h-32 mt-2 rounded border" />
+        )}
       </div>
 
       <div>
@@ -108,17 +163,27 @@ export default function BeliefsSectionForm({ data, onUpdate }: Props) {
         <Label>Vision Points</Label>
         {formData.visionPoints.map((point, i) => (
           <div key={i} className="flex gap-2 mb-2">
-            <Input
-              value={point}
-              onChange={(e) => handleListChange('visionPoints', i, e.target.value)}
-            />
+            <Input value={point} onChange={(e) => handleListChange('visionPoints', i, e.target.value)} />
             <Button variant="destructive" onClick={() => handleRemoveItem('visionPoints', i)}>X</Button>
           </div>
         ))}
         <Button onClick={() => handleAddItem('visionPoints')}>Add Vision Point</Button>
       </div>
 
-      <Button onClick={handleSubmit}>Save</Button>
+      <div>
+        <Label>Vision Image</Label>
+        <Input type="file" accept="image/*" onChange={(e) => {
+          const file = e.target.files?.[0]
+          if (file) handleImageUpload('visionImage', file)
+        }} />
+        {formData.visionImage && (
+          <img src={formData.visionImage} alt="Vision" className="max-h-32 mt-2 rounded border" />
+        )}
+      </div>
+
+      <Button onClick={handleSubmit} disabled={loading || uploading}>
+        {loading || uploading ? 'Saving...' : 'Save'}
+      </Button>
     </div>
   )
 }

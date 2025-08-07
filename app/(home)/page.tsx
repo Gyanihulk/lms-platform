@@ -61,10 +61,6 @@ export default function Home() {
 
       <StatsSection />
       <Dedicated />
-
-
-
-
       <HighlightSection
         title="Our Global Tie-Ups — Your Gateway to the World!"
         description={[

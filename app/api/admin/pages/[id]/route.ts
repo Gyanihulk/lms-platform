@@ -41,9 +41,15 @@ export async function GET(
 
         const componentData = await model.findUnique({
           where: { id: block.componentId },
-          include: block.type === "StatsSection" ? { stats: true } : 
-                   block.type === "TestimonialSection" ? { testimonials: true } : 
-                   undefined,
+          include:  block.type === "StatsSection"
+          ? { stats: true }
+          : block.type === "TestimonialSection"
+          ? { testimonials: true }
+          : block.type === "FAQSection"
+          ? { items: true }
+          : block.type === "WeWorkSection"
+          ? { mentors: true }
+          : undefined,
         });
 
         return {
@@ -65,6 +71,10 @@ export async function GET(
       { status: 500 }
     );
   }
+}
+function sanitizeUpdateData(data: Record<string, any>) {
+  const { id, createdAt, updatedAt, ...cleanData } = data
+  return cleanData
 }
 
 export async function PUT(
@@ -132,10 +142,64 @@ export async function PUT(
         try {
           if (componentId) {
             console.log(`[UPDATE] Updating existing ${type} with ID: ${componentId}`);
-            section = await model.update({
-              where: { id: componentId },
-              data: componentData,
-            });
+            if (type === "StatsSection") {
+              // 1. Update section fields if any
+              section = await db.statsSection.update({
+                where: { id: componentId },
+                data: {},
+              })
+            
+              // 2. Manually sync stats
+              const incomingStats = componentData.stats || []
+            
+              const existingStats = await db.statItem.findMany({
+                where: { sectionId: componentId }
+              })
+            
+              const incomingIds = new Set(incomingStats.map((s: any) => s.id).filter(Boolean))
+              const existingIds = new Set(existingStats.map((s: any) => s.id))
+            
+              const toCreate = incomingStats.filter((s: any) => !s.id)
+              const toUpdate = incomingStats.filter((s: any) => s.id && existingIds.has(s.id))
+              const toDelete = existingStats.filter((s: any) => !incomingIds.has(s.id))
+            
+              await Promise.all([
+                ...toCreate.map((stat: any) =>
+                  db.statItem.create({
+                    data: {
+                      ...stat,
+                      sectionId: componentId,
+                    },
+                  })
+                ),
+                ...toUpdate.map((stat: any) =>
+                  db.statItem.update({
+                    where: { id: stat.id },
+                    data: {
+                      icon: stat.icon,
+                      value: stat.value,
+                      label: stat.label,
+                      suffix: stat.suffix || null,
+                      textColor: stat.textColor || null,
+                    },
+                  })
+                ),
+                ...toDelete.map((stat: any) =>
+                  db.statItem.delete({
+                    where: { id: stat.id },
+                  })
+                ),
+              ])
+            }else{
+            
+              const safeData = sanitizeUpdateData(componentData)
+  
+              section = await model.update({
+                where: { id: componentId },
+                data: safeData,
+              });
+            }
+           
           } else {
             console.log(`[CREATE] Creating new ${type}`);
             if (type === "StatsSection" && componentData.stats) {
@@ -173,15 +237,19 @@ export async function PUT(
             
               // Step 2: Create nested testimonials and link via testimonialSectionId
               await Promise.all(
-                componentData.testimonials.create.map((testimonial: any) =>
+                componentData.testimonials.create.map((t: any) =>
                   db.testimonial.create({
                     data: {
-                      ...testimonial,
-                      testimonialSectionId: section.id,
+                      name: t.name,
+                      profession: t.profession,
+                      comment: t.comment,
+                      imgSrc: t.imgSrc,
+                      rating: t.rating,
+                      sectionId: section.id, 
                     },
                   })
                 )
-              );
+              )
             
               // Optional: fetch full data back
               section = await db.testimonialSection.findUnique({
@@ -197,7 +265,7 @@ export async function PUT(
                   missionText: mission.description,
                   missionPoints: mission.points,
                   visionTitle: vision.heading,
-                  visionText: vision.heading, // or description if added later
+                  visionText: vision.description, // or description if added later
                   visionPoints: vision.points,
                 },
               });

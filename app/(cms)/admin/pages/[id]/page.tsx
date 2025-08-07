@@ -9,17 +9,21 @@ import ProgramsGridSectionForm from '../_components/ProgramsGridSectionForm'
 import StatsSectionForm from '../_components/StatsSectionForm'
 import DedicatedSectionForm from '../_components/DedicatedSectionForm'
 import BeliefsSectionForm from '../_components/BeliefsSectionForm'
+import TestimonialSectionForm from '../_components/TestimonialSectionForm'
+import FAQSectionForm from '../_components/FAQSectionForm'
+import WeWorkSectionForm from '../_components/WeWorkSectionForm'
 // import { Select } from '@/components/ui/select'
 
 const componentTypes = ['HighlightSection', 'StatsSection', 'TestimonialSection']
 
 export default function EditPage() {
   const { id } = useParams()
+  const pageId = Array.isArray(id) ? id[0] : id 
   const [page, setPage] = useState<any>(null)
   const [selectedType, setSelectedType] = useState('HighlightSection')
 
   useEffect(() => {
-    fetch(`/api/admin/pages/${id}`)
+    fetch(`/api/admin/pages/${pageId}`)
       .then((res) => res.json())
       .then(setPage)
   }, [id])
@@ -56,13 +60,14 @@ export default function EditPage() {
 
 
       {page.blocks.map((block: any, i: number) => (
-        <div key={i} className="border p-4 rounded-md pt-4">
+        <div key={i} className="border p-4 mt-6 rounded-md pt-4">
           <h3 className="text-xl font-bold">{block.type}</h3>
           <p>ID: {block.componentId}</p>
 
           {block.type === 'BannerSection' && (
             <BannerSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData
@@ -70,9 +75,22 @@ export default function EditPage() {
               }}
             />
           )}
+          {block.type === 'FAQSection' && (
+  <FAQSectionForm
+    data={block.data}
+    pageId={pageId}
+    onUpdate={(updatedData) => {
+      const updatedBlocks = [...page.blocks]
+      updatedBlocks[i].data = updatedData
+      setPage({ ...page, blocks: updatedBlocks })
+    }}
+  />
+)}
+
           {block.type === 'HighlightSection' && (
             <HighlightSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData
@@ -83,6 +101,7 @@ export default function EditPage() {
           {block.type === 'ProgramsGridSection' && (
             <ProgramsGridSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData
@@ -93,6 +112,7 @@ export default function EditPage() {
           {block.type === 'StatsSection' && (
             <StatsSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData
@@ -100,9 +120,33 @@ export default function EditPage() {
               }}
             />
           )}
+          {block.type === 'WeWorkSection' && (
+  <WeWorkSectionForm
+    data={block.data}
+    pageId={pageId}
+    onUpdate={(updatedData) => {
+      const updatedBlocks = [...page.blocks]
+      updatedBlocks[i].data = updatedData
+      setPage({ ...page, blocks: updatedBlocks })
+    }}
+  />
+)}
+
+           {block.type === 'TestimonialSection' && (
+      <TestimonialSectionForm
+        data={block.data}
+        pageId={pageId}
+        onUpdate={(updatedData) => {
+          const updatedBlocks = [...page.blocks]
+          updatedBlocks[i].data = updatedData
+          setPage({ ...page, blocks: updatedBlocks })
+        }}
+      />
+    )}
           {block.type === 'DedicatedSection' && (
             <DedicatedSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData
@@ -113,6 +157,7 @@ export default function EditPage() {
           {block.type === 'BeliefsSection' && (
             <BeliefsSectionForm
               data={block.data}
+              pageId={pageId}
               onUpdate={(updatedData) => {
                 const updatedBlocks = [...page.blocks]
                 updatedBlocks[i].data = updatedData

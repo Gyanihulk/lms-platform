@@ -23,15 +23,16 @@ interface ProgramsGridData {
 
 interface Props {
   data: ProgramsGridData
+  pageId: string
   onUpdate: (updatedData: ProgramsGridData) => void
 }
 
-export default function ProgramsGridSectionForm({ data, onUpdate }: Props) {
+export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
+  const [uploading, setUploading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
@@ -52,12 +53,64 @@ export default function ProgramsGridSectionForm({ data, onUpdate }: Props) {
     setFormData((prev) => ({ ...prev, programs: updated }))
   }
 
+  const handleImageUpload = async (
+    file: File,
+    target: { type: 'images' | 'programIcon'; index: number }
+  ) => {
+    setUploading(true)
+    const formDataFile = new FormData()
+    formDataFile.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataFile,
+      })
+      const result = await res.json()
+
+      if (res.ok && result.path) {
+        if (target.type === 'images') {
+          const updated = [...formData.images]
+          updated[target.index] = result.path
+          setFormData((prev) => ({ ...prev, images: updated }))
+        } else if (target.type === 'programIcon') {
+          const updated = [...formData.programs]
+          updated[target.index].iconPath = result.path
+          setFormData((prev) => ({ ...prev, programs: updated }))
+        }
+      } else {
+        alert('Upload failed')
+      }
+    } catch (err) {
+      console.error('Upload error:', err)
+      alert('Upload error')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'ProgramsGridSection',
+          componentId: formData.id,
+          componentData: formData,
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -90,6 +143,15 @@ export default function ProgramsGridSectionForm({ data, onUpdate }: Props) {
               value={img}
               onChange={(e) => handleImageChange(idx, e.target.value)}
             />
+            <Input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) handleImageUpload(file, { type: 'images', index: idx })
+              }}
+            />
+            {img && <img src={img} alt={`Image ${idx + 1}`} className="max-h-32 mt-2 rounded" />}
           </div>
         ))}
       </div>
@@ -122,6 +184,21 @@ export default function ProgramsGridSectionForm({ data, onUpdate }: Props) {
                 value={program.iconPath}
                 onChange={(e) => handleProgramChange(i, 'iconPath', e.target.value)}
               />
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleImageUpload(file, { type: 'programIcon', index: i })
+                }}
+              />
+              {program.iconPath && (
+                <img
+                  src={program.iconPath}
+                  alt={program.iconAlt || `Program ${i + 1}`}
+                  className="max-h-20 mt-2"
+                />
+              )}
             </div>
 
             <div>
@@ -135,7 +212,9 @@ export default function ProgramsGridSectionForm({ data, onUpdate }: Props) {
         ))}
       </div>
 
-      <Button onClick={handleSubmit}>Save</Button>
+      <Button onClick={handleSubmit} disabled={uploading || loading}>
+        {uploading || loading ? 'Saving...' : 'Save'}
+      </Button>
     </div>
   )
 }

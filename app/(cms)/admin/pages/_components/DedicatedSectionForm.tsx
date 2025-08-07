@@ -22,11 +22,14 @@ interface DedicatedSectionData {
 
 interface Props {
   data: DedicatedSectionData
+  pageId: string
   onUpdate: (updatedData: DedicatedSectionData) => void
 }
 
-export default function DedicatedSectionForm({ data, onUpdate }: Props) {
+export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
+  const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -51,12 +54,57 @@ export default function DedicatedSectionForm({ data, onUpdate }: Props) {
     setFormData((prev) => ({ ...prev, points: updated }))
   }
 
+  const handleImageUpload = async (field: keyof DedicatedSectionData, file: File) => {
+    setUploading(true)
+
+    const formDataFile = new FormData()
+    formDataFile.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataFile,
+      })
+
+      const result = await res.json()
+      if (res.ok && result.path) {
+        setFormData((prev) => ({
+          ...prev,
+          [field]: result.path,
+        }))
+      } else {
+        alert('Image upload failed')
+      }
+    } catch (err) {
+      console.error('Upload error:', err)
+      alert('Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async () => {
-    const res = await fetch(`/api/components/${formData.id}`, {
+    setLoading(true)
+
+    const payload = {
+      slug: undefined,
+      title: undefined,
+      components: [
+        {
+          type: 'DedicatedSection',
+          componentId: formData.id,
+          componentData: formData,
+        },
+      ],
+    }
+
+    const res = await fetch(`/api/admin/pages/${pageId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(payload),
     })
+
+    setLoading(false)
 
     if (res.ok) {
       onUpdate(formData)
@@ -65,6 +113,27 @@ export default function DedicatedSectionForm({ data, onUpdate }: Props) {
       alert('Update failed!')
     }
   }
+
+  const renderImageUpload = (
+    label: string,
+    field: keyof DedicatedSectionData,
+    currentValue: string
+  ) => (
+    <div>
+      <Label>{label}</Label>
+      <Input
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files?.[0]
+          if (file) handleImageUpload(field, file)
+        }}
+      />
+      {currentValue && (
+        <img src={currentValue} alt={label} className="max-h-32 mt-2 rounded border" />
+      )}
+    </div>
+  )
 
   return (
     <div className="space-y-6 border rounded-lg p-6 bg-white shadow">
@@ -84,32 +153,16 @@ export default function DedicatedSectionForm({ data, onUpdate }: Props) {
         <Label>Points</Label>
         {formData.points.map((point, i) => (
           <div key={i} className="flex gap-2">
-            <Textarea
-              value={point}
-              onChange={(e) => handlePointChange(i, e.target.value)}
-            />
-            <Button variant="destructive" onClick={() => handleRemovePoint(i)}>
-              X
-            </Button>
+            <Textarea value={point} onChange={(e) => handlePointChange(i, e.target.value)} />
+            <Button variant="destructive" onClick={() => handleRemovePoint(i)}>X</Button>
           </div>
         ))}
         <Button onClick={handleAddPoint}>Add Point</Button>
       </div>
 
-      <div>
-        <Label>Image Source</Label>
-        <Input name="imageSrc" value={formData.imageSrc} onChange={handleChange} />
-      </div>
-
-      <div>
-        <Label>Comma Image Source</Label>
-        <Input name="commaSrc" value={formData.commaSrc} onChange={handleChange} />
-      </div>
-
-      <div>
-        <Label>Spiral Image Source</Label>
-        <Input name="spiralSrc" value={formData.spiralSrc} onChange={handleChange} />
-      </div>
+      {renderImageUpload('Main Image', 'imageSrc', formData.imageSrc)}
+      {renderImageUpload('Comma Image', 'commaSrc', formData.commaSrc)}
+      {renderImageUpload('Spiral Image', 'spiralSrc', formData.spiralSrc)}
 
       <div>
         <Label>Button 1 Text</Label>
@@ -131,7 +184,9 @@ export default function DedicatedSectionForm({ data, onUpdate }: Props) {
         <Input name="button2Link" value={formData.button2Link} onChange={handleChange} />
       </div>
 
-      <Button onClick={handleSubmit}>Save</Button>
+      <Button onClick={handleSubmit} disabled={loading || uploading}>
+        {loading || uploading ? 'Saving...' : 'Save'}
+      </Button>
     </div>
   )
 }
