@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import toast from 'react-hot-toast'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 
 interface Program {
   title: string
@@ -24,10 +26,11 @@ interface ProgramsGridData {
 interface Props {
   data: ProgramsGridData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: ProgramsGridData) => void
 }
 
-export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Props) {
+export default function ProgramsGridSectionForm({ data, pageId,sortOrder, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -79,10 +82,10 @@ export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Prop
           setFormData((prev) => ({ ...prev, programs: updated }))
         }
       } else {
-        alert('Upload failed')
+        toast.error('Failed to upload image')
       }
     } catch (err) {
-      console.error('Upload error:', err)
+      toast.error('Failed to upload image')
       alert('Upload error')
     } finally {
       setUploading(false)
@@ -99,6 +102,7 @@ export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Prop
         {
           type: 'ProgramsGridSection',
           componentId: formData.id,
+          sortOrder,
           componentData: formData,
         },
       ],
@@ -114,15 +118,18 @@ export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Prop
 
     if (res.ok) {
       onUpdate(formData)
-      alert('ProgramsGrid section updated!')
+      toast.success('Program Grid section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
   return (
-    <div className="space-y-6 border p-6 rounded-lg shadow bg-white">
-      <h2 className="text-2xl font-semibold">Edit Programs Grid Section</h2>
+    <div className="relative">
+      <LoadingOverlay show={loading} label="Saving program grid..." />
+
+      <div className={loading ? "pointer-events-none opacity-60" : ""}>
+              <h2 className="text-2xl font-semibold">Edit Programs Grid Section</h2>
 
       <div>
         <Label htmlFor="title">Title</Label>
@@ -215,6 +222,6 @@ export default function ProgramsGridSectionForm({ data, pageId, onUpdate }: Prop
       <Button onClick={handleSubmit} disabled={uploading || loading}>
         {uploading || loading ? 'Saving...' : 'Save'}
       </Button>
-    </div>
+    </div></div>
   )
 }

@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import toast from 'react-hot-toast'
 
 interface FAQItem {
   id?: string
@@ -21,10 +23,11 @@ interface FAQData {
 interface Props {
   data: FAQData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: FAQData) => void
 }
 
-export default function FAQSectionForm({ data, pageId, onUpdate }: Props) {
+export default function FAQSectionForm({ data, pageId,sortOrder, onUpdate }: Props) {
   const [formData, setFormData] = useState<FAQData>(data)
   const [loading, setLoading] = useState(false)
 
@@ -62,6 +65,7 @@ export default function FAQSectionForm({ data, pageId, onUpdate }: Props) {
         {
           type: 'FAQSection',
           componentId: formData.id,
+          sortOrder,
           componentData: formData,
         },
       ],
@@ -77,14 +81,17 @@ export default function FAQSectionForm({ data, pageId, onUpdate }: Props) {
 
     if (res.ok) {
       onUpdate(formData)
-      alert('FAQ section updated!')
+      toast.success('Faq section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
   return (
-    <div className="space-y-4 border rounded-lg p-6 bg-white shadow">
+    <div className="relative">
+         <LoadingOverlay show={loading} label="Saving Faq's ..." />
+   
+         <div className={loading ? "pointer-events-none opacity-60" : ""}>
       <h2 className="text-2xl font-semibold mb-2">Edit FAQ Section</h2>
 
       <div>
@@ -104,23 +111,23 @@ export default function FAQSectionForm({ data, pageId, onUpdate }: Props) {
             value={item.answer}
             onChange={(e) => handleItemChange(idx, 'answer', e.target.value)}
           />
-          <Button
+          {/* <Button
             variant="destructive"
             className="mt-2"
             onClick={() => removeItem(idx)}
           >
             Remove
-          </Button>
+          </Button> */}
         </div>
       ))}
-
+{/* 
       <Button type="button" onClick={addItem}>
         + Add FAQ
-      </Button>
+      </Button> */}
 
       <Button onClick={handleSubmit} disabled={loading}>
         {loading ? 'Saving...' : 'Save FAQ Section'}
       </Button>
-    </div>
+    </div></div>
   )
 }

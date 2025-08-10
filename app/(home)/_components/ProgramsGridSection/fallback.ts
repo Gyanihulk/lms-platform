@@ -1,4 +1,20 @@
-{
+// types/programsGrid.ts
+export type ProgramItem = {
+  title: string
+  description: string
+  iconPath: string
+  iconAlt: string
+}
+
+export type ProgramsGridData = {
+  sectionTitle: string
+  subtitle: string
+  images: string[]
+  programs: ProgramItem[]
+}
+
+
+export const programsGrid: ProgramsGridData ={
     "sectionTitle": "Your Flight Plan to the Skies Starts Here!",
     "subtitle": "Our Pilot Training Programs",
     "images": [

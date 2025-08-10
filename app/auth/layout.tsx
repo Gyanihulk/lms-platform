@@ -4,8 +4,16 @@ const AuthLayout = ({
   children: React.ReactNode
 }) => {
   return ( 
-    <div className="pt-[200px] h-full flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
-      {children}
+    <div
+    style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "radial-gradient(ellipse at top, #d9e8ff, #00224A)", 
+      // lightblue (#d9e8ff) to navyblue (#00224A)
+    }}
+  >      {children}
     </div>
    );
 }

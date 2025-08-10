@@ -258,6 +258,19 @@ model JoinUsSection {
   ctaLabel    String? // "Join Now", etc.
   createdAt   DateTime @default(now())
 }
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  TEACHER
+  TEACHING_ASSISTANT
+  STUDENT
+  PARENT
+  GUEST
+  MODERATOR
+  CONTENT_REVIEWER
+  ASSESSOR
+  EXAM_PROCTOR
+}
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -265,7 +278,7 @@ model User {
   name      String?
   imageUrl  String?
   password  String
-  role      String   @default("user") // "admin", "user", etc.
+  role      Role     @default(STUDENT)
   createdAt DateTime @default(now())
 }
 

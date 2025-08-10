@@ -18,10 +18,11 @@ interface BannerData {
 interface Props {
   data: BannerData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: BannerData) => void
 }
 
-export default function BannerSectionForm({ data, pageId, onUpdate }: Props) {
+export default function BannerSectionForm({ data, pageId,sortOrder, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -70,10 +71,12 @@ export default function BannerSectionForm({ data, pageId, onUpdate }: Props) {
         {
           type: 'BannerSection',
           componentId: formData.id,
+        
           componentData: {
             title: formData.title,
             subtitle: formData.subtitle,
             imageSrc: formData.imageSrc,
+            sortOrder,
             buttonText: formData.buttonText,
             ctaLink: formData.ctaLink,
             theme: formData.theme,

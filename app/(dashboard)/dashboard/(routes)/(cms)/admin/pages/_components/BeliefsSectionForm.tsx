@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import toast from 'react-hot-toast'
 
 interface BeliefsSectionData {
   id: string
@@ -21,10 +23,11 @@ interface BeliefsSectionData {
 interface Props {
   data: BeliefsSectionData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: BeliefsSectionData) => void
 }
 
-export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
+export default function BeliefsSectionForm({ data, pageId,sortOrder, onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -72,11 +75,11 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
       if (res.ok && result.path) {
         setFormData((prev) => ({ ...prev, [field]: result.path }))
       } else {
-        alert('Image upload failed')
+        toast.error('Failed to upload image')
       }
     } catch (err) {
       console.error('Upload error:', err)
-      alert('Upload failed')
+      toast.error('Failed to upload image')
     } finally {
       setUploading(false)
     }
@@ -84,7 +87,7 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
 
   const handleSubmit = async () => {
     setLoading(true)
-
+    console.log(formData,"beleif section")
     const payload = {
       slug: undefined,
       title: undefined,
@@ -93,6 +96,7 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
           type: 'BeliefsSection',
           componentId: formData.id,
           componentData: formData,
+          sortOrder,
         },
       ],
     }
@@ -104,17 +108,21 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
     })
 
     setLoading(false)
-
     if (res.ok) {
       onUpdate(formData)
-      alert('Beliefs section updated!')
+      toast.success('Belief section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
   return (
-    <div className="space-y-6 border rounded-lg p-6 bg-white shadow">
+   <div className="relative">
+         <LoadingOverlay show={loading} label="Saving Beliefs..." />
+   
+         <div className={loading ? "pointer-events-none opacity-60" : ""}>
+
+
       <h2 className="text-2xl font-semibold">Edit Beliefs Section</h2>
 
       <div>
@@ -135,7 +143,7 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
             <Button variant="destructive" onClick={() => handleRemoveItem('missionPoints', i)}>X</Button>
           </div>
         ))}
-        <Button onClick={() => handleAddItem('missionPoints')}>Add Mission Point</Button>
+        {/* <Button onClick={() => handleAddItem('missionPoints')}>Add Mission Point</Button> */}
       </div>
 
       <div>
@@ -167,7 +175,7 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
             <Button variant="destructive" onClick={() => handleRemoveItem('visionPoints', i)}>X</Button>
           </div>
         ))}
-        <Button onClick={() => handleAddItem('visionPoints')}>Add Vision Point</Button>
+        {/* <Button onClick={() => handleAddItem('visionPoints')}>Add Vision Point</Button> */}
       </div>
 
       <div>
@@ -184,6 +192,7 @@ export default function BeliefsSectionForm({ data, pageId, onUpdate }: Props) {
       <Button onClick={handleSubmit} disabled={loading || uploading}>
         {loading || uploading ? 'Saving...' : 'Save'}
       </Button>
+    </div>
     </div>
   )
 }

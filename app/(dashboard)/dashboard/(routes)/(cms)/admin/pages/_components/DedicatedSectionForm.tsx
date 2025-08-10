@@ -5,6 +5,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import toast from 'react-hot-toast'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 
 interface DedicatedSectionData {
   id: string
@@ -23,10 +25,11 @@ interface DedicatedSectionData {
 interface Props {
   data: DedicatedSectionData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: DedicatedSectionData) => void
 }
 
-export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) {
+export default function DedicatedSectionForm({ data, pageId, sortOrder,onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -73,11 +76,11 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
           [field]: result.path,
         }))
       } else {
-        alert('Image upload failed')
+        toast.error('Failed to upload image')
       }
     } catch (err) {
-      console.error('Upload error:', err)
-      alert('Upload failed')
+      toast.error('Failed to upload image')
+
     } finally {
       setUploading(false)
     }
@@ -85,7 +88,7 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
 
   const handleSubmit = async () => {
     setLoading(true)
-
+console.log(formData)
     const payload = {
       slug: undefined,
       title: undefined,
@@ -93,6 +96,7 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
         {
           type: 'DedicatedSection',
           componentId: formData.id,
+          sortOrder,
           componentData: formData,
         },
       ],
@@ -108,9 +112,9 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
 
     if (res.ok) {
       onUpdate(formData)
-      alert('Dedicated section updated!')
+      toast.success('Testimonial section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
@@ -136,7 +140,11 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
   )
 
   return (
-    <div className="space-y-6 border rounded-lg p-6 bg-white shadow">
+  <div className="relative">
+        <LoadingOverlay show={loading} label="Saving Dedicated..." />
+  
+        <div className={loading ? "pointer-events-none opacity-60" : ""}>
+          
       <h2 className="text-2xl font-semibold">Edit Dedicated Section</h2>
 
       <div>
@@ -157,12 +165,12 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
             <Button variant="destructive" onClick={() => handleRemovePoint(i)}>X</Button>
           </div>
         ))}
-        <Button onClick={handleAddPoint}>Add Point</Button>
+        {/* <Button onClick={handleAddPoint}>Add Point</Button> */}
       </div>
 
       {renderImageUpload('Main Image', 'imageSrc', formData.imageSrc)}
-      {renderImageUpload('Comma Image', 'commaSrc', formData.commaSrc)}
-      {renderImageUpload('Spiral Image', 'spiralSrc', formData.spiralSrc)}
+      {/* {renderImageUpload('Comma Image', 'commaSrc', formData.commaSrc)}
+      {renderImageUpload('Spiral Image', 'spiralSrc', formData.spiralSrc)} */}
 
       <div>
         <Label>Button 1 Text</Label>
@@ -187,6 +195,6 @@ export default function DedicatedSectionForm({ data, pageId, onUpdate }: Props) 
       <Button onClick={handleSubmit} disabled={loading || uploading}>
         {loading || uploading ? 'Saving...' : 'Save'}
       </Button>
-    </div>
+    </div>   </div>
   )
 }

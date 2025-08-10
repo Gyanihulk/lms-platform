@@ -30,8 +30,8 @@ export function UploadImage({ value, onChange, folder = 'uploads' }: UploadImage
       })
 
       const data = await res.json()
-      if (res.ok && data.url) {
-        onChange(data.url)
+      if (res.ok && data.path) {
+        onChange(data.path)
       } else {
         alert('Upload failed. Please try again.')
       }

@@ -1,91 +1,110 @@
 import Banner from './_components/Banner/index';
-import Aboutus from './_components/Aboutus/index';
 import Dedicated from './_components/Dedicated/index';
-import Digital from './_components/Digital/index';
 import Beliefs from './_components/Beliefs/index';
 import Wework from './_components/Wework/index';
-import Ourteam from './_components/Ourteam/index';
-import Featured from './_components/Featured/index';
-import Manage from './_components/Manage/index';
 import FAQ from './_components/FAQ/index';
 import Testimonials from './_components/Testimonials/index';
-import Articles from './_components/Articles/index';
+
 import Joinus from './_components/Joinus/index';
-import Insta from './_components/Insta/index';
+
 import StatsSection from './_components/Stats';
 import HighlightSection from './_components/HighlightedSection';
-import {
-  FaPlaneDeparture,
-  FaChalkboardTeacher,
-  FaUserGraduate,
-  FaRegPaperPlane,
-  FaExchangeAlt,
-  FaSchool,
-} from "react-icons/fa";
+
 import ProgramsGridSection from './_components/ProgramsGridSection';
 import Image from "next/image";
-import programsGrid from './_components/ProgramsGridSection/programGrid.json'
+import { programsGrid } from './_components/ProgramsGridSection/fallback'
+import { fallbackHighlights } from './_components/HighlightedSection/fallback';
+import { getPageData, pickBlock } from '@/lib/api'
+import { getBannerFallback, getBeliefsFallback, getDedicatedFallback, getFAQFallback, getHighlightFallback, getProgramsFallback, getStatsFallback, getTestimonialFallback, getWeWorkFallback } from '@/lib/fallbacks';
 
-export default function Home() {
+
+export const revalidate = 0 // optional: always fresh
+
+export async function generateMetadata() {
+  const page = await getPageData('/')
+  return {
+    title: page?.title ?? 'Altitude Aviation Academy',
+    description:
+      pickBlock<any>(page, 'BannerSection')?.subtitle ??
+      'Comprehensive aviation training for aspiring pilots.',
+  }
+}
+
+
+const componentMap: Record<
+  string,
+  { component: React.ComponentType<any>; fallback: (data?: any) => any }
+> = {
+  BannerSection: { component: Banner, fallback: getBannerFallback },
+  HighlightSection: { component: HighlightSection, fallback: getHighlightFallback },
+  ProgramsGridSection: { component: ProgramsGridSection, fallback: getProgramsFallback },
+  StatsSection: { component: StatsSection, fallback: getStatsFallback },
+  DedicatedSection: { component: Dedicated, fallback: getDedicatedFallback },
+  TestimonialSection: { component: Testimonials, fallback: getTestimonialFallback },
+  BeliefsSection: { component: Beliefs, fallback: getBeliefsFallback },
+  WeWorkSection: { component: Wework, fallback: getWeWorkFallback },
+  FAQSection: { component: FAQ, fallback: getFAQFallback }
+};
+
+function mergeWithFallback<T extends object>(apiData: T | null, fallbackData?: T): T {
+  const merged = { ...fallbackData, ...apiData } as any;
+
+  // normalize reverse to boolean if present
+  if ('reverse' in merged) {
+    merged.reverse = merged.reverse === true || merged.reverse == 'true';
+  }
+
+  // // If testimonials exist in API and items exist in fallback → merge by id
+  // if ((apiData as any)?.testimonials && Array.isArray((fallbackData as any)?.items)) {
+  //   const apiTestimonials = (apiData as any).testimonials;
+  //   const fallbackItems = (fallbackData as any).items;
+
+  //   // Replace or keep
+  //   const updatedItems = fallbackItems.map((fbItem: any) => {
+  //     const apiMatch = apiTestimonials.find((apiItem: any) => apiItem.id && apiItem.id === fbItem.id);
+  //     return apiMatch ? apiMatch : fbItem;
+  //   });
+
+  //   // Add new API testimonials that weren’t in fallback
+  //   apiTestimonials.forEach((apiItem: any) => {
+  //     const exists = updatedItems.some((item: any) => item.id && item.id === apiItem.id);
+  //     if (!exists) updatedItems.push(apiItem);
+  //   });
+
+  //   merged.items = updatedItems;
+  // }
+  if (apiData && (apiData as any).testimonials) {
+    merged.items = (apiData as any).testimonials;
+  }
+
+
+  return merged as T;
+}
+
+export async function Home({ page }: { page: PageData }) {
   return (
     <main>
-      <Banner />
-      {/* <Digital /> */}
-      <HighlightSection
-        title="At Altitude Aviation Academy, we build aviation success stories!"
-        description={[
-          "With 15 years of expertise and a team of experienced pilots leading the way, we provide comprehensive ground classes, CPL flying training, type rating, and airline prep programs. Our students dominate the skies with top-tier results, global flying opportunities, and seamless support throughout their journey.",
-          "With a <strong>90–95% pass rate</strong> in CPL Ground Classes and a <strong>100% selection rate</strong> in the IndiGo Cadet Program, our track record speaks for itself. When you train with us, you don’t just earn a license — <strong>you earn a career.</strong>"
-        ]}
-        buttonText="Explore Our Programs"
-        imageSrc="/images/digital/new.png"
-      />
-      <ProgramsGridSection
-        title={programsGrid.sectionTitle}
-        subtitle={programsGrid.subtitle}
-        images={programsGrid.images}
-        programs={programsGrid.programs.map((item) => ({
-          title: item.title,
-          description: item.description,
-          icon: (
-            <Image
-              src={item.iconPath}
-              alt={item.iconAlt}
-              width={150}
-              height={150}
-            />
-          )
-        }))}
-      />
+      {page.blocks.map((block) => {
+        
+        const mapping = componentMap[block.type];
+        if (!mapping) return null;
 
-
-      <StatsSection />
-      <Dedicated />
-      <HighlightSection
-        title="Our Global Tie-Ups — Your Gateway to the World!"
-        description={[
-          "Topflyer collaborates with top flight schools globally, offering students the flexibility to complete their flying hours amidst world-class facilities and full-flight simulators.",
-          "Choose the best fit for your training needs, and we’ll handle the visa, medicals, and documentation—no headaches, just flying!",
-          "<strong>Training Locations:</strong> India, USA, Canada, South Africa, Europe"
-        ]}
-        buttonText="Training Programmes"
-        imageSrc="/images/digital/global1.png"
-        imageWidth={800}
-        imageHeight={800}
-        reverse
-      />
-
-      <Testimonials />
-      <Beliefs />
-      <Wework />
-      {/* <Ourteam /> */}
-      {/* <Featured /> */}
-      {/* <Manage /> */}
-      <FAQ />
-      {/* <Articles /> */}
-      <Joinus />
-      {/* <Aboutus /> */}
-      {/* <Insta /> */}
+        const BlockComponent = mapping.component;
+        const mergedData = mergeWithFallback(block.data,  mapping.fallback?.(page));
+   // Debug only for TestimonialSection
+   if (block.type === 'FAQSection') {
+    console.log('[FAQSection] API data:', JSON.stringify(block.data, null, 2));
+    console.log('[FAQSection] Merged props:', JSON.stringify(mergedData, null, 2));
+  }
+        return <BlockComponent key={block.id} {...mergedData} />;
+      })} 
+       <Joinus />
     </main>
-  )
+  );
+}
+export default async function Page() {
+  const page: any = await getPageData("/");
+
+  // If nothing from API, give an empty structure so Home can still render fallbacks
+  return <Home page={page ?? { id: "", slug: "/", blocks: [] }} />;
 }

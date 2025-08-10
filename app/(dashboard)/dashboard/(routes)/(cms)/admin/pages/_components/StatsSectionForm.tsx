@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import toast from 'react-hot-toast'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
 
 interface StatItem {
   id?: string
@@ -22,10 +24,11 @@ interface StatsSectionData {
 interface Props {
   data: StatsSectionData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: StatsSectionData) => void
 }
 
-export default function StatsSectionForm({ data, pageId, onUpdate }: Props) {
+export default function StatsSectionForm({ data, pageId,sortOrder, onUpdate }: Props) {
   const [formData, setFormData] = useState<StatsSectionData>(data)
   const [loading, setLoading] = useState(false)
 
@@ -64,6 +67,7 @@ export default function StatsSectionForm({ data, pageId, onUpdate }: Props) {
         {
           type: 'StatsSection',
           componentId: formData.id,
+          sortOrder,
           componentData: {
             stats: formData.stats,
           },
@@ -79,17 +83,21 @@ export default function StatsSectionForm({ data, pageId, onUpdate }: Props) {
 
     setLoading(false)
 
+
     if (res.ok) {
       onUpdate(formData)
-      alert('Stats section updated!')
+      toast.success('Stats section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
   return (
-    <div className="space-y-6 border rounded-lg p-6 bg-white shadow">
-      <h2 className="text-2xl font-semibold">Edit Stats Section</h2>
+    <div className="relative">
+      <LoadingOverlay show={loading} label="Saving testimonials..." />
+
+      <div className={loading ? "pointer-events-none opacity-60" : ""}>
+        <h2 className="text-2xl font-semibold">Edit Stats Section</h2>
 
       <div className="space-y-4">
         {formData.stats.map((stat, index) => (
@@ -147,22 +155,22 @@ export default function StatsSectionForm({ data, pageId, onUpdate }: Props) {
               />
             </div>
 
-            <Button
+            {/* <Button
               variant="destructive"
               onClick={() => handleRemoveStat(index)}
             >
               Delete Stat
-            </Button>
+            </Button> */}
           </div>
         ))}
       </div>
 
       <div className="flex space-x-2">
-        <Button onClick={handleAddStat}>Add Stat</Button>
+        {/* <Button onClick={handleAddStat}>Add Stat</Button> */}
         <Button onClick={handleSubmit} disabled={loading}>
           {loading ? 'Saving...' : 'Save'}
         </Button>
       </div>
-    </div>
+    </div></div>
   )
 }

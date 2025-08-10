@@ -33,3 +33,17 @@ export async function POST(req: Request) {
 }
 
 
+export async function GET() {
+  try {
+    const pages = await db.page.findMany({
+      orderBy: { createdAt: "desc" }, // optional, if you have createdAt
+    });
+
+    return NextResponse.json(pages);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch pages" },
+      { status: 500 }
+    );
+  }
+}

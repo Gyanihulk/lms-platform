@@ -5,8 +5,8 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Gyaan Bhandaar",
-    description: "Gyani Hulk aspiring Software Engineer",
+    title: "Aviation Altitude Dashbaord",
+    description: "Aviation Altitude Dashbaord",
   };
 
 const DashBoardLayout=({children}:{children:React.ReactNode})=>{

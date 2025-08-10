@@ -62,7 +62,7 @@ export const LoginForm = () => {
           setError("Invalid email or password.");
         } else {
           setSuccess("Login successful!");
-          router.push("/admin/pages"); // or your desired route
+          router.push("/dashboard/admin/pages"); // or your desired route
         }
       } catch (err) {
         setError("Something went wrong during login.");

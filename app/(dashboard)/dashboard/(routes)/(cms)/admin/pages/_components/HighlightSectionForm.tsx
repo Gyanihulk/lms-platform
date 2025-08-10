@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
+import LoadingOverlay from '@/components/common/LoadingOverlay'
+import toast from 'react-hot-toast'
 
 interface HighlightData {
   id: string
@@ -23,10 +25,11 @@ interface HighlightData {
 interface Props {
   data: HighlightData
   pageId: string
+  sortOrder: number
   onUpdate: (updatedData: HighlightData) => void
 }
 
-export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) {
+export default function HighlightSectionForm({ data, pageId, sortOrder,onUpdate }: Props) {
   const [formData, setFormData] = useState(data)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -57,10 +60,10 @@ export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) 
       if (res.ok && result.path) {
         setFormData((prev) => ({ ...prev, imageSrc: result.path }))
       } else {
-        alert('Image upload failed')
+        toast.error('Failed to upload image')
       }
     } catch (err) {
-      console.error('Image upload error:', err)
+      toast.error('Failed to upload image')
       alert('Upload failed')
     } finally {
       setUploading(false)
@@ -77,6 +80,7 @@ export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) 
         {
           type: 'HighlightSection',
           componentId: formData.id,
+          sortOrder: sortOrder,
           componentData: formData,
         },
       ],
@@ -89,17 +93,19 @@ export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) 
     })
 
     setLoading(false)
-
     if (res.ok) {
       onUpdate(formData)
-      alert('Highlight section updated!')
+      toast.success('Hightlight section updated!')
     } else {
-      alert('Update failed!')
+      toast.error('Failed to update section')
     }
   }
 
   return (
-    <div className="space-y-4 border rounded-lg p-6 bg-white shadow">
+ <div className="relative">
+       <LoadingOverlay show={loading} label="Saving Hightlight Section..." />
+ 
+       <div className={loading ? "pointer-events-none opacity-60" : ""}>
       <h2 className="text-2xl font-semibold mb-2">Edit Highlight Section</h2>
 
       <div>
@@ -222,6 +228,6 @@ export default function HighlightSectionForm({ data, pageId, onUpdate }: Props) 
       <Button onClick={handleSubmit} disabled={loading || uploading}>
         {loading || uploading ? 'Saving...' : 'Save'}
       </Button>
-    </div>
+    </div></div>
   )
 }

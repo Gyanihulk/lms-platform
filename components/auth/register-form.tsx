@@ -5,9 +5,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Input
-} from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -20,14 +18,18 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+// Allowed public registration roles
+const publicRoles = ["STUDENT", "PARENT", "GUEST"] as const;
 
-// ✅ Update schema
+// ✅ Updated schema
 const RegisterSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email(),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  role: z.enum(publicRoles, { required_error: "Please select a role" }),
 });
 
 export const RegisterForm = () => {
@@ -42,6 +44,7 @@ export const RegisterForm = () => {
       lastName: "",
       email: "",
       password: "",
+      role: "STUDENT",
     },
   });
 
@@ -51,19 +54,27 @@ export const RegisterForm = () => {
 
     startTransition(async () => {
       try {
-        // const response = await axiosInstance.post("/auth/register", values);
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+            name: `${values.firstName} ${values.lastName}`,
+            role: values.role,
+          }),
+        });
 
-        // if (response.status === 201) {
-        //   setSuccess("Your account is ready! Just verify your email to log in and get started.");
-        // } else {
-        //   setError("Something went wrong. Please try again.");
-        // }
-      } catch (err: any) {
-        if (err.response?.data?.message) {
-          setError(err.response.data.message);
+        const data = await res.json();
+
+        if (res.ok) {
+          setSuccess("Your account is ready! Just verify your email to log in.");
+          form.reset();
         } else {
-          setError("An unexpected error occurred during registration.");
+          setError(data.error || "Something went wrong. Please try again.");
         }
+      } catch (err) {
+        setError("An unexpected error occurred during registration.");
       }
     });
   };
@@ -84,16 +95,13 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="John"
-                    />
+                    <Input {...field} disabled={isPending} placeholder="John" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="lastName"
@@ -101,16 +109,13 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="Doe"
-                    />
+                    <Input {...field} disabled={isPending} placeholder="Doe" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="email"
@@ -129,6 +134,7 @@ export const RegisterForm = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
@@ -143,6 +149,36 @@ export const RegisterForm = () => {
                       type="password"
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Role Selection */}
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select
+                    disabled={isPending}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {publicRoles.map((role) => (
+                        <SelectItem key={role} value={role}>
+                          {role.charAt(0) + role.slice(1).toLowerCase()}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

@@ -39,11 +39,37 @@ const Data = () => {
                                 {item.name}
                             </Link>
                         ))}
-                        <div className="mt-4"></div>
-                        <button className="bg-navyblue w-full hover:text-white text-white border border-purple font-medium py-2 px-4 rounded">
-                            Contact Us
-                        </button>
+                      <div className="mt-4 space-y-3">
+  {/* Contact Us */}
+  <button
+    type="button"
+    className="w-full justify-center text-xl font-semibold bg-transparent py-4 px-6 lg:px-12 navbutton rounded-full hover:bg-navyblue hover:text-white"
+  >
+    Contact Us
+  </button>
+
+  {/* Register */}
+  <Link href="/auth/register" className="block">
+    <button
+      type="button"
+      className="w-full justify-center text-xl font-semibold bg-transparent py-4 px-6 lg:px-12 navbutton rounded-full hover:bg-navyblue hover:text-white"
+    >
+      Register
+    </button>
+  </Link>
+
+  {/* Login */}
+  <Link href="/auth/login" className="block">
+    <button
+      type="button"
+      className="w-full justify-center text-xl font-semibold bg-transparent py-4 px-6 lg:px-12 navbutton rounded-full hover:bg-navyblue hover:text-white"
+    >
+      Login
+    </button>
+  </Link>
+</div>
                         {/* <Contactusform /> */}
+                        
                     </div>
                 </div>
             </div>
