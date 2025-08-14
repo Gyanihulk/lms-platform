@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
-import { Role } from "@prisma/client";
+// next-auth.d.ts
+import { RoleEnum } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      role: Role; // strongly typed to your Prisma enum
+      role: RoleEnum; // ✅ scalar enum
       email?: string | null;
       name?: string | null;
       image?: string | null;
@@ -16,6 +16,6 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
-    role?: Role;
+    role?: RoleEnum;
   }
 }

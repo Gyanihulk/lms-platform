@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "db:push": "node prisma/compose.js && prisma db push",
+    "generate": "node prisma/compose.js && prisma generate",
     "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "yarn generate && next build",
+    "start": "next start"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",

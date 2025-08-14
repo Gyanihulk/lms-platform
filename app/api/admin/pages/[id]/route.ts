@@ -18,7 +18,7 @@ async function syncWeWorkMentors(sectionId: string, mentorsPayload: any) {
 
     const toCreate = incoming.filter((m: any) => !m.id);
     const toUpdate = incoming.filter((m: any) => m.id && existingIds.has(m.id));
-    const toDelete = [...existingIds].filter(id => !incomingIds.has(id)); // delete removed
+    const toDelete = Array.from(existingIds).filter(id => !incomingIds.has(id)); // delete removed
 
     await Promise.all([
       // create new (no id)
@@ -92,7 +92,11 @@ async function syncWeWorkMentors(sectionId: string, mentorsPayload: any) {
   }
 
   // nothing to do
-}async function syncFAQItems(sectionId: string, itemsPayload: any) {
+}
+
+
+
+async function syncFAQItems(sectionId: string, itemsPayload: any) {
   // Load existing items for this section
   const existing = await db.fAQItem.findMany({
     where: { fAQSectionId: sectionId },
@@ -107,7 +111,7 @@ async function syncWeWorkMentors(sectionId: string, mentorsPayload: any) {
     const incomingIds = new Set(incoming.map((i: any) => i.id).filter(Boolean));
     const toCreate = incoming.filter((i: any) => !i.id);
     const toUpdate = incoming.filter((i: any) => i.id && existingIds.has(i.id));
-    const toDelete = [...existingIds].filter(id => !incomingIds.has(id)); // prune removed
+    const toDelete = Array.from(existingIds).filter(id => !incomingIds.has(id)); // prune removed
 
     await Promise.all([
       // create new (no id)
@@ -440,7 +444,7 @@ export async function PUT(
               const toUpdate = incoming.filter(
                 (t: any) => t.id && existingIds.has(t.id)
               );
-              const toDelete = [...existingIds].filter((id) => !incomingIds.has(id));
+              const toDelete = Array.from(existingIds).filter((id) => !incomingIds.has(id));
             
               // Apply changes
               await Promise.all([

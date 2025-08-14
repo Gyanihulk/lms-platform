@@ -100,7 +100,7 @@ export default function WeWorkSectionForm({ data, pageId, sortOrder, onUpdate }:
                     folder="mentors"
                     value={mentor.imgSrc}
                     onChange={(url)=>handleMentorChange(index,'imgSrc',url)}
-                    disabled={loading}
+                    // disabled={loading}
                   />
                 </div>
               </CardContent>

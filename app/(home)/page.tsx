@@ -9,12 +9,12 @@ import Joinus from './_components/Joinus/index';
 
 import StatsSection from './_components/Stats';
 import HighlightSection from './_components/HighlightedSection';
-
 import ProgramsGridSection from './_components/ProgramsGridSection';
 import Image from "next/image";
 import { programsGrid } from './_components/ProgramsGridSection/fallback'
 import { fallbackHighlights } from './_components/HighlightedSection/fallback';
 import { getPageData, pickBlock } from '@/lib/api'
+import type { PageData } from '@/lib/api' 
 import { getBannerFallback, getBeliefsFallback, getDedicatedFallback, getFAQFallback, getHighlightFallback, getProgramsFallback, getStatsFallback, getTestimonialFallback, getWeWorkFallback } from '@/lib/fallbacks';
 
 
@@ -81,7 +81,7 @@ function mergeWithFallback<T extends object>(apiData: T | null, fallbackData?: T
   return merged as T;
 }
 
-export async function Home({ page }: { page: PageData }) {
+ function HomePage({ page }: { page: PageData }) {
   return (
     <main>
       {page.blocks.map((block) => {
@@ -102,9 +102,9 @@ export async function Home({ page }: { page: PageData }) {
     </main>
   );
 }
-export default async function Page() {
+export default async function Home() {
   const page: any = await getPageData("/");
 
   // If nothing from API, give an empty structure so Home can still render fallbacks
-  return <Home page={page ?? { id: "", slug: "/", blocks: [] }} />;
+  return <HomePage page={page ?? { id: "", slug: "/", blocks: [] }} />;
 }

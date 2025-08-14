@@ -1,0 +1,29 @@
+/// --- Enums (safe for frontend use) ---
+enum RoleType {
+  SYSTEM
+  ORGANIZATION
+  COURSE
+  CUSTOM
+}
+
+enum AppliesToType {
+  GLOBAL
+  ORGANIZATION
+  COURSE
+  CHAPTER
+  USER
+}
+
+enum RoleEnum {
+  SUPER_ADMIN
+  ADMIN
+  TEACHER
+  TEACHING_ASSISTANT
+  STUDENT
+  PARENT
+  GUEST
+  MODERATOR
+  CONTENT_REVIEWER
+  ASSESSOR
+  EXAM_PROCTOR
+}

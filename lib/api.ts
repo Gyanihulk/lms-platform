@@ -1,85 +1,81 @@
 // lib/api.ts
-import 'server-only'
+import "server-only";
+import { revalidateTag } from "next/cache";
+import { cache } from "react";
 
-export type PageBlock = {
-  id: string
-  type: string
-  sortOrder: number
-  data: Record<string, any>
-}
-
+export type PageBlock = { id: string; type: string; sortOrder: number; data: Record<string, any> };
 export type PageData = {
-  id: string
-  slug: string
-  title: string
-  createdAt: string
-  updatedAt: string
-  blocks: PageBlock[]
-}
+  id: string; slug: string; title: string; createdAt: string; updatedAt: string; blocks: PageBlock[];
+};
 
-const DEFAULT_TIMEOUT_MS = 7000
+const INTERNAL_ORIGIN =
+  process.env.INTERNAL_ORIGIN || process.env.CMS_URL || process.env.NEXT_PUBLIC_APP_URL;
+const HOMEPAGE_API_PATH = process.env.HOMEPAGE_API_PATH ?? "/api/pages";
+const DEFAULT_TIMEOUT_MS = Number(process.env.API_TIMEOUT_MS ?? 8000);
+const HOME_TAG = "page:/";
 
-function withTimeout<T>(p: Promise<T>, ms = DEFAULT_TIMEOUT_MS) {
-  return new Promise<T>((resolve, reject) => {
-    const id = setTimeout(() => reject(new Error('Request timed out')), ms)
-    p.then((v) => {
-      clearTimeout(id)
-      resolve(v)
-    }).catch((e) => {
-      clearTimeout(id)
-      reject(e)
-    })
-  })
-}
-
-/**
- * Fetches page data from your API by slug.
- * Works on the server for SSR/SEO.
- * Returns null if request fails or data shape invalid.
- */
-export async function getPageData(slug: string): Promise<PageData | null> {
-  const base = process.env.NEXT_PUBLIC_APP_URL // e.g. https://cms.example.com
-  const path = process.env.HOMEPAGE_API_PATH ?? '/api/pages'
-  
-
-  if (!base) {
-    return null
-  }
-
-  const url = `${base}${path}`
-
+async function fetchWithTimeout(url: string, init: RequestInit & { timeoutMs?: number } = {}) {
+  const { timeoutMs = DEFAULT_TIMEOUT_MS, ...rest } = init;
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await withTimeout(fetch(url, { cache: 'no-store' }))
-
-
-    if (!res.ok) throw new Error(`Bad status ${res.status}`)
-
-    const json = await res.json()
-
-    const data = (json?.data ?? json) as PageData | undefined
-    if (!data || !Array.isArray(data.blocks)) {
-      console.warn('[getPageData] No valid blocks found in API response')
-      return null
-    }
-
-    // sort by sortOrder
-    data.blocks.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
-    
-// console.log('[getPageData] returning parsed page data:', JSON.stringify(data, null, 3))
-
-
-    return data
-  } catch (err) {
-    console.error('[getPageData] failed:', err)
-    return null
+    return await fetch(url, { ...rest, signal: controller.signal });
+  } finally {
+    clearTimeout(t);
   }
 }
 
+async function getPageDataRaw(slug: string): Promise<PageData> {
+  if (!INTERNAL_ORIGIN) throw new Error("Missing INTERNAL_ORIGIN/CMS_URL/NEXT_PUBLIC_APP_URL");
 
-/**
- * Safe helper to pick block data by type.
- */
-export function pickBlock<T = any>(page: PageData | null, type: string): T | null {
-  const b = page?.blocks?.find((blk) => blk.type === type)
-  return (b?.data as T) ?? null
+  const url = `${INTERNAL_ORIGIN}${HOMEPAGE_API_PATH}${
+    HOMEPAGE_API_PATH.includes("?") ? "&" : "?"
+  }slug=${encodeURIComponent(slug)}`;
+
+  const res = await fetchWithTimeout(url, {
+    // ISR happens here; do NOT use 'no-store'
+    next: { revalidate: 300, tags: [HOME_TAG] },
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!res.ok) throw new Error(`API ${res.status} ${res.statusText}`);
+
+  const json = await res.json();
+  const data = (json?.data ?? json) as PageData | undefined;
+  if (!data || !Array.isArray(data.blocks)) throw new Error("Invalid API shape: missing blocks");
+
+  data.blocks.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+  return data;
 }
+
+// Per-request dedupe only (safe in Edge/Node). ISR still handled by fetch above.
+export const getPageData = cache(async (slug: string): Promise<PageData | null> => {
+  try {
+    return await getPageDataRaw(slug);
+  } catch (e) {
+    console.error("[getPageData] failed:", e);
+    return null;
+  }
+});
+
+export function pickBlock<T = any>(page: PageData | null, type: string): T | null {
+  const b = page?.blocks?.find((blk) => blk.type === type);
+  return (b?.data as T) ?? null;
+}
+
+export function revalidateHome() {
+  revalidateTag(HOME_TAG);
+}
+
+export const prewarmHome = (async () => {
+  console.log("[prewarmHome] Starting home page prewarm...");
+  try {
+    const data = await getPageData("/");
+    if (data) {
+      console.log("[prewarmHome] Home page data cached successfully.");
+    } else {
+      console.warn("[prewarmHome] No data returned from getPageData.");
+    }
+  } catch (err) {
+    console.error("[prewarmHome] Failed to prewarm home page data:", err);
+  }
+})();

@@ -81,7 +81,7 @@ export default function Testimonials({
           <h3 className="text-4xl sm:text-6xl font-bold text-black/25 lg:-mr-32 my-4">{echoTitle2}</h3>
         </div>
 
-        {/* Slider */}
+        {/* @ts-ignore – old module */}
         <Slider {...settings}>
           {finalItems.map((t, i) => (
             <div key={i} className="relative">

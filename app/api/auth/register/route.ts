@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
-import { Role } from "@prisma/client"; // import enum
+import { RoleEnum } from "@prisma/client"; 
 
 export async function POST(req: Request) {
   try {
@@ -14,9 +14,9 @@ export async function POST(req: Request) {
     }
 
     // ✅ Validate role against enum
-    if (!Object.values(Role).includes(role)) {
+    if (!Object.values(RoleEnum).includes(role)) {
       return NextResponse.json(
-        { error: `Invalid role. Must be one of: ${Object.values(Role).join(", ")}` },
+        { error: `Invalid role. Must be one of: ${Object.values(RoleEnum).join(", ")}` },
         { status: 400 }
       );
     }

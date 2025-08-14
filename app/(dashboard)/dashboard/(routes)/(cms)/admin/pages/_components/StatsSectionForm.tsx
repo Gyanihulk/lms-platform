@@ -38,7 +38,11 @@ export default function StatsSectionForm({ data, pageId,sortOrder, onUpdate }: P
     value: string | number
   ) => {
     const updatedStats = [...formData.stats]
-    updatedStats[index][field] = value
+    if (field === 'value') {
+      updatedStats[index][field] = value // can be number or string
+    } else {
+      updatedStats[index][field] = String(value) // force to string
+    }
     setFormData((prev) => ({ ...prev, stats: updatedStats }))
   }
 

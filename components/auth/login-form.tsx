@@ -23,9 +23,9 @@ import { FormError } from "@/components/form-error";
 import { useRouter } from "next/navigation";
 import { getSession, signIn } from "next-auth/react";
 import { FormSuccess } from "../form-success";
-import { Role } from "@prisma/client";
+import { Role, RoleEnum } from "@prisma/client";
 
-const ROLE_REDIRECT: Record<Role, string> = {
+const ROLE_REDIRECT: Record<RoleEnum, string> = {
   SUPER_ADMIN: "/dashboard/admin/pages",
   ADMIN: "/dashboard/admin/pages",
   TEACHER: "/dashboard/teacher/courses",
@@ -80,9 +80,9 @@ export const LoginForm = () => {
         } else {
           setSuccess("Login successful!");
           const session = await getSession();
-          const role = (session?.user as any)?.role as Role ?? "STUDENT";
-          console.log(session,ROLE_REDIRECT[role])
-router.push(ROLE_REDIRECT[role] ?? "/");
+          const role = (session?.user as any)?.role as RoleEnum ?? "STUDENT";
+          console.log(session,role)
+// router.push(ROLE_REDIRECT[role] ?? "/");
         
         }
       } catch (err) {

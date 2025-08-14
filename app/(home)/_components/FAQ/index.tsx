@@ -3,10 +3,8 @@
 import React from 'react'
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import { getFAQFallback } from '@/lib/fallbacks'
 
-// =============================
-// Types
-// =============================
 export type FAQItem = {
   id?: string
   question: string
@@ -19,12 +17,9 @@ export type FAQProps = {
   bgClassName?: string
   cardClassName?: string
   items?: FAQItem[]
-  faqs?: FAQItem[] // tolerate alternate API key
+  faqs?: FAQItem[]
 }
 
-// =============================
-// Component
-// =============================
 export default function FAQ({
   title = 'Frequently Asked Questions',
   subtitle = 'Answers to common questions about our training programs.',
@@ -33,7 +28,9 @@ export default function FAQ({
   items,
   faqs,
 }: FAQProps) {
-  const finalItems = (items && items.length ? items : faqs) ?? []
+  const finalItems = (items?.length ? items : faqs) ?? []
+
+  const safeItems = finalItems.length > 0 ? finalItems : (getFAQFallback().items ?? [])
 
   return (
     <section id="faq-section" className={`mx-auto max-w-7xl py-24 lg:px-8 rounded-2xl my-16 faq-bg ${bgClassName}`}>
@@ -51,7 +48,7 @@ export default function FAQ({
       )}
 
       <div className="w-full px-4 pt-16">
-        {(finalItems.length ? finalItems : getFAQFallback().items).map((item, index) => (
+        {safeItems.map((item, index) => (
           <div key={item.id ?? index} className={cardClassName}>
             <Disclosure>
               {({ open }) => (
@@ -72,4 +69,3 @@ export default function FAQ({
     </section>
   )
 }
-

@@ -1,35 +1,56 @@
+// middleware.ts
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { Role } from "@prisma/client";
+import { RoleEnum } from "@prisma/client"; // ✅ use the enum, not the Role model
 
-function canAccess(pathname: string, role: Role): boolean {
+function canAccess(pathname: string, role: RoleEnum): boolean {
   if (pathname.startsWith("/dashboard/admin")) {
-    return role === "SUPER_ADMIN" || role === "ADMIN";
+    return role === RoleEnum.SUPER_ADMIN || role === RoleEnum.ADMIN;
   }
   if (pathname.startsWith("/dashboard/teacher")) {
     return (
-      role === "SUPER_ADMIN" ||
-      role === "ADMIN" ||
-      role === "TEACHER" ||
-      role === "TEACHING_ASSISTANT"
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN ||
+      role === RoleEnum.TEACHER ||
+      role === RoleEnum.TEACHING_ASSISTANT
     );
   }
   if (pathname.startsWith("/dashboard/mod")) {
-    return role === "MODERATOR" || role === "SUPER_ADMIN" || role === "ADMIN";
+    return (
+      role === RoleEnum.MODERATOR ||
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN
+    );
   }
   if (pathname.startsWith("/dashboard/review")) {
-    return role === "CONTENT_REVIEWER" || role === "SUPER_ADMIN" || role === "ADMIN";
+    return (
+      role === RoleEnum.CONTENT_REVIEWER ||
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN
+    );
   }
   if (pathname.startsWith("/dashboard/assessor")) {
-    return role === "ASSESSOR" || role === "SUPER_ADMIN" || role === "ADMIN";
+    return (
+      role === RoleEnum.ASSESSOR ||
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN
+    );
   }
   if (pathname.startsWith("/dashboard/proctor")) {
-    return role === "EXAM_PROCTOR" || role === "SUPER_ADMIN" || role === "ADMIN";
+    return (
+      role === RoleEnum.EXAM_PROCTOR ||
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN
+    );
   }
   if (pathname.startsWith("/dashboard/parent")) {
-    return role === "PARENT" || role === "SUPER_ADMIN" || role === "ADMIN";
+    return (
+      role === RoleEnum.PARENT ||
+      role === RoleEnum.SUPER_ADMIN ||
+      role === RoleEnum.ADMIN
+    );
   }
-  // default protected area: any authenticated role
+  // any authenticated role can access generic /dashboard
   if (pathname.startsWith("/dashboard")) return true;
   return true; // non-protected routes
 }
@@ -37,7 +58,14 @@ function canAccess(pathname: string, role: Role): boolean {
 export default withAuth(
   (req) => {
     const token = (req as any).nextauth?.token as any;
-    const role = (token?.role as Role) ?? "STUDENT";
+
+    // In case something still sticks a Role object into the token, normalize:
+    const raw = token?.role;
+    const role: RoleEnum =
+      typeof raw === "string"
+        ? (raw as RoleEnum)
+        : (raw?.name as RoleEnum) ?? RoleEnum.STUDENT;
+
     const { pathname } = req.nextUrl;
 
     if (pathname.startsWith("/dashboard") && !token) {
@@ -49,7 +77,7 @@ export default withAuth(
 
     if (!canAccess(pathname, role)) {
       const url = req.nextUrl.clone();
-      url.pathname = "/"; // or a /403 page
+      url.pathname = "/";
       return NextResponse.redirect(url);
     }
 

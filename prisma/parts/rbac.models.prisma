@@ -1,0 +1,96 @@
+
+model User {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  email      String     @unique
+  name       String?
+  imageUrl   String?
+  password   String
+  role       RoleEnum   @default(STUDENT)
+  createdAt  DateTime   @default(now())
+
+  userRoles  UserRole[] // 👈 opposite relation for UserRole.user
+}
+
+/// Modules group functionalities
+model Module {
+  id              String          @id @default(uuid()) @map("_id")
+  name            String          @unique
+  key             String          @unique
+  description     String?
+  functionalities Functionality[] // 👈 opposite relation for Functionality.module
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Functionality {
+  id          String             @id @default(uuid()) @map("_id")
+  moduleId    String
+  module      Module             @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  name        String
+  key         String             @unique
+  description String?
+
+  roleFuncs   RoleFunctionality[] // 👈 opposite relation for RoleFunctionality.functionality
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([moduleId])
+}
+
+model Role {
+  id            String         @id @default(uuid()) @map("_id")
+  name          String
+  type          RoleType       @default(CUSTOM)
+  parentId      String?
+  parent        Role?          @relation("RoleToChildren", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction) // 👈 cyclic safe
+  children      Role[]         @relation("RoleToChildren")
+  appliesTo     AppliesToType  @default(GLOBAL)
+  appliesToId   String?
+  ancestors     String[]       @default([])
+
+  roleFuncs     RoleFunctionality[] // 👈 opposite relation for RoleFunctionality.role
+  userRoles     UserRole[]           // 👈 opposite relation for UserRole.role
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([parentId])
+  @@index([appliesTo, appliesToId])
+  @@index([ancestors])
+  @@unique([name, appliesTo, appliesToId, type])
+}
+
+model RoleFunctionality {
+  id              String        @id @default(uuid()) @map("_id")
+  roleId          String
+  role            Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  functionalityId String
+  functionality   Functionality @relation(fields: [functionalityId], references: [id], onDelete: Cascade)
+  allow           Boolean       @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([roleId, functionalityId])
+  @@index([roleId])
+  @@index([functionalityId])
+}
+
+model UserRole {
+  id         String         @id @default(uuid()) @map("_id")
+  userId     String         @db.ObjectId
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleId     String
+  role       Role           @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  scopeType  AppliesToType?
+  scopeId    String?
+  assignedAt DateTime       @default(now())
+
+  @@index([userId])
+  @@index([roleId])
+  @@index([scopeType, scopeId])
+  @@unique([userId, roleId, scopeType, scopeId])
+}

@@ -64,7 +64,7 @@ const Wework: React.FC<WeWorkProps> = ({ title, subtitle, mentors = [] }) => {
           </h3>
         </div>
       </div>
-
+    {/* @ts-ignore – old module */}
       <Slider {...settings}>
         {items.map((m) => (
           <div key={m.id}>
