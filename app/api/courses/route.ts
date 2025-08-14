@@ -1,20 +1,32 @@
-import { db } from "@/lib/db"
-import { auth } from "@/context/AuthContext";
-import { NextResponse } from "next/server"
+import { db } from "@/lib/db";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/lib/auth/config"; // your NextAuth config
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    try {
-        const { userId } =auth()
-        const { title } = await req.json()
-        if (!userId) {
-            return new NextResponse("UnAuthorised", { status: 401 })
-        }
+  try {
+    // ✅ Get session from NextAuth
+    const session = await getServerSession(authConfig);
 
-        const course = await db.course.create({ data: { userId, title } })
-        return NextResponse.json(course)
-    } catch (error) {
-        console.log("[Courses post]", error)
-        return new NextResponse("Internal Server Error", { status: 500 })
+    // ✅ Check if user is logged in
+    if (!session?.user?.id) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
+    // ✅ Parse request body
+    const { title } = await req.json();
+
+    // ✅ Create course with the authenticated user's ID
+    const course = await db.course.create({
+      data: {
+        userId: session.user.id,
+        title,
+      },
+    });
+
+    return NextResponse.json(course);
+  } catch (error) {
+    console.error("[Courses post]", error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
 }

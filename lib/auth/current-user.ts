@@ -1,4 +1,5 @@
 // lib/auth/current-user.ts
+import "server-only";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/lib/auth/config"; // Adjust path as needed
 

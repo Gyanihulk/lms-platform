@@ -1,38 +1,29 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import CredentialsProvider from "next-auth/providers/credentials";
+import type { NextAuthOptions } from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { db } from "@/lib/db";
-import type { NextAuthOptions } from "next-auth";
+import { Role } from "@prisma/client";
 
 export const authConfig: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
-  session: {
-    strategy: "jwt", // ✅ important
-  },
+  session: { strategy: "jwt" },
   providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-
+    Credentials({
+      name: "Credentials",
+      credentials: { email: {}, password: {} },
+      async authorize(creds) {
+        if (!creds?.email || !creds?.password) return null;
         const user = await db.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: creds.email },
+          select: { id: true, email: true, name: true, password: true, role: true },
         });
-
         if (!user || !user.password) return null;
-
-        const isValid = await compare(credentials.password, user.password);
-        if (!isValid) return null;
-
+        const ok = await compare(creds.password, user.password);
+        if (!ok) return null;
         return {
           id: user.id,
           email: user.email,
-          name: user.name,
-          role: user.role,
+          name: user.name ?? undefined,
+          role: user.role as Role,
         };
       },
     }),
@@ -40,20 +31,18 @@ export const authConfig: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = (user as any).role;
+        token.id = (user as any).id;
+        token.role = ((user as any).role ?? Role.STUDENT) as Role;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id;
-        session.user.role = token.role;
+        session.user.id = token.id as string;
+        session.user.role = (token.role as Role) ?? Role.STUDENT;
       }
       return session;
     },
   },
-  pages: {
-    signIn: "/login", // Optional custom login page
-  },
+  pages: { signIn: "/auth/login" },
 };

@@ -21,8 +21,24 @@ import { CardWrapper } from "@/components/auth/card-wrapper"
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/form-error";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { FormSuccess } from "../form-success";
+import { Role } from "@prisma/client";
+
+const ROLE_REDIRECT: Record<Role, string> = {
+  SUPER_ADMIN: "/dashboard/admin/pages",
+  ADMIN: "/dashboard/admin/pages",
+  TEACHER: "/dashboard/teacher/courses",
+  TEACHING_ASSISTANT: "/dashboard/teacher/courses",
+  STUDENT: "/dashboard",
+  PARENT: "/dashboard/parent",
+  GUEST: "/",
+  MODERATOR: "/dashboard/mod",
+  CONTENT_REVIEWER: "/dashboard/review",
+  ASSESSOR: "/dashboard/assessor",
+  EXAM_PROCTOR: "/dashboard/proctor",
+};
+
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -36,6 +52,7 @@ export const LoginForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
+  
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -62,7 +79,11 @@ export const LoginForm = () => {
           setError("Invalid email or password.");
         } else {
           setSuccess("Login successful!");
-          router.push("/dashboard/admin/pages"); // or your desired route
+          const session = await getSession();
+          const role = (session?.user as any)?.role as Role ?? "STUDENT";
+          console.log(session,ROLE_REDIRECT[role])
+router.push(ROLE_REDIRECT[role] ?? "/");
+        
         }
       } catch (err) {
         setError("Something went wrong during login.");

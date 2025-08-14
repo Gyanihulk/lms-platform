@@ -1,3 +1,4 @@
+"use client";
 import { IconBadge } from "@/components/icon-badge";
 import { db } from "@/lib/db";
 import { auth } from "@/context/AuthContext";
@@ -7,7 +8,7 @@ import {
   LayoutDashboard,
   ListChecks,
 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { TitleForm } from "./_components/titleForm";
 import { DescriptionForm } from "./_components/descriptionForm";
 import { ImageForm } from "./_components/imageForm";
@@ -17,30 +18,37 @@ import { AttachmentForm } from "./_components/attachmentForm";
 import { ChapterForm } from "./_components/chapterForm";
 import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
+import { useEffect, useState } from "react";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { userId } =auth();
 
-  if (!userId) {
-    return redirect("/");
-  }
-  const course = await db.course.findUnique({
-    where: { id: params.courseId ,userId},
-    include: {
-      chapters: {
-        orderBy: { position: "asc" },
-      },
-      attachments: { orderBy: { createdAt: "desc" } },
-    },
-  });
-  const categories = await db.category.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
-  if (!course) {
-    return redirect("/");
-  }
+const CourseIdPage =  ({ params }: { params: { courseId: string } }) => {
+  const { courseId } = useParams();
+  const { userId } = auth();
+  const router = useRouter();
+
+  const [data, setData] = useState<{
+    course: any;
+    categories: any[];
+  } | null>(null);
+
+  useEffect(() => {
+    if (!userId) {
+      router.push("/");
+      return;
+    }
+
+    fetch(`/api/courses/${courseId}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then(setData)
+      .catch((err) => console.error(err));
+  }, [userId, courseId, router]);
+
+  if (!data) return <p>Loading...</p>;
+
+  const { course, categories } = data;
 
   const requiredFields = [
     course.title,
@@ -48,14 +56,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
-    course.chapters.some(chpater=>chpater.isPublished)
+    course.chapters.some((chapter: any) => chapter.isPublished),
   ];
 
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
-
   const completionText = `(${completedFields}/${totalFields})`;
-  const isComplete= requiredFields.every(Boolean);
+  const isComplete = requiredFields.every(Boolean);
   return (
     <>{!course.isPublished && (<Banner label="This course is unpublished. It will not be visible to the students."/>)}
     <div className="p-6">

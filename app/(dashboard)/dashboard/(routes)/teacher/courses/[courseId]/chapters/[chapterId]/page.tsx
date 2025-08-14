@@ -1,3 +1,4 @@
+import "server-only";
 import { auth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -12,18 +13,19 @@ import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
 import { ChapterVideoForm } from "./_components/chapter-video-form";
 import { ChapterActions } from "./_components/chapter-actions";
+import { currentUser } from "@/lib/auth/current-user";
 
 const ChapterIdPage = async ({
   params
 }: {
   params: { courseId: string; chapterId: string }
 }) => {
-  const { userId } =auth();
+  const user = await currentUser();
 
-  if (!userId) {
+  if (!user) {
     return redirect("/");
   }
-
+console.log(user)
   const chapter = await db.chapter.findUnique({
     where: {
       id: params.chapterId,

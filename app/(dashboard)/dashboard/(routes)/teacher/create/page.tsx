@@ -68,12 +68,12 @@ toast.success("Course Created")
                   <FormControl>
                     <Input
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Advanced web development'"
+                      placeholder="e.g. 'Advanced Aviation Management'"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    What will you teach in this Course
+                  What will you teach in this aviation course
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
