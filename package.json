@@ -7,7 +7,13 @@
     "generate": "node prisma/compose.js && prisma generate",
     "dev": "next dev",
     "build": "yarn generate && next build",
-    "start": "next start"
+    "start": "next start",
+    "seed": "ts-node-esm prisma/seedRBAC.ts"
+  },
+
+  
+  "prisma": {
+    "seed": "node prisma/seedRBAC.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",
@@ -36,7 +42,6 @@
     "@radix-ui/react-switch": "^1.2.5",
     "@sanity/client": "^6.15.5",
     "@tanstack/react-table": "^8.10.7",
-    "@types/node": "20.9.1",
     "@types/react": "18.2.37",
     "@types/react-dom": "18.2.15",
     "@uploadthing/react": "^6.0.1",
@@ -70,7 +75,6 @@
     "tailwind-merge": "^2.0.0",
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.2.2",
     "uploadthing": "^6.0.3",
     "uuid": "^11.1.0",
     "zod": "^3.22.4",
@@ -78,7 +82,10 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/node": "^24.2.1",
     "@types/react-slick": "^0.23.13",
-    "prisma": "^5.6.0"
+    "prisma": "^5.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

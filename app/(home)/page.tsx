@@ -92,10 +92,10 @@ function mergeWithFallback<T extends object>(apiData: T | null, fallbackData?: T
         const BlockComponent = mapping.component;
         const mergedData = mergeWithFallback(block.data,  mapping.fallback?.(page));
    // Debug only for TestimonialSection
-   if (block.type === 'FAQSection') {
-    console.log('[FAQSection] API data:', JSON.stringify(block.data, null, 2));
-    console.log('[FAQSection] Merged props:', JSON.stringify(mergedData, null, 2));
-  }
+  //  if (block.type === 'FAQSection') {
+  //   console.log('[FAQSection] API data:', JSON.stringify(block.data, null, 2));
+  //   console.log('[FAQSection] Merged props:', JSON.stringify(mergedData, null, 2));
+  // }
         return <BlockComponent key={block.id} {...mergedData} />;
       })} 
        <Joinus />

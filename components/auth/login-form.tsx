@@ -82,7 +82,7 @@ export const LoginForm = () => {
           const session = await getSession();
           const role = (session?.user as any)?.role as RoleEnum ?? "STUDENT";
           console.log(session,role)
-// router.push(ROLE_REDIRECT[role] ?? "/");
+router.push(ROLE_REDIRECT[role] ?? "/");
         
         }
       } catch (err) {

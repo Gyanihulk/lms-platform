@@ -19,18 +19,38 @@ async function fetchWithTimeout(url: string, init: RequestInit & { timeoutMs?: n
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), timeoutMs);
   try {
+    console.error("[getPageData] calling url :", url);
     return await fetch(url, { ...rest, signal: controller.signal });
   } finally {
     clearTimeout(t);
   }
 }
+function getInternalOrigin() {
+  // If you have an external CMS, prefer that and return early.
+  if (process.env.CMS_URL) return process.env.CMS_URL;
+  if (process.env.INTERNAL_ORIGIN) return process.env.INTERNAL_ORIGIN;
+
+  // Server-side only: pick the current deployed host in runtime.
+  // NOTE: VERCEL_URL is set at RUNTIME (e.g., inside route handlers/RSC render),
+  // but NOT reliably at BUILD for static generation.
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+
+  // Local dev fallback
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
 
 async function getPageDataRaw(slug: string): Promise<PageData> {
-  if (!INTERNAL_ORIGIN) throw new Error("Missing INTERNAL_ORIGIN/CMS_URL/NEXT_PUBLIC_APP_URL");
+  const origin = getInternalOrigin();
 
-  const url = `${INTERNAL_ORIGIN}${HOMEPAGE_API_PATH}${
-    HOMEPAGE_API_PATH.includes("?") ? "&" : "?"
-  }slug=${encodeURIComponent(slug)}`;
+  // Guard: don’t allow localhost in production/preview
+  const isProdLike = process.env.VERCEL_ENV === "production" || process.env.VERCEL_ENV === "preview";
+  if (isProdLike && /^(http:\/\/)?(localhost|127\.0\.0\.1|0\.0\.0\.0)/.test(origin)) {
+    throw new Error(`INTERNAL_ORIGIN resolves to localhost in ${process.env.VERCEL_ENV}: ${origin}`);
+  }
+
+  const sep = HOMEPAGE_API_PATH.includes("?") ? "&" : "?";
+  const url = `${origin}${HOMEPAGE_API_PATH}${sep}slug=${encodeURIComponent(slug)}`;
+
 
   const res = await fetchWithTimeout(url, {
     // ISR happens here; do NOT use 'no-store'
