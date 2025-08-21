@@ -25,6 +25,7 @@ import ChaptersList from "./chaptersList";
 interface ChapterFormProps {
   initialData: Course & { chapters:Chapter[]};
   courseId: string;
+  onCreated?: (chapter: any) => void;
 };
 
 const formSchema = z.object({
@@ -34,6 +35,7 @@ const formSchema = z.object({
 export const ChapterForm = ({
   initialData,
   courseId
+  , onCreated
 }: ChapterFormProps) => {
   const[isCreating,setIsCreating]=useState(false)
   const [isUpdating, setIsUpdating] = useState(false);
@@ -53,15 +55,21 @@ export const ChapterForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post(`/api/courses/${courseId}/chapters`, values);
+      const res = await axios.post(`/api/courses/${courseId}/chapters`, values);
+  
+      // make sure your API returns the new chapter object
+      const newChapter = res.data;
+  
       toast.success("Chapter Created");
-      toggleCreating();
-      router.refresh();
-    } catch {
+  
+      // notify parent page
+      onCreated?.(newChapter);
+  
+      toggleCreating(); // close modal/form
+    } catch (error) {
       toast.error("Something went wrong");
     }
-  }
-
+  };
   const onReorder= async (updateData:{id:string;position:number}[])=>{
     try{
       setIsUpdating(true);

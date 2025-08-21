@@ -63,6 +63,22 @@ const CourseIdPage =  ({ params }: { params: { courseId: string } }) => {
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
   const isComplete = requiredFields.every(Boolean);
+
+  const handleChapterCreated = (chapter: any) => {
+    setData((prev) =>
+      prev
+        ? {
+            ...prev,
+            course: {
+              ...prev.course,
+              chapters: [...prev.course.chapters, chapter], // append new chapter
+            },
+          }
+        : prev
+    );
+  };
+
+
   return (
     <>{!course.isPublished && (<Banner label="This course is unpublished. It will not be visible to the students."/>)}
     <div className="p-6">
@@ -103,7 +119,7 @@ const CourseIdPage =  ({ params }: { params: { courseId: string } }) => {
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course Chapters</h2>
             </div>
-            <ChapterForm initialData={course} courseId={course.id} />
+            <ChapterForm initialData={course} courseId={course.id}  onCreated={handleChapterCreated} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
