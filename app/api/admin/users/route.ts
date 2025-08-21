@@ -1,8 +1,8 @@
 import { db } from "@/lib/db";
 import { bad, ok, server } from "@/app/api/_lib/http";
 import { requireAdmin } from "@/app/api/_lib/auth";
+import bcrypt from "bcryptjs";
 
-import { hash } from "bcrypt";
 import { NextRequest } from "next/server";
 import { createUserSchema, listUsersQuerySchema } from "@/lib/validation/user";
 import { currentUser } from "@/lib/auth/current-user";
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     const existing = await db.user.findUnique({ where: { email } });
     if (existing) return bad("Email already exists", 409);
 
-    const hashed = await hash(password, 10);
+    const hashed = await bcrypt.hash(password, 10);
     const user = await db.user.create({
       data: { email, password: hashed, name, role },
       select: { id: true, email: true, name: true, role: true, createdAt: true },

@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { bad, ok, server } from "@/app/api/_lib/http";
 import { requireAdmin } from "@/app/api/_lib/auth";
 
-import { hash } from "bcrypt";
+import bcrypt from "bcryptjs";
 import { updateUserSchema } from "@/lib/validation/user";
 
 type Ctx = { params: { id: string } };
@@ -34,7 +34,7 @@ export async function PUT(req: Request, { params }: Ctx) {
 
     const data: any = { ...parsed.data };
     if (data.password) {
-      data.password = await hash(data.password, 10);
+      data.password = await bcrypt.hash(data.password, 10);
     }
 
     const user = await db.user.update({

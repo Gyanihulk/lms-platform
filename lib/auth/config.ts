@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcrypt";
+import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { RoleEnum } from "@prisma/client"; // ✅ only the enum
 
@@ -25,7 +25,7 @@ export const authConfig: NextAuthOptions = {
         });
         if (!user || !user.password) return null;
 
-        const ok = await compare(creds.password, user.password);
+        const ok = await bcrypt.compare(creds.password, user.password);
         if (!ok) return null;
 
         // ✅ return a plain object for the JWT; keep role as RoleEnum (scalar)

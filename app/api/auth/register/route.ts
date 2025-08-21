@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { hash } from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { RoleEnum } from "@prisma/client"; 
 
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     }
 
     // ✅ Hash password
-    const hashedPassword = await hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // ✅ Create user
     const user = await db.user.create({

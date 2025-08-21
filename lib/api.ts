@@ -40,7 +40,7 @@ function getInternalOrigin() {
 }
 
 async function getPageDataRaw(slug: string): Promise<PageData> {
-  const origin = getInternalOrigin();
+  const origin = process.env.NEXT_PUBLIC_APP_URL as string;
 
   // Guard: don’t allow localhost in production/preview
   const isProdLike = process.env.VERCEL_ENV === "production" || process.env.VERCEL_ENV === "preview";

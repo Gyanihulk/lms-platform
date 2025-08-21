@@ -15,7 +15,7 @@ const DashBoardLayout=({children}:{children:React.ReactNode})=>{
             <Navbar/>
 
         </div>
-        <div className="hidden md:flex h-full w-56 flex-col fixed inset-y-0 z-50">
+        <div className="invisible md:visible md:flex h-full w-56 flex-col fixed inset-y-0 left-0  z-50">
             <SideBar/>
         </div>
         <main className="md:pl-56 pt-[80px] h-full">
