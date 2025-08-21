@@ -4,8 +4,7 @@ import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { formatPrice } from "@/lib/format";
-import { Order } from "@/types";
+
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -91,7 +90,7 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const { _id } = row.original;
+      // const { _id } = row.original;
 
       return (
         <DropdownMenu>
@@ -102,12 +101,12 @@ export const columns: ColumnDef<User>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <Link href={`/admin/users/${_id}`}>
+            {/* <Link href={`/admin/users/${_id}`}>
               <DropdownMenuItem>
                 <Pencil className="h-4 w-4 mr-2" />
                 Edit User
               </DropdownMenuItem>
-            </Link>
+            </Link> */}
           </DropdownMenuContent>
         </DropdownMenu>
       );

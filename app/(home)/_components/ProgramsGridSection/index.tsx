@@ -72,7 +72,7 @@ const ProgramsGridSection = ({
                     </div>
 
                     {/* Center Image */}
-                    <div className="hidden md:block">
+                    <div className="invisible md:visible">
                         {images.length > 0 && (
                             <div className="flex flex-col gap-6 items-center">
                                 {images.map((img, i) => (

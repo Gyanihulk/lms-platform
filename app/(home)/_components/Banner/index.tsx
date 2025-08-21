@@ -61,9 +61,9 @@ export default function Banner({
                 </div>
 
                 {/* COLUMN-2 */}
-                <div className="hidden lg:flex justify-center items-center">
-                    <div className="rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 bg-white">
-                        <Image
+                <div className="invisible lg:visible justify-center items-center">
+                <div className="rounded-2xl overflow-hidden shadow-xl transition-transform duration-300 hover:scale-105 bg-white">
+                   <Image
                             src={imageSrc}
                             alt="pilot-training-banner"
                             width={700}
@@ -71,7 +71,7 @@ export default function Banner({
                             className="rounded-2xl"
                             priority
                         />
-                    </div>
+  </div>
                 </div>
             </div>
         </div>

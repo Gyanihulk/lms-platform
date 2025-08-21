@@ -45,7 +45,7 @@ const Navbar = () => {
 
                             {/* LINKS */}
 
-                            <div className="hidden lg:flex items-center border-right ">
+                            <div className="invisible lg:visible items-center border-right ">
                                 <div className="flex justify-end space-x-4">
                                     {navigation.map((item) => (
                                         <Link
@@ -63,7 +63,7 @@ const Navbar = () => {
                                 </div>
 
                             </div>
-                            {/* <button className='hidden lg:flex justify-end text-xl font-semibold bg-transparent py-4 px-6 lg:px-12 navbutton rounded-full hover:bg-navyblue hover:text-white'>Contact us</button> */}
+                            {/* <button className='invisible lg:visible justify-end text-xl font-semibold bg-transparent py-4 px-6 lg:px-12 navbutton rounded-full hover:bg-navyblue hover:text-white'>Contact us</button> */}
                             <Contactusform />
                         </div>
 
