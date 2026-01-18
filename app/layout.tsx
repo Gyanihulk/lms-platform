@@ -6,8 +6,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
 import { cn } from "@/lib/utils";
-import { StarsCanvas } from "./(home)/_components/threejsTheme/components/main/star-background";
-import { Navbar } from "./(home)/_components/threejsTheme/components/main/navbar";
 import { Footer } from "./(home)/_components/threejsTheme/components/main/footer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,11 +32,10 @@ export default function RootLayout({
            <meta name="google-adsense-account" content="ca-pub-4078042381069561" />
         </head>
         <body   className={cn(
-          "bg-[#030014] overflow-y-scroll overflow-x-hidden",
+          "overflow-y-scroll overflow-x-hidden",
           inter.className
         )}>
 
-        <Navbar />
         {children}
         <Footer />
           <ConfettiProvider />

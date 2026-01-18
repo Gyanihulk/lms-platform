@@ -3,7 +3,11 @@ import { HeroContent } from "../sub/hero-content";
 
 export const Hero = () => {
   return (
-    <div className="relative flex flex-col h-full w-full">
+    <section
+      id="hero"
+      data-autoscroll-delay="1500"
+      className="relative flex flex-col h-full w-full"
+    >
       <video
         autoPlay
         muted
@@ -14,6 +18,6 @@ export const Hero = () => {
       </video>
 
       <HeroContent />
-    </div>
+    </section>
   );
 };

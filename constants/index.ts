@@ -1,108 +1,48 @@
-import { FaYoutube, FaFacebook } from "react-icons/fa";
-import {
-  RxDiscordLogo,
-  RxGithubLogo,
-  RxInstagramLogo,
-  RxTwitterLogo,
-  RxLinkedinLogo,
-} from "react-icons/rx";
+import { RxGithubLogo, RxLinkedinLogo } from "react-icons/rx";
 
 export const SKILL_DATA = [
   {
-    skill_name: "HTML",
-    image: "html.png",
-    width: 80,
-    height: 80,
+    skill_name: "AWS",
+    image: "AWS.png",
+    width: 70,
+    height: 70,
   },
   {
-    skill_name: "CSS",
-    image: "css.png",
-    width: 80,
-    height: 80,
+    skill_name: "Azure DevOps",
+    image: "Azure Devops.png",
+    width: 70,
+    height: 70,
   },
   {
-    skill_name: "JavaScript",
-    image: "js.png",
-    width: 65,
-    height: 65,
+    skill_name: "Docker",
+    image: "docker.png",
+    width: 70,
+    height: 70,
   },
   {
-    skill_name: "Tailwind CSS",
-    image: "tailwind.png",
-    width: 80,
-    height: 80,
+    skill_name: "Kafka",
+    image: "kafka.png",
+    width: 70,
+    height: 70,
   },
   {
-    skill_name: "React",
-    image: "react.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Redux",
-    image: "redux.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "React Query",
-    image: "reactquery.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "TypeScript",
-    image: "ts.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Next.js 14",
-    image: "next.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Framer Motion",
-    image: "framer.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Stripe",
-    image: "stripe.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Node.js",
-    image: "node.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "MongoDB",
-    image: "mongodb.png",
-    width: 40,
-    height: 40,
+    skill_name: "Cloudflare",
+    image: "Cloudflare.png",
+    width: 70,
+    height: 70,
   },
 ] as const;
 
 export const SOCIALS = [
   {
-    name: "Instagram",
-    icon: RxInstagramLogo,
-    link: "https://instagram.com",
+    name: "GitHub",
+    icon: RxGithubLogo,
+    link: "https://github.com",
   },
   {
-    name: "Facebook",
-    icon: FaFacebook,
-    link: "https://facebook.com",
-  },
-  {
-    name: "Twitter",
-    icon: RxTwitterLogo,
-    link: "https://twitter.com",
+    name: "LinkedIn",
+    icon: RxLinkedinLogo,
+    link: "https://www.linkedin.com",
   },
 ] as const;
 
@@ -126,14 +66,8 @@ export const FRONTEND_SKILL = [
     height: 65,
   },
   {
-    skill_name: "Tailwind CSS",
-    image: "tailwind.png",
-    width: 80,
-    height: 80,
-  },
-  {
-    skill_name: "Material UI",
-    image: "mui.png",
+    skill_name: "TypeScript",
+    image: "ts.png",
     width: 80,
     height: 80,
   },
@@ -150,20 +84,38 @@ export const FRONTEND_SKILL = [
     height: 80,
   },
   {
+    skill_name: "Next.js",
+    image: "next.png",
+    width: 80,
+    height: 80,
+  },
+  {
+    skill_name: "Tailwind CSS",
+    image: "tailwind.png",
+    width: 80,
+    height: 80,
+  },
+  {
+    skill_name: "Material UI",
+    image: "mui.png",
+    width: 80,
+    height: 80,
+  },
+  {
     skill_name: "React Query",
     image: "reactquery.png",
     width: 80,
     height: 80,
   },
   {
-    skill_name: "TypeScript",
-    image: "ts.png",
+    skill_name: "Framer Motion",
+    image: "framer.png",
     width: 80,
     height: 80,
   },
   {
-    skill_name: "Next.js 14",
-    image: "next.png",
+    skill_name: "Stripe",
+    image: "stripe.png",
     width: 80,
     height: 80,
   },
@@ -183,16 +135,22 @@ export const BACKEND_SKILL = [
     height: 80,
   },
   {
+    skill_name: "GraphQL",
+    image: "graphql.png",
+    width: 80,
+    height: 80,
+  },
+  {
+    skill_name: "Prisma",
+    image: "prisma.png",
+    width: 70,
+    height: 70,
+  },
+  {
     skill_name: "MongoDB",
     image: "mongodb.png",
     width: 40,
     height: 40,
-  },
-  {
-    skill_name: "Firebase",
-    image: "firebase.png",
-    width: 55,
-    height: 55,
   },
   {
     skill_name: "PostgreSQL",
@@ -207,16 +165,10 @@ export const BACKEND_SKILL = [
     height: 70,
   },
   {
-    skill_name: "Prisma",
-    image: "prisma.png",
-    width: 70,
-    height: 70,
-  },
-  {
-    skill_name: "Graphql",
-    image: "graphql.png",
-    width: 80,
-    height: 80,
+    skill_name: "Firebase",
+    image: "firebase.png",
+    width: 55,
+    height: 55,
   },
 ] as const;
 
@@ -228,97 +180,126 @@ export const FULLSTACK_SKILL = [
     height: 70,
   },
   {
-    skill_name: "Tauri",
-    image: "tauri.png",
+    skill_name: "Flutter",
+    image: "Flutter.png",
     width: 70,
     height: 70,
-  },
-  {
-    skill_name: "Docker",
-    image: "docker.png",
-    width: 70,
-    height: 70,
-  },
-
-  {
-    skill_name: "Figma",
-    image: "figma.png",
-    width: 50,
-    height: 50,
   },
 ] as const;
 
 export const OTHER_SKILL = [
   {
-    skill_name: "Go",
-    image: "go.png",
-    width: 60,
-    height: 60,
+    skill_name: "PHP",
+    image: "new-php-logo.png",
+    width: 70,
+    height: 70,
+  },
+  {
+    skill_name: "C#",
+    image: "C# (CSharp).png",
+    width: 70,
+    height: 70,
   },
 ] as const;
 
 export const PROJECTS = [
   {
-    title: "Modern Next.js 14 Portfolio",
+    title: "Trading Algorithm: Nifty Options System",
     description:
-      'Embark on a journey through my professional evolution with the "Modern Next.js Portfolio" - a dynamic showcase of my skills, experiences, and passion for web development. Crafted with precision and powered by Next.js, this portfolio is more than just a static display; it\'s an immersive experience that reflects the cutting edge of modern web technologies.',
-    image: "/projects/project-1.png",
-    link: "https://example.com",
+      "Automated trading system using Node.js and the Zerodha API for real-time Nifty options analysis and strategy execution.",
+    images: [
+      "/projects/trade/slideA.png",
+      "/projects/trade/slideB.png",
+      "/projects/trade/slideA.png",
+    ],
+    link: "#",
   },
   {
-    title: "Interactive Cards Portfolio",
+    title: "Adaptive LMS (Learning Management System)",
     description:
-      'Step into the extraordinary world of my professional journey through the "Interactive Cards Portfolio" - an innovative and visually captivating platform that redefines the traditional portfolio experience. Ditching the conventional static layout, this portfolio leverages interactive cards to showcase my skills, projects, and personality in an engaging and dynamic manner.',
-    image: "/projects/project-2.png",
-    link: "https://example.com",
+      "SaaS-based adaptive LMS with RAG pipelines, personalized recommendations, and analytics using vector search.",
+    images: [
+      "/projects/profly/slideA.png",
+      "/projects/profly/slideB.png",
+      "/projects/profly/slideC.png",
+    ],
+    link: "#",
   },
   {
-    title: "Space Themed Website",
+    title: "Multiplayer Game Development",
     description:
-      'Embark on an interstellar journey with my "Space Themed Website", a mesmerizing space-themed website that invites you to explore the cosmic wonders beyond our world. Immerse yourself in an awe-inspiring digital experience that blends cutting-edge design with the mysteries of the universe.',
-    image: "/projects/project-3.png",
-    link: "https://example.com",
+      "Real-time 3D multiplayer game built with Three.js, Socket.io, and React Three Fiber for interactive online play.",
+    images: [
+      "/projects/gamer3f/slideA.png",
+      "/projects/gamer3f/slideB.png",
+      "/projects/gamer3f/slideC.png",
+    ],
+    link: "#",
+  },
+  {
+    title: "Cow Donation Mobile App",
+    description:
+      "Flutter mobile app with UPI payments, recurring donations, and reminder notifications.",
+    images: [
+      "/projects/dhenu/slideA.png",
+      "/projects/dhenu/slideB.png",
+      "/projects/dhenu/slideC.png",
+    ],
+    link: "#",
+  },
+  {
+    title: "Unity Game Development",
+    description:
+      "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
+    images: ["/projects/unity/1.png", "/projects/unity/2.png", "/projects/unity/3.png", "/projects/unity/4.png", "/projects/unity/5.png", "/projects/unity/6.png", "/projects/unity/7.png"],
+    link: "#",
+  },
+  {
+    title: "Electron LinkedIn Automation Suite",
+    description:
+      "Cross-platform app to automate LinkedIn engagement, including comments, follow-ups, and connection management.",
+    images: [
+      "/projects/3fiber.png",
+      "/projects/3fiber.png",
+      "/projects/3fiber.png",
+    ],
+    link: "#",
   },
 ] as const;
 
 export const FOOTER_DATA = [
   {
-    title: "Community",
+    title: "Profiles",
     data: [
       {
-        name: "YouTube",
-        icon: FaYoutube,
-        link: "https://youtube.com",
+        name: "Portfolio",
+        icon: null,
+        link: "#",
       },
       {
         name: "GitHub",
         icon: RxGithubLogo,
-        link: "https://github.com",
+        link: "https://github.com/Gyanihulk",
       },
       {
-        name: "Discord",
-        icon: RxDiscordLogo,
-        link: "https://discord.com",
+        name: "LinkedIn",
+        icon: RxLinkedinLogo,
+        link: "https://www.linkedin.com/in/adamya-kumar-5947751ba/",
       },
     ],
   },
   {
-    title: "Social Media",
+    title: "Contact",
     data: [
       {
-        name: "Instagram",
-        icon: RxInstagramLogo,
-        link: "https://instagram.com",
+        name: "Email",
+        icon: null,
+        link: "mailto:kumar.adamya2000@gmail.com",
       },
       {
-        name: "Twitter",
-        icon: RxTwitterLogo,
-        link: "https://twitter.com",
-      },
-      {
-        name: "Linkedin",
-        icon: RxLinkedinLogo,
-        link: "https://linkedin.com",
+        name: "Phone",
+        icon: null,
+        link: "tel:+917017368626",
       },
     ],
   },
@@ -326,19 +307,9 @@ export const FOOTER_DATA = [
     title: "About",
     data: [
       {
-        name: "Become Sponsor",
+        name: "About me",
         icon: null,
-        link: "https://youtube.com",
-      },
-      {
-        name: "Learning about me",
-        icon: null,
-        link: "https://example.com",
-      },
-      {
-        name: "Contact Me",
-        icon: null,
-        link: "mailto:contact@example.com",
+        link: "#about-me",
       },
     ],
   },
@@ -360,5 +331,5 @@ export const NAV_LINKS = [
 ] as const;
 
 export const LINKS = {
-  sourceCode: "https://github.com/sanidhyy/space-portfolio",
+  sourceCode: "https://github.com",
 };

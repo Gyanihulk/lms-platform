@@ -1,9 +1,10 @@
 "use client";
-import React, { forwardRef, useRef } from "react";
+import React, { useRef } from "react";
 import "./portfolio.scss";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useScroll1 } from "@/context/ScrollContext";
 import Link from "next/link";
+import Image from "next/image";
 
 const items = [
   {
@@ -76,7 +77,13 @@ const Single = ({ item }: any) => {
       <div className="container p-10">
         <div className="wrapper">
           <div className="imageContainer" ref={ref}>
-            <img src={item.img} alt="" />
+            <Image
+              src={item.img}
+              alt={item.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="portfolioImage"
+            />
           </div>
           <motion.div className="textContainer" style={{ y }}>
             <h2>{item.title}</h2>
