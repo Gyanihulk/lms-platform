@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Gyaan Bhandaar",
+  title: "Adamya Courses",
   description: "Gyani Hulk aspiring Software Engineer",
 };
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {

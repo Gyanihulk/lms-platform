@@ -9,7 +9,7 @@ import { CourseNavbar } from "./_components/courseNavbar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Gyaan Bhandaar",
+  title: "Adamya Courses",
   description: "Gyani Hulk aspiring Software Engineer",
 };
 const CourseLayout = async ({

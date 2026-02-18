@@ -37,12 +37,12 @@ export const SOCIALS = [
   {
     name: "GitHub",
     icon: RxGithubLogo,
-    link: "https://github.com",
+    link: "https://github.com/Gyanihulk/",
   },
   {
     name: "LinkedIn",
     icon: RxLinkedinLogo,
-    link: "https://www.linkedin.com",
+    link: "https://www.linkedin.com/in/adamya-kumar-5947751ba/",
   },
 ] as const;
 
@@ -212,18 +212,44 @@ export const PROJECTS = [
       "/projects/trade/slideB.png",
       "/projects/trade/slideA.png",
     ],
-    link: "#",
+    link: "/courses/79434cf6-e39c-4257-a908-8b578bcbfb27",
   },
   {
-    title: "Adaptive LMS (Learning Management System)",
+    title: "PROFLY AI - Adaptive Aviation Exam Platform",
     description:
-      "SaaS-based adaptive LMS with RAG pipelines, personalized recommendations, and analytics using vector search.",
+      "Built an adaptive aviation exam-prep platform for pilot students with personalized learning paths, AI-powered mock tests and evaluations, a 500+ book aviation library, and live AI assistance to accelerate training outcomes.",
     images: [
       "/projects/profly/slideA.png",
       "/projects/profly/slideB.png",
       "/projects/profly/slideC.png",
     ],
-    link: "#",
+    link: "https://dev.proflyai.com/",
+  },
+  {
+    title: "Altitude Aviation Academy LMS",
+    description:
+      "Aviation-focused LMS with an integrated CMS and Udemy-style course delivery, including structured modules, assessments, and progress tracking for pilot training.",
+    images: ["/projects/lms.png", "/projects/lms.png", "/projects/lms.png"],
+    link: "https://www.altitudeaviationacademy.in/",
+  },
+ 
+  {
+    title: "Cow Donation Mobile App",
+    description:
+      "Flutter mobile app with UPI payments, recurring donations, and reminder notifications.",
+    images: [
+      "/projects/dhenu/slideA.png",
+      "/projects/dhenu/slideB.png",
+      "/projects/dhenu/slideC.png",
+    ],
+    link: "https://www.dhenudharmafoundation.org/",
+  },
+  {
+    title: "Unity Game Development",
+    description:
+      "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
+    images: ["/projects/unity/1.png", "/projects/unity/2.png", "/projects/unity/3.png", "/projects/unity/4.png", "/projects/unity/5.png", "/projects/unity/6.png", "/projects/unity/7.png"],
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7283183592887799809/",
   },
   {
     title: "Multiplayer Game Development",
@@ -234,25 +260,7 @@ export const PROJECTS = [
       "/projects/gamer3f/slideB.png",
       "/projects/gamer3f/slideC.png",
     ],
-    link: "#",
-  },
-  {
-    title: "Cow Donation Mobile App",
-    description:
-      "Flutter mobile app with UPI payments, recurring donations, and reminder notifications.",
-    images: [
-      "/projects/dhenu/slideA.png",
-      "/projects/dhenu/slideB.png",
-      "/projects/dhenu/slideC.png",
-    ],
-    link: "#",
-  },
-  {
-    title: "Unity Game Development",
-    description:
-      "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
-    images: ["/projects/unity/1.png", "/projects/unity/2.png", "/projects/unity/3.png", "/projects/unity/4.png", "/projects/unity/5.png", "/projects/unity/6.png", "/projects/unity/7.png"],
-    link: "#",
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7233898679965728768/",
   },
   {
     title: "Electron LinkedIn Automation Suite",

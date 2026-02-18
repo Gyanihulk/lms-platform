@@ -17,15 +17,15 @@ const Home = async () => {
   return (
     <>
       <StarsCanvas />
-      <AutoScroll />
+      {/* <AutoScroll /> */}
       <main className="h-full w-full">
         <div className="flex flex-col gap-20">
           <Hero />
           <EncryptionSkills />
-          <CoursesList items={courses} />
           {/* <Services /> */}
-          <Services />
           <Projects />
+          <CoursesList items={courses} />
+          <Services />
         </div>
       </main>
     </>
