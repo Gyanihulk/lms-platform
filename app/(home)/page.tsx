@@ -8,6 +8,7 @@ import { Services } from "./_components/threejsTheme/components/main/Services";
 import { EncryptionSkills } from "./_components/threejsTheme/components/main/encryption-skills";
 import { StarsCanvas } from "./_components/threejsTheme/components/main/star-background";
 import { AutoScroll } from "./_components/AutoScroll";
+import { WorkshopBanner } from "./_components/WorkshopBanner";
 
 const Home = async () => {
   const courses = await getCourses({
@@ -21,6 +22,7 @@ const Home = async () => {
       <main className="h-full w-full">
         <div className="flex flex-col gap-20">
           <Hero />
+          <WorkshopBanner />
           <EncryptionSkills />
           {/* <Services /> */}
           <Projects />

@@ -25,14 +25,14 @@ export const SkillText = () => {
 
       <motion.div
         variants={slideInFromLeft(0.5)}
-        className="text-[30px] text-white font-medium mt-[10px] text-center mb-[15px]"
+        className="text-xl md:text-[30px] text-white font-medium mt-[10px] text-center mb-[15px] px-4"
       >
         Full-stack, DevOps, cloud, and 3D development.
       </motion.div>
 
       <motion.div
         variants={slideInFromRight(0.5)}
-        className="cursive text-[20px] text-gray-200 mb-10 mt-[10px] text-center"
+        className="cursive text-base md:text-[20px] text-gray-200 mb-10 mt-[10px] text-center px-4"
       >
         Clean architecture, scalable systems, and reliable delivery.
       </motion.div>

@@ -38,8 +38,15 @@ export const SkillDataProvider = ({
       animate={inView ? "visible" : "hidden"}
       custom={index}
       transition={{ delay: index * animationDelay }}
+      className="w-[40px] h-[40px] sm:w-[55px] sm:h-[55px] md:w-auto md:h-auto flex items-center justify-center"
     >
-      <Image src={`/skills/${src}`} width={width} height={height} alt={name} />
+      <Image
+        src={`/skills/${src}`}
+        width={width}
+        height={height}
+        alt={name}
+        className="w-full h-full object-contain"
+      />
     </motion.div>
   );
 };

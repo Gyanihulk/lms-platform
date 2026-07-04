@@ -22,7 +22,7 @@ export const Encryption = ({ showBackground = true }: EncryptionProps) => {
           variants={slideInFromTop}
           initial="hidden"
           animate="visible"
-          className="text-[40px] font-medium text-center text-gray-200"
+          className="text-2xl md:text-[40px] font-medium text-center text-gray-200"
         >
           Live{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
@@ -51,8 +51,8 @@ export const Encryption = ({ showBackground = true }: EncryptionProps) => {
             height={70}
             className="z-10"
           />
-               <div className="Welcome-box px-[15px] py-[4px] z-[20] border my-[16px] border-[#7042F88B] opacity-[0.9]">
-          <h1 className="Welcome-text text-[62px]">
+               <div className="Welcome-box px-[10px] py-[4px] z-[20] border my-[16px] border-[#7042F88B] opacity-[0.9] max-w-[90vw] overflow-hidden">
+          <h1 className="Welcome-text text-[28px] sm:text-[44px] md:text-[62px] whitespace-normal text-center leading-tight">
             विद्या धनम् सर्वधन प्रधानम्
           </h1>
         </div>

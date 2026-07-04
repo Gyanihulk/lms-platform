@@ -49,8 +49,7 @@ export const Skills = ({ showBackground = true }: SkillsProps) => {
   return (
     <section
       id="skills"
-      style={{ transform: "scale(0.9)" }}
-      className="flex flex-col items-center justify-center gap-3 h-full relative overflow-hidden py-20"
+      className="flex flex-col items-center justify-center gap-3 h-full relative overflow-hidden py-20 px-2"
     >
       <SkillText />
 
@@ -58,7 +57,7 @@ export const Skills = ({ showBackground = true }: SkillsProps) => {
         {rows.map((row, rowIndex) => (
           <div
             key={`skill-row-${rowIndex}`}
-            className="flex flex-row justify-center flex-wrap gap-5 items-center"
+            className="flex flex-row justify-center flex-wrap gap-3 md:gap-5 items-center"
           >
             {row.map((skill) => {
               const currentIndex = animationIndex;

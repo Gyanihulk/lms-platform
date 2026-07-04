@@ -126,3 +126,18 @@ model StripeCustomer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model WorkshopRegistration {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  email     String
+  phone     String
+  year      String
+  branch    String
+  college   String?
+  preferOffline Boolean @default(false)
+  message   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
