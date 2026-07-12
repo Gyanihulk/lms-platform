@@ -204,39 +204,42 @@ export const OTHER_SKILL = [
 
 export const PROJECTS = [
   {
-    title: "Trading Algorithm: Nifty Options System",
-    description:
-      "Automated trading system using Node.js and the Zerodha API for real-time Nifty options analysis and strategy execution.",
-    images: [
-      "/projects/trade/slideA.png",
-      "/projects/trade/slideB.png",
-      "/projects/trade/slideA.png",
-    ],
-    link: "/courses/79434cf6-e39c-4257-a908-8b578bcbfb27",
-  },
-  {
     title: "PROFLY AI - Adaptive Aviation Exam Platform",
     description:
-      "Built an adaptive aviation exam-prep platform for pilot students with personalized learning paths, AI-powered mock tests and evaluations, a 500+ book aviation library, and live AI assistance to accelerate training outcomes.",
+    "Built an adaptive aviation exam-prep platform for pilot students with personalized learning paths, AI-powered mock tests and evaluations, a 500+ book aviation library, and live AI assistance to accelerate training outcomes.",
     images: [
       "/projects/profly/slideA.png",
       "/projects/profly/slideB.png",
       "/projects/profly/slideC.png",
     ],
-    link: "https://dev.proflyai.com/",
+    link: "https://proflyai.com/",
   },
   {
     title: "Altitude Aviation Academy LMS",
     description:
-      "Aviation-focused LMS with an integrated CMS and Udemy-style course delivery, including structured modules, assessments, and progress tracking for pilot training.",
-    images: ["/projects/lms.png", "/projects/lms.png", "/projects/lms.png"],
+    "Aviation-focused LMS with an integrated CMS and Udemy-style course delivery, including structured modules, assessments, and progress tracking for pilot training.",
+    images: ["/projects/aviation1.png", "/projects/lms.png", "/projects/lms.png"],
     link: "https://www.altitudeaviationacademy.in/",
   },
- 
+  {
+    title: "Eclipse iOS Productivity App",
+    description:
+    "iPhone productivity app that makes distracting apps less rewarding with scheduled app limits, automatic grayscale, pause controls, and focus insights built around environment design instead of willpower.",
+    images: ["/projects/eclipse/1.png", "/projects/eclipse/2.png"],
+    link: "https://eclipsesystemsinc.com/",
+  },
+  {
+    title: "Adhian Gurus AI Tutoring Platform",
+    description:
+    "AI-monitored tutoring platform for India with verified tutors across CBSE, ICSE, IB, and state boards, offering online classes, home tutors, hybrid learning, and demo sessions starting at Rs 99.",
+    images: ["/projects/adhian/1.png", "/projects/adhian/2.png"],
+    link: "https://adhiangurus.com/",
+  },
+  
   {
     title: "Cow Donation Mobile App",
     description:
-      "Flutter mobile app with UPI payments, recurring donations, and reminder notifications.",
+    "Flutter mobile app with UPI payments, recurring donations, and reminder notifications.",
     images: [
       "/projects/dhenu/slideA.png",
       "/projects/dhenu/slideB.png",
@@ -247,14 +250,14 @@ export const PROJECTS = [
   {
     title: "Unity Game Development",
     description:
-      "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
+    "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
     images: ["/projects/unity/1.png", "/projects/unity/2.png", "/projects/unity/3.png", "/projects/unity/4.png", "/projects/unity/5.png", "/projects/unity/6.png", "/projects/unity/7.png"],
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7283183592887799809/",
   },
   {
     title: "Multiplayer Game Development",
     description:
-      "Real-time 3D multiplayer game built with Three.js, Socket.io, and React Three Fiber for interactive online play.",
+    "Real-time 3D multiplayer game built with Three.js, Socket.io, and React Three Fiber for interactive online play.",
     images: [
       "/projects/gamer3f/slideA.png",
       "/projects/gamer3f/slideB.png",
@@ -263,15 +266,33 @@ export const PROJECTS = [
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7233898679965728768/",
   },
   {
-    title: "Electron LinkedIn Automation Suite",
+    title: "Three.js Car Stunt Experience",
     description:
-      "Cross-platform app to automate LinkedIn engagement, including comments, follow-ups, and connection management.",
+    "Interactive Three.js car experience where users can drive freely through the environment, explore the scene, and perform jumps and stunt-style moves in real time.",
     images: [
-      "/projects/3fiber.png",
-      "/projects/3fiber.png",
-      "/projects/3fiber.png",
+      "/projects/car/1.png",
+      "/projects/car/2.png",
+      "/projects/car/3.png",
     ],
+    link: "https://adamyaportfolio.netlify.app/",
+  },
+  {
+    title: "3D Home Architecture Collaboration",
+    description:
+    "Real-time collaboration platform built with React Three Fiber and WebSockets where users join as Sims-style avatars to plan home architecture, organize spaces, and work together inside a shared 3D environment.",
+    images: ["/projects/3fiber.png"],
     link: "#",
+  },
+  {
+    title: "Trading Algorithm: Nifty Options System",
+    description:
+      "Automated trading system using Node.js and the Zerodha API for real-time Nifty options analysis and strategy execution.",
+    images: [
+      "/projects/trade/slideA.png",
+      "/projects/trade/slideB.png",
+      "/projects/trade/slideA.png",
+    ],
+    link: "/courses/79434cf6-e39c-4257-a908-8b578bcbfb27",
   },
 ] as const;
 
