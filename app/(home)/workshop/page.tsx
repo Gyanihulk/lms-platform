@@ -55,13 +55,13 @@ export default function WorkshopPage() {
             href="/workshop/register"
             className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-full transition-all hover:scale-105 shadow-lg shadow-purple-500/30"
           >
-            Register Now — It's Free
+            Register Now — It&apos;s Free
           </Link>
           <a
             href="#sessions"
             className="border border-purple-500/40 hover:border-purple-400 text-gray-300 hover:text-white font-semibold px-8 py-3 rounded-full transition-all"
           >
-            See What's Covered
+            See What&apos;s Covered
           </a>
         </div>
       </div>

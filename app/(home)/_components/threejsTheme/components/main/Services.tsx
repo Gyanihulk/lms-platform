@@ -1,311 +1,137 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { GraduationCap, Award, Newspaper, Trophy } from "lucide-react";
+
+const EDUCATION = [
+  {
+    degree: "Masters in Business Administration",
+    detail: "Finance + Human Resource",
+    place: "Gurukul Kangri, Haridwar",
+    dates: "May 2019 - Apr 2021",
+  },
+  {
+    degree: "Bachelors of Technology",
+    detail: "Computer Science",
+    place: "Gurukul Kangri",
+    dates: "Jun 2015 - Apr 2019",
+  },
+];
+
+const RECOGNITIONS = [
+  {
+    icon: Trophy,
+    text: "Gold Medalist at Delhi Horse Show (2011, 2013)",
+  },
+  {
+    icon: Award,
+    text: "Recipient of Dada Saheb Phalke Film Award (2013)",
+  },
+  {
+    icon: Newspaper,
+    text: "Research on Home Automation published in International Journal (Dec 2019)",
+  },
+];
+
 export const Services = () => {
   return (
     <section
       id="about-me"
       data-autoscroll-delay="10000"
-      className="flex flex-col relative items-center justify-center min-h-screen w-full h-full z-30 py-20"
+      className="flex flex-col relative items-center justify-center w-full h-full z-30 py-20"
     >
-      <div className="absolute w-auto h-auto top-0 z-[5] pt-10">
-        <div className="text-[40px] font-medium text-center text-gray-200">
-          About Adamya Kumar
-        </div>
-        <div className="text-center text-gray-400 text-sm mt-2">
-          Profile summary, skills, and experience
-        </div>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="text-center mb-12 relative z-[5]"
+      >
+        <p className="uppercase tracking-[0.2em] text-xs text-cyan-400/80 mb-3">
+          A little more about me
+        </p>
+        <h1 className="text-[40px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
+          About Me
+        </h1>
+      </motion.div>
 
-      <div className="relative z-[30] w-[92%] max-w-[1100px] px-4 mt-16">
-        <div className="backdrop-blur-md bg-black/40 border border-white/10 rounded-2xl p-6 md:p-8 shadow-lg space-y-6">
-          <div className="space-y-2">
-            <h2 className="text-gray-100 font-semibold text-2xl">
-              Profile Summary
-            </h2>
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-              Backend Engineer and Software Developer with strong expertise in
-              web technologies, DevOps, and cloud infrastructure. Experienced
-              in designing scalable systems, automating CI/CD pipelines, and
-              leading cross-functional teams to deliver robust applications.
-              Skilled in full-stack development, API design, and performance
-              optimization with a focus on clean architecture and continuous
-              improvement.
-            </p>
-          </div>
+      <div className="relative z-[30] w-[92%] max-w-[900px] px-4 space-y-6">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-gray-300 text-sm md:text-base leading-relaxed text-center max-w-[680px] mx-auto"
+        >
+          Backend Engineer with 5+ years across manufacturing infrastructure,
+          HR SaaS, and marketplace platforms — currently building backend
+          systems at Hero MotoCorp. I care about clean architecture,
+          observability, and systems that hold up once real production
+          traffic shows up.
+        </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition">
-              <h3 className="text-gray-100 font-semibold text-lg mb-3">
-                Skill Set
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="rounded-xl border border-white/10 bg-white/5 p-5 hover:border-cyan-400/30 hover:bg-white/[0.07] transition"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-white/10">
+                <GraduationCap className="w-4 h-4 text-cyan-300" />
+              </div>
+              <h3 className="text-gray-100 font-semibold text-lg">
+                Education
               </h3>
-              <ul className="text-gray-300 text-sm leading-relaxed space-y-2">
-                <li>
-                  <span className="text-gray-100 font-medium">Languages:</span>{" "}
-                  JavaScript, TypeScript, PHP, C#, Dart, Bash
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Front-End:</span>{" "}
-                  React, Next.js, React Native, Flutter, Redux Toolkit, Context
-                  API, Bootstrap, Tailwind, Material Design, CSS3, HTML5
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Back-End:</span>{" "}
-                  Node.js, Express, Nest.js, Laravel, Kafka, GraphQL,
-                  Microservices, Prisma, Socket.io
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Databases:</span>{" "}
-                  PostgreSQL, MySQL, MongoDB, Redis
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">
-                    Cloud &amp; DevOps:
-                  </span>{" "}
-                  AWS (EC2, S3, Lambda, API Gateway, Load Balancers, Target
-                  Groups, CloudWatch), Azure, Vercel, Docker, Jenkins, GitHub
-                  Actions, CI/CD Pipelines, Infrastructure Management
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">
-                    Game &amp; 3D:
-                  </span>{" "}
-                  Unity (C#), Blender, React Three Fiber, Three.js
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">
-                    Additional:
-                  </span>{" "}
-                  Firebase, Nginx, Apache, Shell Scripting, Software Design
-                  Patterns, Agile Development
-                </li>
-              </ul>
             </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition">
-              <h3 className="text-gray-100 font-semibold text-lg mb-3">
-                Contact &amp; Personal Info
-              </h3>
-              <ul className="text-gray-300 text-sm leading-relaxed space-y-2">
-                <li>
-                  <span className="text-gray-100 font-medium">Email:</span>{" "}
-                  kumar.adamya2000@gmail.com
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Phone:</span>{" "}
-                  +91 7017368626
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">
-                    Citizenship:
-                  </span>{" "}
-                  Indian
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Languages:</span>{" "}
-                  English, Hindi
-                </li>
-                <li>
-                  <span className="text-gray-100 font-medium">Hobbies:</span>{" "}
-                  Horse Riding, Game Development, Reading Tech Blogs, Music
-                </li>
-              </ul>
+            <div className="space-y-4 border-l border-white/10 pl-4">
+              {EDUCATION.map((edu) => (
+                <div key={edu.degree} className="relative">
+                  <span className="absolute -left-[21px] top-1.5 w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-cyan-400" />
+                  <p className="text-gray-100 font-medium text-sm">
+                    {edu.degree}
+                  </p>
+                  <p className="text-gray-400 text-xs">{edu.detail}</p>
+                  <p className="text-gray-500 text-xs mt-1">
+                    {edu.place} &middot; {edu.dates}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition space-y-4">
-            <h3 className="text-gray-100 font-semibold text-lg">Experience</h3>
-            <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
-              <div>
-                <p className="text-gray-100 font-medium">
-                  HERO MOTOCORP | Backend Engineer
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Gurugram | Nov 2024 - Present
-                </p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>
-                    Built and customized a CMS in Strapi to centralize website
-                    content management and improve editorial workflows.
-                  </li>
-                  <li>
-                    Designed and maintained Jenkins pipelines to automate CI/CD
-                    workflows, increasing release velocity and reliability.
-                  </li>
-                  <li>
-                    Managed AWS infrastructure including Target Groups and API
-                    Gateways for scalable and resilient services.
-                  </li>
-                  <li>
-                    Implemented Kafka and Redis for inter-service communication,
-                    reducing latency by 20%.
-                  </li>
-                  <li>
-                    Created and maintained self-published npm packages to
-                    reduce redundant code and improve development efficiency.
-                  </li>
-                </ul>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="rounded-xl border border-white/10 bg-white/5 p-5 hover:border-cyan-400/30 hover:bg-white/[0.07] transition"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-white/10">
+                <Award className="w-4 h-4 text-cyan-300" />
               </div>
-
-              <div>
-                <p className="text-gray-100 font-medium">
-                  APPFOSTER | Software Engineer II
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Noida, India | Apr 2022 - Nov 2024
-                </p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>
-                    Engineered a Chrome automation integration for chats with
-                    LinkedIn using ChatGPT, Node.js, Next.js, and Express,
-                    improving user productivity by 35%.
-                  </li>
-                  <li>
-                    Automated Microsoft subscription billing processes using
-                    Azure APIs, Node.js, and Express, cutting manual efforts by
-                    40% and improving onboarding efficiency by 20%.
-                  </li>
-                  <li>
-                    Built and deployed a GraphQL + Next.js social media app
-                    with 40% better real-time interaction.
-                  </li>
-                  <li>
-                    Revamped a PHP-based marketplace, improving engagement by
-                    20% and transactions by 15%.
-                  </li>
-                  <li>
-                    Led a Laravel + Nuxt.js HR SaaS app, reducing HR process
-                    time by 25%.
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="text-gray-100 font-medium">
-                  CAPLINE SERVICES | Associate
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Noida, India | Aug 2021 - Apr 2022
-                </p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>
-                    Streamlined insurance data collection via 10+ APIs,
-                    improving accuracy by 30%.
-                  </li>
-                  <li>
-                    Resolved SaaS issues in a cross-functional team, achieving
-                    99.9% uptime and 15% fewer support tickets.
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="text-gray-100 font-medium">
-                  ITDA | Training Desk Analyst
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Dehradun | Jan 2021 - May 2021
-                </p>
-                <ul className="list-disc pl-5 mt-2 space-y-1">
-                  <li>
-                    Trained 20+ officials in E-Office systems, transitioning
-                    1000+ legacy files to digital format.
-                  </li>
-                  <li>
-                    Developed Python-based visualization tools, cutting file
-                    processing time by 50% and paper use by 40%.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition space-y-3">
-              <h3 className="text-gray-100 font-semibold text-lg">Education</h3>
-              <div className="text-gray-300 text-sm leading-relaxed">
-                <p className="text-gray-100 font-medium">
-                  Masters in Business Administration (Finance + Human Resource)
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Gurukul Kangri, Haridwar | May 2019 - Apr 2021
-                </p>
-              </div>
-              <div className="text-gray-300 text-sm leading-relaxed">
-                <p className="text-gray-100 font-medium">
-                  Bachelors of Technology (Computer Science)
-                </p>
-                <p className="text-gray-400 text-xs">
-                  Gurukul Kangri | Jun 2015 - Apr 2019
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition space-y-3">
               <h3 className="text-gray-100 font-semibold text-lg">
                 Recognitions
               </h3>
-              <ul className="text-gray-300 text-sm leading-relaxed list-disc pl-5 space-y-2">
-                <li>Gold Medalist at Delhi Horse Show (2011, 2013)</li>
-                <li>Recipient of Dada Saheb Phalke Film Award (2013)</li>
-                <li>
-                  Research on Home Automation published in International
-                  Journal (Dec 2019)
-                </li>
-              </ul>
             </div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4 hover:bg-white/10 transition">
-            <h3 className="text-gray-100 font-semibold text-lg mb-3">
-              Personal Learning Projects
-            </h3>
-            <ul className="text-gray-300 text-sm leading-relaxed list-disc pl-5 space-y-2">
-              <li>
-                Trading Algorithm: Nifty options system using Node.js and
-                Zerodha API for real-time strategy execution.
-              </li>
-              <li>
-                Adaptive LMS: SaaS-based LMS with RAG pipelines, vector search,
-                personalization, and analytics.
-              </li>
-              <li>
-                Electron.js LinkedIn Automation Suite: Cross-platform tool for
-                comments, follow-ups, and connection management.
-              </li>
-              <li>
-                Cow Donation Mobile App (iOS/Android): Flutter app with UPI
-                payments, recurring donations, and reminders.
-              </li>
-              <li>
-                Unity Game Development: GTA-style open-world and Tekken-style
-                3D fighting games with multiplayer and physics.
-              </li>
-              <li>
-                Multiplayer Game Development: Real-time 3D multiplayer game
-                using Three.js, Socket.io, and React Three Fiber.
-              </li>
-            </ul>
-          </div>
+            <div className="space-y-3">
+              {RECOGNITIONS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.text} className="flex items-start gap-3">
+                    <Icon className="w-4 h-4 text-cyan-400/80 mt-0.5 shrink-0" />
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
-      </div>
-
-      <div className="absolute z-[20] bottom-[10px] px-[5px]">
-        <div className="cursive text-[20px] font-medium text-center text-gray-300">
-          Building scalable, optimized, and secure experiences.
-        </div>
-      </div>
-
-      <div className="w-full flex items-start justify-center absolute">
-        <video
-          loop
-          muted
-          autoPlay
-          playsInline
-          preload="false"
-          className="w-full h-auto"
-        >
-          <source src="/videos/encryption-bg.webm" type="video/webm" />
-        </video>
       </div>
     </section>
   );

@@ -202,40 +202,46 @@ export const OTHER_SKILL = [
   },
 ] as const;
 
+export const PROJECT_CATEGORIES = [
+  "All",
+  "AI",
+  "SaaS",
+  "Mobile",
+  "3D / Game",
+  "Automation",
+] as const;
+
 export const PROJECTS = [
   {
     title: "PROFLY AI - Adaptive Aviation Exam Platform",
     description:
-    "Built an adaptive aviation exam-prep platform for pilot students with personalized learning paths, AI-powered mock tests and evaluations, a 500+ book aviation library, and live AI assistance to accelerate training outcomes.",
+    "In production for over a year with 30+ active students. Built a full RAG pipeline (Node.js, Python/FastAPI, MongoDB, Pinecone, OpenAI GPT-4) with a custom PDF parser, subtopic-scoped retrieval, and a source-bound system prompt so answers stay grounded in real aviation material instead of hallucinating — plus a custom eval harness to iterate on prompt quality.",
     images: [
       "/projects/profly/slideA.png",
       "/projects/profly/slideB.png",
       "/projects/profly/slideC.png",
     ],
     link: "https://proflyai.com/",
+    categories: ["AI", "SaaS"],
   },
-  {
-    title: "Altitude Aviation Academy LMS",
-    description:
-    "Aviation-focused LMS with an integrated CMS and Udemy-style course delivery, including structured modules, assessments, and progress tracking for pilot training.",
-    images: ["/projects/aviation1.png", "/projects/lms.png", "/projects/lms.png"],
-    link: "https://www.altitudeaviationacademy.in/",
-  },
+
   {
     title: "Eclipse iOS Productivity App",
     description:
-    "iPhone productivity app that makes distracting apps less rewarding with scheduled app limits, automatic grayscale, pause controls, and focus insights built around environment design instead of willpower.",
+    "Live on the App Store with real subscription pricing. A native iOS app (Swift, Node.js/TypeScript backend, MongoDB, AWS) built on Apple's Screen Time framework for scheduled grayscale and app limits — plus a custom reliability system that detects whether scheduled automations are actually firing on time, not just whether the feature exists, and a Python scraper for gathering supporting data.",
     images: ["/projects/eclipse/1.png", "/projects/eclipse/2.png"],
     link: "https://eclipsesystemsinc.com/",
+    categories: ["Mobile", "SaaS"],
   },
   {
     title: "Adhian Gurus AI Tutoring Platform",
     description:
-    "AI-monitored tutoring platform for India with verified tutors across CBSE, ICSE, IB, and state boards, offering online classes, home tutors, hybrid learning, and demo sessions starting at Rs 99.",
+    "Live two-sided marketplace connecting verified tutors with students across CBSE, ICSE, IB, and state boards. Built on Node.js/Express, MongoDB, and a Next.js frontend with GPT-4-powered AI session summaries so parents get topic coverage and homework notes after every class — plus a founding-tutor program with 0% commission for year one.",
     images: ["/projects/adhian/1.png", "/projects/adhian/2.png"],
     link: "https://adhiangurus.com/",
+    categories: ["AI", "SaaS"],
   },
-  
+
   {
     title: "Cow Donation Mobile App",
     description:
@@ -246,6 +252,7 @@ export const PROJECTS = [
       "/projects/dhenu/slideC.png",
     ],
     link: "https://www.dhenudharmafoundation.org/",
+    categories: ["Mobile"],
   },
   {
     title: "Unity Game Development",
@@ -253,6 +260,7 @@ export const PROJECTS = [
     "GTA-style open-world and Tekken-style 3D fighting games with multiplayer systems, animations, and physics.",
     images: ["/projects/unity/1.png", "/projects/unity/2.png", "/projects/unity/3.png", "/projects/unity/4.png", "/projects/unity/5.png", "/projects/unity/6.png", "/projects/unity/7.png"],
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7283183592887799809/",
+    categories: ["3D / Game"],
   },
   {
     title: "Multiplayer Game Development",
@@ -264,6 +272,7 @@ export const PROJECTS = [
       "/projects/gamer3f/slideC.png",
     ],
     link: "https://www.linkedin.com/feed/update/urn:li:activity:7233898679965728768/",
+    categories: ["3D / Game"],
   },
   {
     title: "Three.js Car Stunt Experience",
@@ -275,6 +284,7 @@ export const PROJECTS = [
       "/projects/car/3.png",
     ],
     link: "https://adamyaportfolio.netlify.app/",
+    categories: ["3D / Game"],
   },
   {
     title: "3D Home Architecture Collaboration",
@@ -282,6 +292,35 @@ export const PROJECTS = [
     "Real-time collaboration platform built with React Three Fiber and WebSockets where users join as Sims-style avatars to plan home architecture, organize spaces, and work together inside a shared 3D environment.",
     images: ["/projects/3fiber.png"],
     link: "#",
+    categories: ["3D / Game"],
+  },
+  {
+    title: "Altitude Aviation Academy LMS",
+    description:
+    "Aviation-focused LMS with an integrated CMS and Udemy-style course delivery, including structured modules, assessments, and progress tracking for pilot training.",
+    images: ["/projects/aviation1.png","/projects/altitute/2.png","/projects/altitute/3.png"],
+    link: "https://www.altitudeaviationacademy.in/",
+    categories: ["SaaS"],
+  },
+  {
+    title: "Aircamp — Pilot Aptitude & Hand-Eye Coordination Test",
+    description:
+    "Full-stack coordination/motor-skills assessment platform for aviation academy candidates, run on real joystick and rudder pedal hardware. FastAPI + Postgres backend with a Firebase-authenticated candidate station app and an admin app (React/Vite) for roster import, level/package assignment, scoring, PDF reports, and an audit-logged dashboard.",
+    images: [
+      "/projects/aircamp/joystick-rudder.mp4",
+      "/projects/aircamp/candidate-test.mp4",
+      "/projects/aircamp/dashboard.mp4",
+    ],
+    link: "#",
+    categories: ["SaaS", "Automation", "3D / Game"],
+  },
+  {
+    title: "Sanaraa — Oncology Nutrition Support",
+    description:
+    "Platform connecting cancer patients with a dedicated oncology nutritionist. A clinical intake generates a free WYBODY summary from the patient's cancer type, treatment phase, and blood markers, then drives a personalised, kitchen-realistic nutrition plan alongside caregiver and community support.",
+    images: ["/projects/sanaraa/1.jpg", "/projects/sanaraa/2.jpg"],
+    link: "https://sanaraa.com/",
+    categories: ["SaaS"],
   },
   {
     title: "Trading Algorithm: Nifty Options System",
@@ -293,6 +332,7 @@ export const PROJECTS = [
       "/projects/trade/slideA.png",
     ],
     link: "/courses/79434cf6-e39c-4257-a908-8b578bcbfb27",
+    categories: ["Automation"],
   },
 ] as const;
 
@@ -346,8 +386,8 @@ export const FOOTER_DATA = [
 
 export const NAV_LINKS = [
   {
-    title: "About me",
-    link: "/#about-me",
+    title: "Experience",
+    link: "/#experience",
   },
   {
     title: "Skills",
@@ -358,9 +398,16 @@ export const NAV_LINKS = [
     link: "/#projects",
   },
   {
-    title: "Workshop",
-    link: "/workshop",
+    title: "About me",
+    link: "/#about-me",
   },
+  {
+    title: "Contact",
+    link: "/#contact",
+  },
+  // "Workshop" removed from the nav on purpose. The /workshop route still works
+  // and can be linked directly from wherever it's being promoted — it just
+  // isn't advertised on the surface recruiters and interviewers land on.
 ] as const;
 
 export const LINKS = {

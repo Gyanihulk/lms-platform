@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import Sidebar from "../sidebar/Sidebar";
 import "./navbar.scss";
 import { motion } from "framer-motion";
@@ -18,16 +19,16 @@ const Navbar = () => {
         </motion.span>
         <div className="social">
           <a href="#">
-            <img src="/facebook.png" alt="" />
+            <Image src="/facebook.png" alt="Facebook" width={18} height={18} />
           </a>
           <a href="#">
-            <img src="/instagram.png" alt="" />
+            <Image src="/instagram.png" alt="Instagram" width={18} height={18} />
           </a>
           <a href="#">
-            <img src="/youtube.png" alt="" />
+            <Image src="/youtube.png" alt="YouTube" width={18} height={18} />
           </a>
           <a href="#">
-            <img src="/dribbble.png" alt="" />
+            <Image src="/dribbble.png" alt="Dribbble" width={18} height={18} />
           </a>
         </div>
       </div>

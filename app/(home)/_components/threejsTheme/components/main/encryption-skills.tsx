@@ -32,7 +32,7 @@ export const EncryptionSkills = () => {
       return;
     }
     hasStartedRef.current = true;
-    const timer = setTimeout(() => setShowSkills(true), 1000);
+    const timer = setTimeout(() => setShowSkills(true), 550);
     return () => clearTimeout(timer);
   }, [isActive, showSkills]);
 

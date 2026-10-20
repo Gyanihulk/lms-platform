@@ -7,6 +7,7 @@ import { ToastProvider } from "@/components/providers/toaster-provider";
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
 import { cn } from "@/lib/utils";
 import { Footer } from "./(home)/_components/threejsTheme/components/main/footer";
+import { ChatWidget } from "./(home)/_components/threejsTheme/components/main/chat-widget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,6 +50,7 @@ export default function RootLayout({
       
           <ConfettiProvider />
           <ToastProvider />
+          <ChatWidget />
         </body>
       </html>
     </ClerkProvider>
