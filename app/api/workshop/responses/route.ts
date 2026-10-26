@@ -4,6 +4,25 @@ import { NextResponse } from "next/server";
 const TYPES = ["feedback", "mock_interview", "teacher"] as const;
 type ResponseType = (typeof TYPES)[number];
 
+const TEACHER_ROLES = [
+  "developer_teacher",
+  "academic_counsellor",
+  "career_mentor",
+  "mock_interviewer",
+  "data_ai_teacher",
+  "design_teacher",
+  "school_subject_teacher",
+  "soft_skills_trainer",
+  "cbse_teacher",
+  "jee_main_teacher",
+  "ai_llm_intern",
+  "web_dev_intern",
+  "app_dev_intern",
+  "data_science_intern",
+  "content_intern",
+  "other",
+];
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const clean = (v: unknown, max = 500) =>
@@ -61,7 +80,7 @@ export async function POST(req: Request) {
 
     if (type === "teacher") {
       const teacherRole = clean(body.teacherRole, 50);
-      if (teacherRole !== "developer_teacher" && teacherRole !== "academic_counsellor") {
+      if (!teacherRole || !TEACHER_ROLES.includes(teacherRole)) {
         return new NextResponse("Choose a role", { status: 400 });
       }
       data.teacherRole = teacherRole;

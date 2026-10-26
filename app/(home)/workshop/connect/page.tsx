@@ -269,6 +269,20 @@ export default function WorkshopConnectPage() {
                   <option value="" disabled>Select a role</option>
                   <option value="developer_teacher">Developer teacher</option>
                   <option value="academic_counsellor">Academic counsellor</option>
+                  <option value="career_mentor">Career mentor</option>
+                  <option value="mock_interviewer">Mock interviewer</option>
+                  <option value="data_ai_teacher">Data / AI teacher</option>
+                  <option value="design_teacher">UI/UX design teacher</option>
+                  <option value="school_subject_teacher">School subject teacher</option>
+                  <option value="soft_skills_trainer">Soft skills / communication trainer</option>
+                  <option value="cbse_teacher">CBSE teacher (Class 9-12)</option>
+                  <option value="jee_main_teacher">JEE Main / competitive exam teacher</option>
+                  <option value="ai_llm_intern">AI / LLM intern</option>
+                  <option value="web_dev_intern">Web development intern</option>
+                  <option value="app_dev_intern">App development intern</option>
+                  <option value="data_science_intern">Data science intern</option>
+                  <option value="content_intern">Content / social media intern</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div>
