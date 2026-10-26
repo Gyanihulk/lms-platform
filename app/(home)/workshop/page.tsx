@@ -163,6 +163,12 @@ export default function WorkshopPage() {
         >
           Register for Free
         </Link>
+        <p className="text-gray-400 text-sm mt-6">
+          Already attended?{" "}
+          <Link href="/workshop/connect" className="text-purple-400 hover:underline">
+            Share feedback, book a mock interview, or join Adhian Gurus as a teacher
+          </Link>
+        </p>
         <p className="text-gray-500 text-sm mt-4">
           Questions? Reach out at{" "}
           <a href="mailto:kumar.adamya2000@gmail.com" className="text-purple-400 hover:underline">

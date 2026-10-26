@@ -141,3 +141,35 @@ model WorkshopRegistration {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// Feedback, mock-interview requests and teacher/counsellor interest, all from /workshop/connect.
+model WorkshopResponse {
+  id        String   @id @default(uuid()) @map("_id")
+  type      String   // "feedback" | "mock_interview" | "teacher"
+  name      String
+  email     String
+  phone     String?
+  college   String?
+
+  // feedback
+  rating    Int?
+  bestPart  String?
+  improve   String?
+  nextTopic String?
+
+  // mock interview
+  targetRole    String?
+  preferredSlot String?
+  resumeUrl     String?
+
+  // teacher / counsellor
+  teacherRole String?  // "developer_teacher" | "academic_counsellor"
+  expertise   String?
+  experience  String?
+  city        String?
+
+  consent   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([type])
+}
