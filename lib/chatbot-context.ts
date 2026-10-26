@@ -63,5 +63,6 @@ Email: kumar.adamya2000@gmail.com
 Phone: +91 7017368626
 LinkedIn: linkedin.com/in/adamya-kumar-5947751ba
 GitHub: github.com/Gyanihulk
+YouTube: youtube.com/channel/UCo_liE2rWMZuWcEMAgjS_bg
 Résumé: downloadable from the portfolio site (Highlights / Contact sections).
 `;

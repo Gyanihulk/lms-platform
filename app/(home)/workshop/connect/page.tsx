@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle, Loader2, MessageSquare, Mic, GraduationCap } from "lucide-react";
+import { CheckCircle, Loader2, MessageSquare, Mic, Briefcase, MessageCircle } from "lucide-react";
 
 type Tab = "feedback" | "mock_interview" | "teacher";
 
 const tabs: { id: Tab; label: string; icon: typeof MessageSquare }[] = [
   { id: "feedback", label: "Session feedback", icon: MessageSquare },
   { id: "mock_interview", label: "Mock interview", icon: Mic },
-  { id: "teacher", label: "Teach on Adhian Gurus", icon: GraduationCap },
+  { id: "teacher", label: "Internships & Opportunities", icon: Briefcase },
 ];
 
 const nextTopics = ["Resume", "DSA", "Building a project", "Getting a first client", "Other"];
@@ -40,6 +40,7 @@ const initial = {
   website: "", // honeypot
 };
 
+const whatsappGroupUrl = "https://chat.whatsapp.com/H0dZ1hZKVUFKMVRyvLILDY";
 const adhianUrl = process.env.NEXT_PUBLIC_ADHIAN_GURUS_URL || "https://adhiangurus.com";
 
 export default function WorkshopConnectPage() {
@@ -104,7 +105,7 @@ export default function WorkshopConnectPage() {
           {done === "teacher" && (
             <>
               <p className="text-gray-300 mb-6">
-                Interest received. Finish your teacher profile on Adhian Gurus to go live.
+                Interest received. Complete your profile on Adhian Gurus to be considered for internships and teaching roles.
               </p>
               <a
                 href={adhianUrl}
@@ -134,8 +135,18 @@ export default function WorkshopConnectPage() {
             ← Back to Workshop
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold mb-3">Stay connected</h1>
-          <p className="text-gray-400">Feedback, mock interviews and teaching opportunities</p>
+          <p className="text-gray-400">Feedback, mock interviews, internships and teaching opportunities</p>
         </div>
+
+        <a
+          href={whatsappGroupUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 mb-6 rounded-xl bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-3 transition"
+        >
+          <MessageCircle className="w-5 h-5" />
+          Join our WhatsApp group
+        </a>
 
         <div className="grid grid-cols-3 gap-2 mb-6" role="tablist">
           {tabs.map(({ id, label, icon: Icon }) => (
@@ -264,9 +275,17 @@ export default function WorkshopConnectPage() {
           {tab === "teacher" && (
             <>
               <div>
-                <label className={labelCls}>I want to join as <span className="text-red-400">*</span></label>
+                <label className={labelCls}>Opportunity I'm interested in <span className="text-red-400">*</span></label>
                 <select name="teacherRole" value={form.teacherRole} onChange={onChange} required className={field}>
-                  <option value="" disabled>Select a role</option>
+                  <option value="" disabled>Select an opportunity</option>
+                  <optgroup label="Internships">
+                  <option value="ai_llm_intern">AI / LLM intern</option>
+                  <option value="web_dev_intern">Web development intern</option>
+                  <option value="app_dev_intern">App development intern</option>
+                  <option value="data_science_intern">Data science intern</option>
+                  <option value="content_intern">Content / social media intern</option>
+                </optgroup>
+                  <optgroup label="Teaching &amp; mentoring">
                   <option value="developer_teacher">Developer teacher</option>
                   <option value="academic_counsellor">Academic counsellor</option>
                   <option value="career_mentor">Career mentor</option>
@@ -277,21 +296,17 @@ export default function WorkshopConnectPage() {
                   <option value="soft_skills_trainer">Soft skills / communication trainer</option>
                   <option value="cbse_teacher">CBSE teacher (Class 9-12)</option>
                   <option value="jee_main_teacher">JEE Main / competitive exam teacher</option>
-                  <option value="ai_llm_intern">AI / LLM intern</option>
-                  <option value="web_dev_intern">Web development intern</option>
-                  <option value="app_dev_intern">App development intern</option>
-                  <option value="data_science_intern">Data science intern</option>
-                  <option value="content_intern">Content / social media intern</option>
                   <option value="other">Other</option>
+                </optgroup>
                 </select>
               </div>
               <div>
-                <label className={labelCls}>Subjects or skills</label>
-                <textarea name="expertise" value={form.expertise} onChange={onChange} rows={2} className={`${field} resize-none`} placeholder="React, Python, DSA, career guidance..." />
+                <label className={labelCls}>Skills, subjects or tools you know</label>
+                <textarea name="expertise" value={form.expertise} onChange={onChange} rows={2} className={`${field} resize-none`} placeholder="React, Node.js, Python, LLMs, DSA, Physics..." />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className={labelCls}>Experience</label>
+                  <label className={labelCls}>Experience (freshers welcome)</label>
                   <select name="experience" value={form.experience} onChange={onChange} className={field}>
                     <option value="">Select</option>
                     {experiences.map((x) => (

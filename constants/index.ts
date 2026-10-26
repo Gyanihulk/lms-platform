@@ -1,4 +1,5 @@
 import { RxGithubLogo, RxLinkedinLogo } from "react-icons/rx";
+import { FaYoutube } from "react-icons/fa";
 
 export const SKILL_DATA = [
   {
@@ -43,6 +44,11 @@ export const SOCIALS = [
     name: "LinkedIn",
     icon: RxLinkedinLogo,
     link: "https://www.linkedin.com/in/adamya-kumar-5947751ba/",
+  },
+  {
+    name: "YouTube",
+    icon: FaYoutube,
+    link: "https://www.youtube.com/channel/UCo_liE2rWMZuWcEMAgjS_bg",
   },
 ] as const;
 
