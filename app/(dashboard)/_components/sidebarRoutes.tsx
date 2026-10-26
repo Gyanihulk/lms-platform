@@ -13,6 +13,7 @@ const teacherRoutes = [
   { icon: List, label: "Courses", href: "/dashboard/teacher/courses" },
   { icon: BarChart, label: "Analytics", href: "/dashboard/teacher/analytics" },
   { icon: Users, label: "Workshop Registrations", href: "/dashboard/teacher/workshop" },
+  { icon: Users, label: "Workshop Responses", href: "/dashboard/teacher/workshop/responses" },
 ];
 export const SidebarRoutes = () => {
   const pathname=usePathname()
