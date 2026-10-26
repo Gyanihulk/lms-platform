@@ -275,7 +275,7 @@ export default function WorkshopConnectPage() {
           {tab === "teacher" && (
             <>
               <div>
-                <label className={labelCls}>Opportunity I'm interested in <span className="text-red-400">*</span></label>
+                <label className={labelCls}>Opportunity I&apos;m interested in <span className="text-red-400">*</span></label>
                 <select name="teacherRole" value={form.teacherRole} onChange={onChange} required className={field}>
                   <option value="" disabled>Select an opportunity</option>
                   <optgroup label="Internships">
